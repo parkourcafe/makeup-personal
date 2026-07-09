@@ -63,7 +63,7 @@ Twelve candidate productized offers generated from the pain research (`pain_sign
 ## O5. Agency Autopilot — Client Onboarding + Reporting OS for Marketing Agencies
 
 - **Target customer:** 5–30-person marketing/SEO/paid-media agencies (US/UK/EU/AU).
-- **Core pain:** Reporting averages 8.2h/client/month; onboarding eats 10–15h/week and churn decisions form in the first two weeks; proposals take 6–8h each; agencies hire coordinators to absorb it (documented hiring posts).
+- **Core pain:** Reporting averages ~8.2h/client (verification note: the origin Databox survey states this per *week*; the citing article per *month* — the conservative monthly reading is used here); onboarding eats 10–15h/week and churn decisions form in the first two weeks; proposals take 6–8h each; agencies hire coordinators to absorb it (documented hiring posts).
 - **Promise:** In 14 days: new-client onboarding runs itself (intake → access collection → kickoff), and monthly reports draft themselves with AI commentary for account-manager review.
 - **Deliverables:** Automated onboarding workflow (forms, access checklist, project setup, welcome sequences), report automation pulling from ad/SEO platforms with AI-written insight drafts, proposal template automation, internal SOP assistant, training + docs.
 - **Price:** $7,500–$10,000.

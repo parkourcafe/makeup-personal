@@ -1,0 +1,33 @@
+{
+  "sampled": 24,
+  "verified": 21,
+  "corroborated": 1,
+  "suspect": 2,
+  "method": "Stratified sample of 3 leads per batch (8 batches). Each lead checked via WebSearch (company name + location) and site confirmed via search-result domain match or direct fetch. Public sources only; no one contacted. Date: 2026-07-09.",
+  "details": [
+    {"company": "Rejuvie Aesthetic & Dermatology", "batch": "bali-clinics", "status": "VERIFIED", "note": "rejuvieclinic.com live in search results; Kuta (Jl. Dewi Sri, near Sunset Rd) + Sanur branches; aesthetic/dermatology confirmed; Trustindex review page cited in CSV exists."},
+    {"company": "Hangover Lounge Bali", "batch": "bali-clinics", "status": "VERIFIED", "note": "hangoverloungebali.com confirmed; Jl. Sunset Road No.27B Kuta; IV therapy, est. 2016, 8am-11pm hours match CSV."},
+    {"company": "Eterna Clinic Bali", "batch": "bali-clinics", "status": "VERIFIED", "note": "eternaclinic.com confirmed; Jl. Sunset Road No.77B Kuta; aesthetic & anti-aging clinic matches."},
+    {"company": "Propertia Bali", "batch": "bali-realestate", "status": "VERIFIED", "note": "propertia.com confirmed; Canggu/Berawa HQ; SIU-P4 licensed agency; WhatsApp +62 818 0888 7711 in CSV matches public contact."},
+    {"company": "Balitecture", "batch": "bali-realestate", "status": "VERIFIED", "note": "balitecture.com confirmed; Uluwatu developments (Solas, Casa, Dasa); 160+ team and 200+ villas claims match; 'sold out in under a week' corroborated (Dasa Uluwatu)."},
+    {"company": "Harcourts Purba Bali", "batch": "bali-realestate", "status": "VERIFIED", "note": "harcourtspurbabali.com confirmed; Jl. Pemelisan Agung No.22, Tibubeneng/Canggu matches CSV address exactly."},
+    {"company": "The Udaya Resorts & Spa", "batch": "bali-hospitality", "status": "SUSPECT", "note": "Resort itself is fully real (Ubud, Tegallantang; Tripadvisor/Booking confirm), but CSV website theudaya.com returns HTTP 403 with no content and is not indexed anywhere; official site is theudayaresort.com. Website field appears wrong/stale - should be corrected before outreach."},
+    {"company": "The Yoga Barn", "batch": "bali-hospitality", "status": "VERIFIED", "note": "theyogabarn.com confirmed; Ubud; largest yoga center in Bali, ~100 classes/week; walk-in registration model corroborated by third-party guides."},
+    {"company": "Atlas Beach Fest", "batch": "bali-hospitality", "status": "VERIFIED", "note": "atlasbeachfest.com confirmed; Berawa Beach, Canggu; self-billed world's biggest beach club matches."},
+    {"company": "Bali Familia Villa Management", "batch": "bali-villas", "status": "VERIFIED", "note": "balifamiliavillamanagement.com confirmed; licensed PT covering Seminyak/Canggu/Legian/Kerobokan; founded 2020 by Ami and Aris."},
+    {"company": "BaliSuperHost", "batch": "bali-villas", "status": "VERIFIED", "note": "balisuperhost.com confirmed; Ubud HQ; WhatsApp +62 811-3820-0390 matches CSV; 550+ villas claim corroborated. Minor: public address shows Jl. Raya Mas No.184 vs CSV's Jl. Cok Rai Pudak No.184."},
+    {"company": "Bukit Vista", "batch": "bali-villas", "status": "VERIFIED", "note": "bukitvista.com confirmed; Bukit Peninsula (Uluwatu/Bingin/Jimbaran) focus; 100+ villas, ~12 years operating."},
+    {"company": "Rocky Real Estate Brokerage LLC", "batch": "dubai-realestate", "status": "VERIFIED", "note": "rockyrealestate.com confirmed; Dubai; established 1976, family-founded (Ashok Uttamchandani) - matches CSV's est. 1976 family-owned claim."},
+    {"company": "Xperience Realty", "batch": "dubai-realestate", "status": "VERIFIED", "note": "xrealty.ae confirmed; Dubai (Dubai Hills Estate HQ); off-plan/secondary/property management brokerage matches."},
+    {"company": "Silverstone Luxury Realty", "batch": "dubai-realestate", "status": "VERIFIED", "note": "silverstonelr.com confirmed; Business Bay, Dubai; off-plan to luxury villas portfolio matches."},
+    {"company": "Results Laser Clinic", "batch": "au-clinics", "status": "VERIFIED", "note": "resultslaserclinic.com.au confirmed; Sydney HQ with 40+ clinics across NSW/VIC/QLD - consistent with CSV's 29-40+ franchise network."},
+    {"company": "Sydney Health Physiotherapy", "batch": "au-clinics", "status": "SUSPECT", "note": "The clinic exists (sydneyhealthphysio.com.au, Sydney, since 2015, industry matches), but the CSV website field is a LinkedIn job-posting URL (au.linkedin.com/jobs/view/...), not the company website. Data-quality error - replace with the real domain before outreach."},
+    {"company": "M1 Med Beauty Australia", "batch": "au-clinics", "status": "VERIFIED", "note": "m1-beauty.com.au confirmed; Sydney CBD (George St) & Melbourne CBD (Elizabeth St); doctor-only injectables model matches CSV."},
+    {"company": "Search Influence", "batch": "agencies", "status": "VERIFIED", "note": "searchinfluence.com confirmed; New Orleans, LA; founded 2006, ~30 staff, healthcare & higher-ed SEO focus matches CSV."},
+    {"company": "Type A Media", "batch": "agencies", "status": "VERIFIED", "note": "typeamedia.net confirmed; London (Wenlock Rd, N1); SEO & digital PR for established businesses matches."},
+    {"company": "Ammo Marketing", "batch": "agencies", "status": "VERIFIED", "note": "ammomarketing.com.au live and confirmed (also ammo.marketing); Perth, WA; startup growth marketing agency corroborated by TechCrunch coverage."},
+    {"company": "Vessi", "batch": "ecom-creators", "status": "VERIFIED", "note": "vessi.com (brand domain, ca.vessi.com storefront) confirmed; Vancouver, BC; DTC waterproof footwear, founded ~2017-2018, matches CSV."},
+    {"company": "Halara", "batch": "ecom-creators", "status": "CORROBORATED", "note": "Brand clearly real (activewear DTC, founded 2020, CNN/Vogue coverage). CSV domain thehalara.com returns 403 to fetchers (bot protection) but is corroborated as theirs via Trustpilot (reviews of thehalara.com) and Facebook @thehalara; current primary domain is halara.com."},
+    {"company": "Dossier", "batch": "ecom-creators", "status": "VERIFIED", "note": "dossier.co confirmed; New York, NY (NoLita flagship); DTC fragrance house founded 2019 matches CSV."}
+  ]
+}
