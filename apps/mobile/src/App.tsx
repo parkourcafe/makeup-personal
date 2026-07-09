@@ -11,6 +11,7 @@ import { LookLibraryScreen } from "./screens/LookLibraryScreen";
 import { MakeupBagScreen } from "./screens/MakeupBagScreen";
 import { ReadinessReportScreen } from "./screens/ReadinessReportScreen";
 import { TutorialPlayerScreen } from "./screens/TutorialPlayerScreen";
+import { colors } from "./theme";
 import type { RootStackParamList } from "./types";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -46,10 +47,11 @@ function AppNavigator() {
       <StatusBar style="dark" />
       <Stack.Navigator
         screenOptions={{
-          contentStyle: { backgroundColor: "#f6f0e9" },
+          contentStyle: { backgroundColor: colors.background },
           headerShadowVisible: false,
-          headerStyle: { backgroundColor: "#f6f0e9" },
-          headerTitleStyle: { color: "#231f20", fontSize: 18, fontWeight: "800" }
+          headerStyle: { backgroundColor: colors.background },
+          headerTintColor: colors.ink,
+          headerTitleStyle: { color: colors.ink, fontSize: 18, fontWeight: "800" }
         }}
       >
         <Stack.Screen component={LookLibraryScreen} name="LookLibrary" options={{ title: "Образы" }} />

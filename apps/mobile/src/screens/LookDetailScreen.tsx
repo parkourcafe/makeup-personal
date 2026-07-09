@@ -6,6 +6,7 @@ import { api } from "../api/client";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { ReferencePreview } from "../components/ReferencePreview";
 import { Screen } from "../components/Screen";
+import { colors, radii, shadow } from "../theme";
 import type { Look, LookRole, RootStackParamList } from "../types";
 import { areaForCategory, categoryLabel, difficultyLabels, occasionLabels } from "../utils/labels";
 
@@ -40,6 +41,7 @@ export function LookDetailScreen({ navigation, route }: Props) {
         <>
           <ReferencePreview look={look} />
           <View style={styles.header}>
+            <Text style={styles.kicker}>{occasionLabels[look.occasion] ?? look.occasion}</Text>
             <Text style={styles.title}>{look.title}</Text>
             <Text style={styles.description}>{look.description}</Text>
             <View style={styles.metaRow}>
@@ -51,7 +53,10 @@ export function LookDetailScreen({ navigation, route }: Props) {
 
           {groupedRoles.map(([area, roles]) => (
             <View key={area} style={styles.section}>
-              <Text style={styles.sectionTitle}>{area}</Text>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitle}>{area}</Text>
+                <Text style={styles.sectionCount}>{roles.length}</Text>
+              </View>
               {roles.map((role) => (
                 <View key={role.id} style={styles.roleRow}>
                   <View style={styles.roleText}>
@@ -88,13 +93,20 @@ const styles = StyleSheet.create({
   header: {
     gap: 10
   },
+  kicker: {
+    color: colors.rose,
+    fontSize: 12,
+    fontWeight: "900",
+    textTransform: "uppercase"
+  },
   title: {
-    color: "#20201f",
-    fontSize: 27,
-    fontWeight: "800"
+    color: colors.ink,
+    fontSize: 28,
+    fontWeight: "900",
+    lineHeight: 33
   },
   description: {
-    color: "#4e4842",
+    color: colors.muted,
     fontSize: 15,
     lineHeight: 22
   },
@@ -104,11 +116,11 @@ const styles = StyleSheet.create({
     gap: 8
   },
   meta: {
-    backgroundColor: "#efe9e1",
-    borderRadius: 8,
-    color: "#4e4842",
+    backgroundColor: colors.surfaceAlt,
+    borderRadius: radii.sm,
+    color: colors.ink,
     fontSize: 12,
-    fontWeight: "700",
+    fontWeight: "800",
     overflow: "hidden",
     paddingHorizontal: 8,
     paddingVertical: 5
@@ -116,39 +128,55 @@ const styles = StyleSheet.create({
   section: {
     gap: 8
   },
+  sectionHeader: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
   sectionTitle: {
-    color: "#20201f",
+    color: colors.ink,
     fontSize: 18,
-    fontWeight: "800"
+    fontWeight: "900"
+  },
+  sectionCount: {
+    backgroundColor: colors.plum,
+    borderRadius: 999,
+    color: colors.surface,
+    fontSize: 12,
+    fontWeight: "900",
+    overflow: "hidden",
+    paddingHorizontal: 8,
+    paddingVertical: 3
   },
   roleRow: {
-    backgroundColor: "#fff",
-    borderColor: "#e5ded5",
-    borderRadius: 8,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.md,
     borderWidth: 1,
     gap: 8,
-    padding: 12
+    padding: 12,
+    ...shadow
   },
   roleText: {
     gap: 4
   },
   roleTitle: {
-    color: "#20201f",
+    color: colors.ink,
     fontSize: 15,
-    fontWeight: "800"
+    fontWeight: "900"
   },
   roleDescription: {
-    color: "#5b554e",
+    color: colors.muted,
     fontSize: 14,
     lineHeight: 20
   },
   category: {
     alignSelf: "flex-start",
-    backgroundColor: "#f3eee7",
-    borderRadius: 8,
-    color: "#5b554e",
+    backgroundColor: "#edf3ee",
+    borderRadius: radii.sm,
+    color: colors.sage,
     fontSize: 12,
-    fontWeight: "700",
+    fontWeight: "900",
     overflow: "hidden",
     paddingHorizontal: 8,
     paddingVertical: 5

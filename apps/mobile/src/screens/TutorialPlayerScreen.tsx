@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { api } from "../api/client";
 import { useAuth } from "../auth/AuthContext";
 import { Screen } from "../components/Screen";
+import { colors, radii, shadow } from "../theme";
 import type { ReadinessReport, RootStackParamList, Tutorial, UserProduct } from "../types";
 import { statusLabels } from "../utils/labels";
 
@@ -64,8 +65,10 @@ export function TutorialPlayerScreen({ route }: Props) {
             const product = match?.matched_product_id ? productsById.get(match.matched_product_id) : null;
             return (
               <View key={step.id} style={styles.stepCard}>
-                <Text style={styles.stepNumber}>Шаг {step.step_number}</Text>
-                <Text style={styles.stepTitle}>{step.title}</Text>
+                <View style={styles.stepHeader}>
+                  <Text style={styles.stepNumber}>{step.step_number}</Text>
+                  <Text style={styles.stepTitle}>{step.title}</Text>
+                </View>
                 {product ? (
                   <Text style={styles.product}>
                     Используй: {product.brand} · {product.name}
@@ -90,55 +93,69 @@ const styles = StyleSheet.create({
     gap: 8
   },
   title: {
-    color: "#20201f",
-    fontSize: 27,
-    fontWeight: "800"
+    color: colors.ink,
+    fontSize: 28,
+    fontWeight: "900",
+    lineHeight: 33
   },
   summary: {
-    color: "#5b554e",
+    color: colors.muted,
     fontSize: 15,
     lineHeight: 22
   },
   stepCard: {
-    backgroundColor: "#fff",
-    borderColor: "#e5ded5",
-    borderRadius: 8,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.md,
     borderWidth: 1,
-    gap: 8,
-    padding: 14
+    gap: 10,
+    padding: 14,
+    ...shadow
+  },
+  stepHeader: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 10
   },
   stepNumber: {
-    color: "#7a7168",
-    fontSize: 12,
+    backgroundColor: colors.plum,
+    borderRadius: 999,
+    color: colors.surface,
+    fontSize: 13,
     fontWeight: "800",
-    textTransform: "uppercase"
+    minWidth: 30,
+    overflow: "hidden",
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+    textAlign: "center"
   },
   stepTitle: {
-    color: "#20201f",
+    color: colors.ink,
+    flex: 1,
     fontSize: 18,
-    fontWeight: "800"
+    fontWeight: "900"
   },
   product: {
-    backgroundColor: "#f6f0e9",
-    borderRadius: 8,
-    color: "#4e4842",
+    backgroundColor: "#edf3ee",
+    borderRadius: radii.md,
+    color: colors.successText,
     fontSize: 14,
     fontWeight: "800",
     overflow: "hidden",
     padding: 10
   },
   instruction: {
-    color: "#4e4842",
+    color: colors.ink,
     fontSize: 15,
     lineHeight: 22
   },
   tip: {
-    color: "#4f5e37",
+    color: colors.successText,
     fontSize: 14,
     lineHeight: 20
   },
   mistake: {
-    color: "#7c342c",
+    color: colors.dangerText,
     fontSize: 14,
     lineHeight: 20
   }

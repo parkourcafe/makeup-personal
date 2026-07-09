@@ -6,7 +6,8 @@ import { api } from "../api/client";
 import { useAuth } from "../auth/AuthContext";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { Screen } from "../components/Screen";
-import type { MockOffer, ReadinessReport, RootStackParamList, UserProduct } from "../types";
+import { colors, radii, shadow } from "../theme";
+import type { MatchStatus, MockOffer, ReadinessReport, RootStackParamList, UserProduct } from "../types";
 import { categoryLabel, overallLabels, statusLabels } from "../utils/labels";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ReadinessReport">;
@@ -51,6 +52,8 @@ export function ReadinessReportScreen({ navigation, route }: Props) {
   }, [loadReport]);
 
   const productsById = useMemo(() => new Map(products.map((product) => [product.id, product])), [products]);
+  const readyCount = report?.role_matches.filter((match) => match.status === "enough").length ?? 0;
+  const gapCount = report?.role_matches.filter((match) => match.status === "missing").length ?? 0;
 
   return (
     <Screen error={error} loading={loading}>
@@ -59,6 +62,10 @@ export function ReadinessReportScreen({ navigation, route }: Props) {
           <View style={styles.summary}>
             <Text style={styles.summaryLabel}>{overallLabels[report.overall_status]}</Text>
             <Text style={styles.score}>{report.readiness_score}%</Text>
+            <View style={styles.summaryPills}>
+              <Text style={styles.summaryPill}>{readyCount} готово</Text>
+              <Text style={styles.summaryPill}>{gapCount} докупить</Text>
+            </View>
           </View>
 
           <View style={styles.section}>
@@ -66,9 +73,9 @@ export function ReadinessReportScreen({ navigation, route }: Props) {
             {report.role_matches.map((match) => {
               const product = match.matched_product_id ? productsById.get(match.matched_product_id) : null;
               return (
-                <View key={match.look_role_id} style={styles.matchCard}>
+                <View key={match.look_role_id} style={[styles.matchCard, statusCardStyle(match.status)]}>
                   <View style={styles.matchHeader}>
-                    <Text style={styles.status}>{statusLabels[match.status]}</Text>
+                    <Text style={[styles.status, statusTextStyle(match.status)]}>{statusLabels[match.status]}</Text>
                     <Text style={styles.scoreSmall}>{match.score}%</Text>
                   </View>
                   {product ? (
@@ -89,7 +96,7 @@ export function ReadinessReportScreen({ navigation, route }: Props) {
                             {offer.brand} · {offer.product_name}
                           </Text>
                           <Text style={styles.offerMeta}>
-                            {offer.store?.name ?? "Mock store"} · {offer.price} {offer.currency}
+                            {offer.store?.name ?? "Демо-магазин"} · {offer.price} {offer.currency}
                           </Text>
                         </View>
                       ))}
@@ -109,40 +116,100 @@ export function ReadinessReportScreen({ navigation, route }: Props) {
   );
 }
 
+function statusCardStyle(status: MatchStatus) {
+  if (status === "enough") {
+    return styles.matchCardReady;
+  }
+  if (status === "missing") {
+    return styles.matchCardGap;
+  }
+  if (status === "needs_confirmation") {
+    return styles.matchCardConfirm;
+  }
+  return styles.matchCardNeutral;
+}
+
+function statusTextStyle(status: MatchStatus) {
+  if (status === "enough") {
+    return styles.statusReady;
+  }
+  if (status === "missing") {
+    return styles.statusGap;
+  }
+  if (status === "needs_confirmation") {
+    return styles.statusConfirm;
+  }
+  return styles.statusNeutral;
+}
+
 const styles = StyleSheet.create({
   summary: {
     alignItems: "center",
-    backgroundColor: "#20201f",
-    borderRadius: 8,
+    backgroundColor: colors.charcoal,
+    borderRadius: radii.md,
     gap: 8,
-    padding: 20
+    padding: 20,
+    ...shadow
   },
   summaryLabel: {
-    color: "#f8f5ef",
+    color: colors.surface,
     fontSize: 16,
     fontWeight: "800",
     textAlign: "center"
   },
   score: {
-    color: "#fff",
+    color: colors.surface,
     fontSize: 40,
     fontWeight: "900"
+  },
+  summaryPills: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    justifyContent: "center"
+  },
+  summaryPill: {
+    backgroundColor: "rgba(255,255,255,0.12)",
+    borderRadius: radii.sm,
+    color: "#efe7dc",
+    fontSize: 12,
+    fontWeight: "900",
+    overflow: "hidden",
+    paddingHorizontal: 9,
+    paddingVertical: 5
   },
   section: {
     gap: 8
   },
   sectionTitle: {
-    color: "#20201f",
+    color: colors.ink,
     fontSize: 18,
-    fontWeight: "800"
+    fontWeight: "900"
   },
   matchCard: {
-    backgroundColor: "#fff",
-    borderColor: "#e5ded5",
-    borderRadius: 8,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.md,
     borderWidth: 1,
     gap: 8,
-    padding: 12
+    padding: 12,
+    ...shadow
+  },
+  matchCardReady: {
+    borderLeftColor: colors.sage,
+    borderLeftWidth: 5
+  },
+  matchCardGap: {
+    borderLeftColor: colors.clay,
+    borderLeftWidth: 5
+  },
+  matchCardConfirm: {
+    borderLeftColor: colors.blue,
+    borderLeftWidth: 5
+  },
+  matchCardNeutral: {
+    borderLeftColor: colors.plum,
+    borderLeftWidth: 5
   },
   matchHeader: {
     alignItems: "center",
@@ -150,61 +217,72 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   status: {
-    color: "#20201f",
     fontSize: 16,
-    fontWeight: "800"
+    fontWeight: "900"
+  },
+  statusReady: {
+    color: colors.successText
+  },
+  statusGap: {
+    color: colors.warningText
+  },
+  statusConfirm: {
+    color: colors.blue
+  },
+  statusNeutral: {
+    color: colors.plum
   },
   scoreSmall: {
-    color: "#6f675f",
+    color: colors.subtle,
     fontSize: 13,
-    fontWeight: "800"
+    fontWeight: "900"
   },
   product: {
-    color: "#4e4842",
+    color: colors.ink,
     fontSize: 14,
-    fontWeight: "700"
+    fontWeight: "800"
   },
   reason: {
-    color: "#5b554e",
+    color: colors.muted,
     fontSize: 14,
     lineHeight: 20
   },
   howTo: {
-    backgroundColor: "#f6f0e9",
-    borderRadius: 8,
-    color: "#4e4842",
+    backgroundColor: colors.surfaceAlt,
+    borderRadius: radii.md,
+    color: colors.ink,
     fontSize: 14,
     lineHeight: 20,
     overflow: "hidden",
     padding: 10
   },
   gapBox: {
-    backgroundColor: "#fff4df",
-    borderColor: "#f1c36d",
-    borderRadius: 8,
+    backgroundColor: colors.warningBg,
+    borderColor: "#edc56e",
+    borderRadius: radii.md,
     borderWidth: 1,
     gap: 4,
     padding: 10
   },
   gapTitle: {
-    color: "#7c4a03",
+    color: colors.warningText,
     fontSize: 14,
     fontWeight: "800"
   },
   gapText: {
-    color: "#7c4a03",
+    color: colors.warningText,
     fontSize: 13,
     lineHeight: 18
   },
   mockLabel: {
-    color: "#7c4a03",
+    color: colors.warningText,
     fontSize: 12,
     fontWeight: "800",
     marginTop: 4
   },
   offerRow: {
     backgroundColor: "rgba(255,255,255,0.58)",
-    borderRadius: 8,
+    borderRadius: radii.md,
     gap: 3,
     marginTop: 4,
     padding: 8

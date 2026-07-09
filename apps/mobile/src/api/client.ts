@@ -8,7 +8,8 @@ import type {
   ReadinessReport,
   Tutorial,
   User,
-  UserProduct
+  UserProduct,
+  Vocabulary
 } from "../types";
 
 type RequestOptions = {
@@ -55,6 +56,7 @@ export const api = {
   getCurrentUser: () => request<User>("/auth/me"),
   logout: () => request<void>("/auth/logout", { method: "POST" }),
   getLooks: () => request<Look[]>("/looks"),
+  getVocabulary: () => request<Vocabulary>("/vocabulary"),
   getLook: (lookId: number) => request<Look>(`/looks/${lookId}`),
   getTutorial: (lookId: number) => request<Tutorial>(`/looks/${lookId}/tutorial`),
   getUserProducts: (userId: number) => request<UserProduct[]>(`/users/${userId}/products`),

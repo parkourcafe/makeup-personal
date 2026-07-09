@@ -143,6 +143,17 @@ export type MockOffer = {
   store: Store | null;
 };
 
+export type Vocabulary = {
+  categories: string[];
+  color_families: string[];
+  undertones: string[];
+  finishes: string[];
+  textures: string[];
+  coverage: string[];
+  sources: string[];
+  offer_statuses: string[];
+};
+
 export type RootStackParamList = {
   LookLibrary: undefined;
   LookDetail: { lookId: number };

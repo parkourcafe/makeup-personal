@@ -47,8 +47,77 @@ export const categoryLabels: Record<string, string> = {
   lip_balm: "бальзам"
 };
 
+export const colorFamilyLabels: Record<string, string> = {
+  beige: "бежевый",
+  berry: "ягодный",
+  black: "черный",
+  bronze: "бронза",
+  brown: "коричневый",
+  champagne: "шампань",
+  clear: "прозрачный",
+  coral: "коралл",
+  mauve: "mauve",
+  nude: "нюд",
+  peach: "персик",
+  pink: "розовый",
+  plum: "слива",
+  rose: "роза",
+  taupe: "taupe",
+  translucent: "прозрачная пудра"
+};
+
+export const undertoneLabels: Record<string, string> = {
+  cool: "холодный",
+  neutral: "нейтральный",
+  warm: "теплый"
+};
+
+export const finishLabels: Record<string, string> = {
+  dewy: "сияющий",
+  gloss: "глянец",
+  matte: "матовый",
+  natural: "натуральный",
+  satin: "сатин"
+};
+
+export const textureLabels: Record<string, string> = {
+  balm: "бальзам",
+  cream: "крем",
+  gel: "гель",
+  liquid: "жидкая",
+  pencil: "карандаш",
+  powder: "пудра"
+};
+
+export const coverageLabels: Record<string, string> = {
+  sheer: "прозрачное",
+  light: "легкое",
+  medium: "среднее",
+  full: "плотное"
+};
+
 export function categoryLabel(value: string): string {
   return categoryLabels[value] ?? value;
+}
+
+export function colorFamilyLabel(value: string): string {
+  return colorFamilyLabels[value] ?? value;
+}
+
+export function undertoneLabel(value: string): string {
+  return undertoneLabels[value] ?? value;
+}
+
+export function finishLabel(value: string): string {
+  return finishLabels[value] ?? value;
+}
+
+export function textureLabel(value: string): string {
+  return textureLabels[value] ?? value;
+}
+
+export function coverageLabel(value: string): string {
+  return coverageLabels[value] ?? value;
 }
 
 export function areaForCategory(category: string): string {

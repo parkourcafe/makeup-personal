@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
+import { colors, radii } from "../theme";
 import type { Look } from "../types";
 import { referenceTheme } from "../utils/reference";
 
@@ -22,7 +23,7 @@ export function ReferencePreview({ look, compact = false }: ReferencePreviewProp
           onError={() => setImageFailed(true)}
           resizeMode="cover"
           source={{ uri: imageUrl }}
-          style={styles.image}
+          style={[styles.image, compact ? styles.compactImage : null]}
         />
       ) : (
         <View style={styles.face}>
@@ -46,15 +47,15 @@ export function ReferencePreview({ look, compact = false }: ReferencePreviewProp
 
 const styles = StyleSheet.create({
   frame: {
-    borderRadius: 8,
-    minHeight: 210,
+    borderRadius: radii.md,
+    minHeight: 230,
     overflow: "hidden",
-    padding: 18
+    padding: 12
   },
   compactFrame: {
-    minHeight: 128,
-    padding: 12,
-    width: 128
+    minHeight: 126,
+    padding: 8,
+    width: 118
   },
   face: {
     alignSelf: "center",
@@ -65,9 +66,12 @@ const styles = StyleSheet.create({
     width: 116
   },
   image: {
-    borderRadius: 8,
-    height: 150,
+    borderRadius: radii.md,
+    height: 172,
     width: "100%"
+  },
+  compactImage: {
+    height: 86
   },
   eye: {
     borderRadius: 4,
@@ -111,14 +115,14 @@ const styles = StyleSheet.create({
     marginTop: 14
   },
   swatch: {
-    borderColor: "rgba(0,0,0,0.08)",
+    borderColor: "rgba(31,32,32,0.12)",
     borderRadius: 999,
     borderWidth: 1,
     height: 18,
     width: 18
   },
   caption: {
-    color: "#635c55",
+    color: colors.muted,
     fontSize: 13,
     marginTop: 12,
     textAlign: "center"

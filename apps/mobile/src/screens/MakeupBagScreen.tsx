@@ -1,13 +1,21 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, Switch, Text, TextInput, View } from "react-native";
 
 import { api } from "../api/client";
 import { useAuth } from "../auth/AuthContext";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { Screen } from "../components/Screen";
-import type { ProductCreate, RootStackParamList, UserProduct } from "../types";
-import { categoryLabel } from "../utils/labels";
+import { colors, radii, shadow } from "../theme";
+import type { ProductCreate, RootStackParamList, UserProduct, Vocabulary } from "../types";
+import {
+  categoryLabel,
+  colorFamilyLabel,
+  coverageLabel,
+  finishLabel,
+  textureLabel,
+  undertoneLabel
+} from "../utils/labels";
 
 type Props = NativeStackScreenProps<RootStackParamList, "MakeupBag">;
 
@@ -21,7 +29,6 @@ type ProductForm = {
   texture: string;
   coverage: string;
   intensity: string;
-  confidence: string;
   is_multi_use_safe: boolean;
 };
 
@@ -29,21 +36,30 @@ const initialForm: ProductForm = {
   brand: "",
   name: "",
   category: "blush",
-  color_family: "",
+  color_family: "rose",
   undertone: "",
-  finish: "",
-  texture: "",
+  finish: "satin",
+  texture: "cream",
   coverage: "",
   intensity: "3",
-  confidence: "1",
   is_multi_use_safe: false
 };
 
-const categoryOptions = ["foundation", "concealer", "blush", "bronzer", "eyeshadow", "eyeliner", "mascara", "lipstick", "lip_tint", "lip_gloss"];
+const fallbackVocabulary: Vocabulary = {
+  categories: ["foundation", "concealer", "blush", "bronzer", "eyeshadow", "eyeliner", "mascara", "lipstick", "lip_tint", "lip_gloss"],
+  color_families: ["nude", "rose", "pink", "peach", "coral", "berry", "plum", "mauve", "brown", "bronze", "beige", "clear"],
+  undertones: ["neutral", "warm", "cool"],
+  finishes: ["natural", "satin", "dewy", "matte", "gloss"],
+  textures: ["cream", "liquid", "powder", "gel", "balm", "pencil"],
+  coverage: ["sheer", "light", "medium", "full"],
+  sources: ["manual"],
+  offer_statuses: []
+};
 
 export function MakeupBagScreen({ navigation, route }: Props) {
   const auth = useAuth();
   const [products, setProducts] = useState<UserProduct[]>([]);
+  const [vocabulary, setVocabulary] = useState<Vocabulary>(fallbackVocabulary);
   const [form, setForm] = useState<ProductForm>(initialForm);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -56,7 +72,12 @@ export function MakeupBagScreen({ navigation, route }: Props) {
       if (!auth.user) {
         return;
       }
-      setProducts(await api.getUserProducts(auth.user.id));
+      const [nextProducts, nextVocabulary] = await Promise.all([
+        api.getUserProducts(auth.user.id),
+        api.getVocabulary()
+      ]);
+      setProducts(nextProducts);
+      setVocabulary(nextVocabulary);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Не удалось загрузить косметичку");
     } finally {
@@ -67,6 +88,13 @@ export function MakeupBagScreen({ navigation, route }: Props) {
   useEffect(() => {
     void loadProducts();
   }, [loadProducts]);
+
+  const productCounts = useMemo(() => {
+    return products.reduce<Record<string, number>>((accumulator, product) => {
+      accumulator[product.category] = (accumulator[product.category] ?? 0) + 1;
+      return accumulator;
+    }, {});
+  }, [products]);
 
   const submit = async () => {
     if (!form.brand.trim() || !form.name.trim() || !form.category.trim()) {
@@ -89,7 +117,7 @@ export function MakeupBagScreen({ navigation, route }: Props) {
         intensity: parseNullableNumber(form.intensity),
         is_multi_use_safe: form.is_multi_use_safe,
         source: "manual",
-        confidence: parseNullableNumber(form.confidence),
+        confidence: 1,
         expires_at: null
       };
       if (!auth.user) {
@@ -106,7 +134,7 @@ export function MakeupBagScreen({ navigation, route }: Props) {
   };
 
   const removeProduct = async (productId: number) => {
-      setError(null);
+    setError(null);
     try {
       if (!auth.user) {
         throw new Error("Нет активного пользователя");
@@ -121,80 +149,133 @@ export function MakeupBagScreen({ navigation, route }: Props) {
   return (
     <Screen error={error} loading={loading}>
       <View style={styles.header}>
-        <Text style={styles.title}>Косметичка</Text>
-        <Text style={styles.subtitle}>{auth.user?.display_name}: продукты сохраняются в твоем аккаунте.</Text>
+        <View>
+          <Text style={styles.kicker}>Твой набор</Text>
+          <Text style={styles.title}>Косметичка</Text>
+        </View>
+        <Text style={styles.subtitle}>{auth.user?.display_name}: {products.length} продуктов сохранено.</Text>
       </View>
 
+      {products.length ? (
+        <View style={styles.statsRow}>
+          {Object.entries(productCounts).slice(0, 4).map(([category, count]) => (
+            <View key={category} style={styles.statPill}>
+              <Text style={styles.statNumber}>{count}</Text>
+              <Text style={styles.statLabel}>{categoryLabel(category)}</Text>
+            </View>
+          ))}
+        </View>
+      ) : null}
+
       <View style={styles.form}>
-        <Text style={styles.formTitle}>Новый продукт</Text>
+        <View style={styles.formHeader}>
+          <Text style={styles.formTitle}>Новый продукт</Text>
+          <Text style={styles.formHint}>Бренд, название и категория обязательны.</Text>
+        </View>
         <FormInput label="Бренд" value={form.brand} onChangeText={(value) => setForm({ ...form, brand: value })} />
         <FormInput label="Название" value={form.name} onChangeText={(value) => setForm({ ...form, name: value })} />
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Категория</Text>
-          <View style={styles.chips}>
-            {categoryOptions.map((category) => (
-              <Pressable
-                accessibilityRole="button"
-                key={category}
-                onPress={() => setForm({ ...form, category })}
-                style={[styles.chip, form.category === category ? styles.chipActive : null]}
-              >
-                <Text style={[styles.chipText, form.category === category ? styles.chipTextActive : null]}>
-                  {categoryLabel(category)}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
-        </View>
-        <FormInput label="Цветовая семья" value={form.color_family} onChangeText={(value) => setForm({ ...form, color_family: value })} />
-        <FormInput label="Подтон" value={form.undertone} onChangeText={(value) => setForm({ ...form, undertone: value })} />
-        <FormInput label="Финиш" value={form.finish} onChangeText={(value) => setForm({ ...form, finish: value })} />
-        <FormInput label="Текстура" value={form.texture} onChangeText={(value) => setForm({ ...form, texture: value })} />
-        <FormInput label="Покрытие" value={form.coverage} onChangeText={(value) => setForm({ ...form, coverage: value })} />
-        <FormInput
-          keyboardType="numeric"
-          label="Интенсивность 0-10"
-          value={form.intensity}
-          onChangeText={(value) => setForm({ ...form, intensity: value })}
+        <ChipGroup
+          label="Категория"
+          options={vocabulary.categories}
+          value={form.category}
+          onChange={(value) => setForm({ ...form, category: value })}
+          labelFor={categoryLabel}
         />
-        <FormInput
-          keyboardType="decimal-pad"
-          label="Уверенность 0-1"
-          value={form.confidence}
-          onChangeText={(value) => setForm({ ...form, confidence: value })}
+        <ChipGroup
+          allowEmpty
+          label="Цвет"
+          options={vocabulary.color_families}
+          value={form.color_family}
+          onChange={(value) => setForm({ ...form, color_family: value })}
+          labelFor={colorFamilyLabel}
+        />
+        <ChipGroup
+          allowEmpty
+          label="Финиш"
+          options={vocabulary.finishes}
+          value={form.finish}
+          onChange={(value) => setForm({ ...form, finish: value })}
+          labelFor={finishLabel}
+        />
+        <ChipGroup
+          allowEmpty
+          label="Текстура"
+          options={vocabulary.textures}
+          value={form.texture}
+          onChange={(value) => setForm({ ...form, texture: value })}
+          labelFor={textureLabel}
+        />
+        <ChipGroup
+          allowEmpty
+          label="Покрытие"
+          options={vocabulary.coverage}
+          value={form.coverage}
+          onChange={(value) => setForm({ ...form, coverage: value })}
+          labelFor={coverageLabel}
+        />
+        <ChipGroup
+          allowEmpty
+          label="Подтон"
+          options={vocabulary.undertones}
+          value={form.undertone}
+          onChange={(value) => setForm({ ...form, undertone: value })}
+          labelFor={undertoneLabel}
+        />
+        <ChipGroup
+          label="Интенсивность"
+          options={["1", "3", "5", "7", "9"]}
+          value={form.intensity}
+          onChange={(value) => setForm({ ...form, intensity: value })}
+          labelFor={(value) => value}
         />
         <View style={styles.switchRow}>
-          <Text style={styles.label}>Безопасно использовать иначе</Text>
+          <View style={styles.switchText}>
+            <Text style={styles.label}>Мульти-продукт</Text>
+            <Text style={styles.switchHint}>Можно безопасно использовать не только в родной зоне.</Text>
+          </View>
           <Switch
             onValueChange={(value) => setForm({ ...form, is_multi_use_safe: value })}
+            thumbColor={form.is_multi_use_safe ? colors.sage : colors.surface}
+            trackColor={{ false: "#d5cabe", true: "#bfd0c4" }}
             value={form.is_multi_use_safe}
           />
         </View>
         <PrimaryButton disabled={saving} onPress={submit}>
-          {saving ? "Добавляю" : "Добавить"}
+          {saving ? "Добавляю" : "Добавить продукт"}
         </PrimaryButton>
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Продукты</Text>
-        {products.map((product) => (
-          <View key={product.id} style={styles.productRow}>
-            <View style={styles.productText}>
-              <Text style={styles.productTitle}>{product.brand}</Text>
-              <Text style={styles.productName}>{product.name}</Text>
-              <Text style={styles.productMeta}>
-                {categoryLabel(product.category)} · {product.color_family ?? "цвет ?"} · {product.finish ?? "финиш ?"}
-              </Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Продукты</Text>
+          <Text style={styles.sectionCount}>{products.length}</Text>
+        </View>
+        {products.length ? (
+          products.map((product) => (
+            <View key={product.id} style={styles.productRow}>
+              <View style={styles.productAccent} />
+              <View style={styles.productText}>
+                <Text style={styles.productTitle}>{product.brand}</Text>
+                <Text style={styles.productName}>{product.name}</Text>
+                <Text style={styles.productMeta}>
+                  {categoryLabel(product.category)} · {product.color_family ? colorFamilyLabel(product.color_family) : "цвет не указан"} · {product.finish ? finishLabel(product.finish) : "финиш не указан"}
+                </Text>
+              </View>
+              <Pressable accessibilityRole="button" onPress={() => void removeProduct(product.id)} style={styles.deleteButton}>
+                <Text style={styles.deleteText}>Удалить</Text>
+              </Pressable>
             </View>
-            <Pressable accessibilityRole="button" onPress={() => void removeProduct(product.id)} style={styles.deleteButton}>
-              <Text style={styles.deleteText}>Удалить</Text>
-            </Pressable>
+          ))
+        ) : (
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyTitle}>Пока пусто</Text>
+            <Text style={styles.emptyText}>Добавь хотя бы один продукт, чтобы проверить готовность к образу.</Text>
           </View>
-        ))}
+        )}
       </View>
 
       <PrimaryButton onPress={() => navigation.navigate("ReadinessReport", { lookId: route.params.lookId })}>
-        Сформировать отчет
+        Проверить готовность
       </PrimaryButton>
     </Screen>
   );
@@ -204,22 +285,52 @@ type FormInputProps = {
   label: string;
   value: string;
   onChangeText: (value: string) => void;
-  keyboardType?: "default" | "numeric" | "decimal-pad";
 };
 
-function FormInput({ label, value, onChangeText, keyboardType = "default" }: FormInputProps) {
+function FormInput({ label, value, onChangeText }: FormInputProps) {
   return (
     <View style={styles.inputGroup}>
       <Text style={styles.label}>{label}</Text>
       <TextInput
         autoCapitalize="none"
-        keyboardType={keyboardType}
         onChangeText={onChangeText}
         placeholder={label}
-        placeholderTextColor="#9b948c"
+        placeholderTextColor={colors.subtle}
         style={styles.input}
         value={value}
       />
+    </View>
+  );
+}
+
+type ChipGroupProps = {
+  label: string;
+  options: string[];
+  value: string;
+  onChange: (value: string) => void;
+  labelFor: (value: string) => string;
+  allowEmpty?: boolean;
+};
+
+function ChipGroup({ label, options, value, onChange, labelFor, allowEmpty = false }: ChipGroupProps) {
+  return (
+    <View style={styles.inputGroup}>
+      <Text style={styles.label}>{label}</Text>
+      <View style={styles.chips}>
+        {options.map((option) => {
+          const active = value === option;
+          return (
+            <Pressable
+              accessibilityRole="button"
+              key={option}
+              onPress={() => onChange(active && allowEmpty ? "" : option)}
+              style={[styles.chip, active ? styles.chipActive : null]}
+            >
+              <Text style={[styles.chipText, active ? styles.chipTextActive : null]}>{labelFor(option)}</Text>
+            </Pressable>
+          );
+        })}
+      </View>
     </View>
   );
 }
@@ -231,52 +342,92 @@ function emptyToNull(value: string): string | null {
 
 function parseNullableNumber(value: string): number | null {
   const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : null;
+  return value.trim() && Number.isFinite(parsed) ? parsed : null;
 }
 
 const styles = StyleSheet.create({
   header: {
     gap: 6
   },
+  kicker: {
+    color: colors.rose,
+    fontSize: 12,
+    fontWeight: "900",
+    textTransform: "uppercase"
+  },
   title: {
-    color: "#20201f",
-    fontSize: 27,
-    fontWeight: "800"
+    color: colors.ink,
+    fontSize: 30,
+    fontWeight: "900"
   },
   subtitle: {
-    color: "#6f675f",
+    color: colors.muted,
     fontSize: 15,
     lineHeight: 21
   },
-  form: {
-    backgroundColor: "#fffaf4",
-    borderColor: "#e2d5c8",
-    borderRadius: 8,
-    borderWidth: 1,
-    gap: 10,
-    padding: 12
+  statsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8
   },
-  formTitle: {
-    color: "#20201f",
+  statPill: {
+    alignItems: "center",
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    minWidth: 74,
+    paddingHorizontal: 10,
+    paddingVertical: 8
+  },
+  statNumber: {
+    color: colors.plum,
     fontSize: 18,
+    fontWeight: "900"
+  },
+  statLabel: {
+    color: colors.muted,
+    fontSize: 11,
     fontWeight: "800"
   },
+  form: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    gap: 13,
+    padding: 14,
+    ...shadow
+  },
+  formHeader: {
+    gap: 3
+  },
+  formTitle: {
+    color: colors.ink,
+    fontSize: 19,
+    fontWeight: "900"
+  },
+  formHint: {
+    color: colors.muted,
+    fontSize: 13,
+    lineHeight: 18
+  },
   inputGroup: {
-    gap: 5
+    gap: 7
   },
   label: {
-    color: "#4e4842",
+    color: colors.ink,
     fontSize: 13,
-    fontWeight: "700"
+    fontWeight: "800"
   },
   input: {
-    backgroundColor: "#f6efe7",
-    borderColor: "#ded1c4",
-    borderRadius: 8,
+    backgroundColor: "#faf5ef",
+    borderColor: colors.border,
+    borderRadius: radii.md,
     borderWidth: 1,
-    color: "#20201f",
-    fontSize: 15,
-    minHeight: 44,
+    color: colors.ink,
+    fontSize: 16,
+    minHeight: 46,
     paddingHorizontal: 12
   },
   chips: {
@@ -285,76 +436,122 @@ const styles = StyleSheet.create({
     gap: 8
   },
   chip: {
-    backgroundColor: "#f6efe7",
-    borderColor: "#ded1c4",
-    borderRadius: 8,
+    backgroundColor: "#faf5ef",
+    borderColor: colors.border,
+    borderRadius: radii.md,
     borderWidth: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 11,
     paddingVertical: 8
   },
   chipActive: {
-    backgroundColor: "#231f20",
-    borderColor: "#231f20"
+    backgroundColor: colors.plum,
+    borderColor: colors.plum
   },
   chipText: {
-    color: "#5b554e",
+    color: colors.muted,
     fontSize: 12,
-    fontWeight: "800"
+    fontWeight: "900"
   },
   chipTextActive: {
-    color: "#fffaf4"
+    color: colors.surface
   },
   switchRow: {
     alignItems: "center",
     flexDirection: "row",
+    gap: 14,
     justifyContent: "space-between"
   },
-  section: {
-    gap: 8
-  },
-  sectionTitle: {
-    color: "#20201f",
-    fontSize: 18,
-    fontWeight: "800"
-  },
-  productRow: {
-    alignItems: "center",
-    backgroundColor: "#fffaf4",
-    borderColor: "#e2d5c8",
-    borderRadius: 8,
-    borderWidth: 1,
-    flexDirection: "row",
-    gap: 10,
-    justifyContent: "space-between",
-    padding: 12
-  },
-  productText: {
+  switchText: {
     flex: 1,
     gap: 3
   },
+  switchHint: {
+    color: colors.muted,
+    fontSize: 12,
+    lineHeight: 17
+  },
+  section: {
+    gap: 9
+  },
+  sectionHeader: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  sectionTitle: {
+    color: colors.ink,
+    fontSize: 18,
+    fontWeight: "900"
+  },
+  sectionCount: {
+    color: colors.subtle,
+    fontSize: 13,
+    fontWeight: "900"
+  },
+  productRow: {
+    alignItems: "center",
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    flexDirection: "row",
+    gap: 10,
+    overflow: "hidden",
+    padding: 12,
+    ...shadow
+  },
+  productAccent: {
+    backgroundColor: colors.rose,
+    alignSelf: "stretch",
+    borderRadius: 99,
+    width: 4
+  },
+  productText: {
+    flex: 1,
+    gap: 4
+  },
   productTitle: {
-    color: "#20201f",
+    color: colors.ink,
     fontSize: 15,
-    fontWeight: "800"
+    fontWeight: "900"
   },
   productName: {
-    color: "#4e4842",
+    color: colors.muted,
     fontSize: 14
   },
   productMeta: {
-    color: "#7a7168",
-    fontSize: 12
+    color: colors.subtle,
+    fontSize: 12,
+    lineHeight: 17
   },
   deleteButton: {
-    borderColor: "#c7beb3",
-    borderRadius: 8,
+    borderColor: colors.border,
+    borderRadius: radii.md,
     borderWidth: 1,
     paddingHorizontal: 10,
     paddingVertical: 8
   },
   deleteText: {
-    color: "#5b554e",
+    color: colors.dangerText,
     fontSize: 12,
-    fontWeight: "800"
+    fontWeight: "900"
+  },
+  emptyState: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    gap: 5,
+    padding: 14
+  },
+  emptyTitle: {
+    color: colors.ink,
+    fontSize: 16,
+    fontWeight: "900"
+  },
+  emptyText: {
+    color: colors.muted,
+    fontSize: 14,
+    lineHeight: 20
   }
 });

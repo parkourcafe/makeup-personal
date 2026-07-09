@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { colors, radii } from "../theme";
+
 type ScreenProps = {
   children?: ReactNode;
   loading?: boolean;
@@ -28,11 +30,15 @@ export function Screen({ children, loading = false, error = null }: ScreenProps)
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f7f4ef"
+    backgroundColor: colors.background
   },
   content: {
+    alignSelf: "center",
+    gap: 16,
+    maxWidth: 560,
     padding: 16,
-    gap: 14
+    paddingBottom: 30,
+    width: "100%"
   },
   center: {
     alignItems: "center",
@@ -40,15 +46,15 @@ const styles = StyleSheet.create({
     paddingTop: 60
   },
   muted: {
-    color: "#726b63",
+    color: colors.muted,
     fontSize: 14
   },
   error: {
-    backgroundColor: "#fee2e2",
-    borderColor: "#ef4444",
-    borderRadius: 8,
+    backgroundColor: colors.dangerBg,
+    borderColor: "#e8b6ae",
+    borderRadius: radii.md,
     borderWidth: 1,
-    color: "#991b1b",
+    color: colors.dangerText,
     padding: 12
   }
 });

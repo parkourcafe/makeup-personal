@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { useAuth } from "../auth/AuthContext";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { Screen } from "../components/Screen";
+import { colors, radii, shadow } from "../theme";
 
 type Mode = "login" | "register";
 
@@ -47,8 +48,10 @@ export function AuthScreen() {
   return (
     <Screen error={error}>
       <View style={styles.hero}>
+        <View style={styles.heroAccent} />
         <Text style={styles.kicker}>Makeup Personal</Text>
-        <Text style={styles.title}>Твоя косметичка, образы и уроки в одном месте</Text>
+        <Text style={styles.title}>Личная косметичка для реальных образов</Text>
+        <Text style={styles.heroText}>Сохраняй продукты, проверяй готовность и открывай уроки под то, что уже есть у тебя.</Text>
       </View>
 
       <View style={styles.segmented}>
@@ -131,28 +134,43 @@ function emptyToNull(value: string): string | null {
 
 const styles = StyleSheet.create({
   hero: {
-    backgroundColor: "#231f20",
-    borderRadius: 8,
-    gap: 10,
-    minHeight: 188,
+    backgroundColor: colors.charcoal,
+    borderRadius: radii.md,
+    gap: 12,
+    minHeight: 218,
     justifyContent: "flex-end",
-    padding: 18
+    overflow: "hidden",
+    padding: 18,
+    ...shadow
+  },
+  heroAccent: {
+    backgroundColor: colors.rose,
+    height: 8,
+    left: 0,
+    position: "absolute",
+    right: 0,
+    top: 0
   },
   kicker: {
-    color: "#f0c9a6",
+    color: "#f3c7d2",
     fontSize: 13,
     fontWeight: "800",
     textTransform: "uppercase"
   },
   title: {
-    color: "#fffaf4",
-    fontSize: 29,
+    color: colors.surface,
+    fontSize: 30,
     fontWeight: "900",
-    lineHeight: 34
+    lineHeight: 35
+  },
+  heroText: {
+    color: "#eadbd0",
+    fontSize: 15,
+    lineHeight: 22
   },
   segmented: {
-    backgroundColor: "#e8dfd5",
-    borderRadius: 8,
+    backgroundColor: colors.surfaceAlt,
+    borderRadius: radii.md,
     flexDirection: "row",
     padding: 4
   },
@@ -164,23 +182,24 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   modeButtonActive: {
-    backgroundColor: "#fffaf4"
+    backgroundColor: colors.surface
   },
   modeText: {
-    color: "#6b625a",
+    color: colors.muted,
     fontSize: 14,
     fontWeight: "800"
   },
   modeTextActive: {
-    color: "#231f20"
+    color: colors.ink
   },
   form: {
-    backgroundColor: "#fffaf4",
-    borderColor: "#e4d8cc",
-    borderRadius: 8,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.md,
     borderWidth: 1,
     gap: 12,
-    padding: 14
+    padding: 14,
+    ...shadow
   },
   twoColumn: {
     gap: 12
@@ -189,16 +208,16 @@ const styles = StyleSheet.create({
     gap: 6
   },
   label: {
-    color: "#4b4540",
+    color: colors.ink,
     fontSize: 13,
     fontWeight: "800"
   },
   input: {
-    backgroundColor: "#f6efe7",
-    borderColor: "#ded1c4",
-    borderRadius: 8,
+    backgroundColor: "#faf5ef",
+    borderColor: colors.border,
+    borderRadius: radii.md,
     borderWidth: 1,
-    color: "#231f20",
+    color: colors.ink,
     fontSize: 16,
     minHeight: 48,
     paddingHorizontal: 12
