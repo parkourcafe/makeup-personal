@@ -1,0 +1,320 @@
+{
+  "meta": {
+    "prepared_for": "Selena Systems (Bali-based, $5k-$10k done-for-you AI implementations)",
+    "date": "2026-07-09",
+    "method": "Public web research only (12+ web searches). Pricing listed only where published; third-party reported figures are labeled as such. Direct fetches of several vendor pricing pages were blocked (403), so some pricing relies on third-party review sites and is flagged.",
+    "categories": ["hospitality_guest_messaging", "real_estate_ai_isa", "clinic_front_desk", "indonesia_sea_agencies"]
+  },
+  "competitors": [
+    {
+      "name": "HiJiffy",
+      "website": "https://www.hijiffy.com/",
+      "category": "hospitality_guest_messaging",
+      "positioning": "Guest communications hub / '#1 hotel chatbot' for direct bookings; AI concierge across WhatsApp, web, Instagram for hotels.",
+      "pricing": "Not officially public on captured pages. Third-party reporting (hoteltechinsight.com, 2025) cites ~EUR 4/room/month Starter tier, ~EUR 120/mo for a 30-room boutique rising to EUR 200-300/mo with modules.",
+      "pricing_sources": ["https://hoteltechinsight.com/2025/11/20/ai-concierge-hotels-practical-guide/", "https://www.hijiffy.com/hotel-chatbot"],
+      "target": "Independent hotels, boutique properties, hotel groups (Europe-heavy).",
+      "proof": "Widely ranked in hotel chatbot roundups (HotelTechReport, Viqal, Conduit lists).",
+      "weaknesses": "Per-room SaaS pricing assumes a PMS-integrated hotel; onboarding reported at 1-3 weeks and value depends on the hotel doing content/FAQ setup and staff adoption (upmarket.cloud implementation guide). ASSUMPTION: thin hands-on presence for small Bali villas/guesthouses without a PMS."
+    },
+    {
+      "name": "Asksuite",
+      "website": "https://asksuite.com/",
+      "category": "hospitality_guest_messaging",
+      "positioning": "AI Reservation Assistant + omnichannel inbox for hotels; converts WhatsApp/web/Instagram inquiries into direct bookings with real-time quotes.",
+      "pricing": "Not public (custom quotes). Third-party estimates ~$150-300/mo for small/mid independents (hoteltechinsight.com); dialzara.com cites 'starts at $199/mo'.",
+      "pricing_sources": ["https://hoteltechinsight.com/2025/11/20/ai-concierge-hotels-practical-guide/", "https://dialzara.com/blog/10-best-ai-chatbots-for-hotel-guest-services-2025"],
+      "target": "Independent hotels and resorts globally, strong in LatAm; 80+ countries.",
+      "proof": "Site claims 5,500+ hotels, 147M travelers served, 2.1B messages, $586M direct revenue, HotelTechAwards #1 chatbot 7 years running (asksuite.com).",
+      "weaknesses": "Booking-engine/PMS-centric; requires demo/sales cycle and onboarding. ASSUMPTION: overkill and under-localized for small Indonesian villa operators who live on WhatsApp without a booking engine."
+    },
+    {
+      "name": "Canary Technologies",
+      "website": "https://www.canarytechnologies.com/products/ai-guest-messaging",
+      "category": "hospitality_guest_messaging",
+      "positioning": "Hotel guest management platform (check-in, upsells, AI guest messaging, AI voice) — 'AI that talks to hotel guests for you'.",
+      "pricing": "Not public on site. Third-party roundups cite entry tiers around $99/mo scaling to custom enterprise (conduit.ai / viqal roundups).",
+      "pricing_sources": ["https://conduit.ai/blog/7-best-ai-guest-communication-platforms-for-hotels-in-2026-tested-ranked", "https://www.viqal.com/blog/top-8-hotel-chatbots"],
+      "target": "Hotels from independents up to major chains (US-centric).",
+      "proof": "Used by major hotel brands per its site and industry roundups.",
+      "weaknesses": "Platform breadth means implementation and PMS integration work; sold via sales team. ASSUMPTION: no on-the-ground SEA implementation support for small properties."
+    },
+    {
+      "name": "Duve",
+      "website": "https://duve.com/",
+      "category": "hospitality_guest_messaging",
+      "positioning": "Guest experience OS (online check-in, guest app, upsells, AI communication) for hotels and short-term rentals.",
+      "pricing": "Partially public via comparison pages: ~$5/room/mo base rising to ~$9-10/room/mo with communication suite and upsells; Duve takes ~10% of upsell revenue (ensoconnect.com comparison, operto.com).",
+      "pricing_sources": ["https://ensoconnect.com/resources/duve-vs-enso-connect-features-pricing-alternatives", "https://operto.com/blog/enso-connect-alternatives/"],
+      "target": "Hotels, aparthotels, vacation rental managers.",
+      "proof": "Featured across hotel-tech comparison sites.",
+      "weaknesses": "Per-room fees plus upsell rev-share; setup and content still on the operator. ASSUMPTION: limited Bahasa Indonesia/local OTA nuance for Bali operators."
+    },
+    {
+      "name": "HostBuddy AI",
+      "website": "https://www.hostbuddy.ai/pricing",
+      "category": "hospitality_guest_messaging",
+      "positioning": "AI guest messaging co-host for short-term rentals; integrates with Hostaway, Guesty, OwnerRez, Hospitable etc.; claims 40-50% of messages on autopilot.",
+      "pricing": "PUBLIC: Pro $7/property/mo (1-10 listings), $6 (11-50), $5 (51-99); Elite $10/$8/$6 per property/mo; 14-day free trial (hostbuddy.ai pricing + userguide).",
+      "pricing_sources": ["https://www.hostbuddy.ai/pricing", "https://userguide.hostbuddy.ai/general-information/pricing-plans"],
+      "target": "Self-managing Airbnb hosts and STR property managers (US-centric).",
+      "proof": "Positive reviews on BNBCalc, Capterra listings; PMS marketplace listings.",
+      "weaknesses": "Requires a supported PMS (many Bali villa operators run on WhatsApp + spreadsheets, no PMS); the host must build/maintain the property knowledge base themselves; ~50% automation ceiling reported by users (bnbcalc.com review)."
+    },
+    {
+      "name": "Besty AI",
+      "website": "https://www.hostaway.com/marketplace/besty-ai/",
+      "category": "hospitality_guest_messaging",
+      "positioning": "AI guest communication + upsell engine for vacation rental portfolios (Hostaway/Guesty ecosystem).",
+      "pricing": "Not public. Third-party reporting: base subscription plus 10-15% revenue share on AI-generated upsells; custom quotes via demo (nowistay.com / stayfi roundups).",
+      "pricing_sources": ["https://www.nowistay.com/ressources/best-ai-co-host-tools-vacation-rentals", "https://stayfi.com/vrm-insider/2026/06/16/best-vacation-rental-ai-tools/"],
+      "target": "Professional STR property managers with 10+ listings.",
+      "proof": "Claims ~30-40% of guest comms handled autonomously (third-party roundups); Hostaway marketplace partner.",
+      "weaknesses": "PMS-dependent; rev-share model; sales-led onboarding. ASSUMPTION: not viable for non-PMS operators or mixed WhatsApp/OTA workflows common in Bali."
+    },
+    {
+      "name": "Enso Connect",
+      "website": "https://ensoconnect.com/",
+      "category": "hospitality_guest_messaging",
+      "positioning": "AI-powered guest experience platform ('Boarding Pass' journey) for STRs and boutique hotels.",
+      "pricing": "Not public (custom quote); charges 5% on upsells per its own comparison page.",
+      "pricing_sources": ["https://ensoconnect.com/resources/duve-vs-enso-connect-features-pricing-alternatives"],
+      "target": "STR property managers and boutique hotels (North America/Europe).",
+      "proof": "HotelTechReport and Capterra presence; PMS marketplace integrations.",
+      "weaknesses": "Quote-only pricing; platform depth requires real implementation effort by the operator. ASSUMPTION: no SEA presence."
+    },
+    {
+      "name": "Conduit (formerly HostAI)",
+      "website": "https://conduit.ai/",
+      "category": "hospitality_guest_messaging",
+      "positioning": "Agentic conversational AI for hospitality — routes messages, assigns tasks, automates responses across teams; one-click install via Guesty/Hostaway marketplaces.",
+      "pricing": "Not public.",
+      "pricing_sources": ["https://conduit.ai/blog/7-best-ai-guest-communication-platforms-for-hotels-in-2026-tested-ranked"],
+      "target": "STR managers and hotels already on major PMSs.",
+      "proof": "Publishes its own tested rankings/content; marketplace listings.",
+      "weaknesses": "PMS-gated; self-serve setup still assumes an ops-savvy buyer. ASSUMPTION: minimal support for Indonesian channels (WhatsApp-first, local OTAs like Traveloka/Tiket)."
+    },
+    {
+      "name": "Structurely",
+      "website": "https://www.structurely.com/",
+      "category": "real_estate_ai_isa",
+      "positioning": "Standalone AI ISA ('Aisa Holmes') qualifying real-estate leads via text, email, chat and voice; 13M+ conversations claimed.",
+      "pricing": "Not public on captured pages (pricing page blocked). Third-party figures conflict: $179/mo starting (realestatetoolkit.ai, listingflare.com) vs newer reporting of $499/mo + $0.12 per action credit (nurtureos.io, 2026).",
+      "pricing_sources": ["https://www.listingflare.com/blog/best-ai-isa-tools-real-estate", "https://www.nurtureos.io/blog/isa-cost-2026/", "https://realestatetoolkit.ai/categories/ai-assistants/"],
+      "target": "US real-estate agents and teams wanting an AI ISA without switching CRM/marketing stack.",
+      "proof": "13M+ conversations claim; long track record in AI-ISA category (listingflare).",
+      "weaknesses": "Per-action credit costs (pay per SMS regardless of outcome, per nurtureos.io); English/US-market scripts. ASSUMPTION: not localized for SEA markets or WhatsApp-first lead flows."
+    },
+    {
+      "name": "Ylopo (raiya AI)",
+      "website": "https://www.ylopo.com/pricing",
+      "category": "real_estate_ai_isa",
+      "positioning": "Full real-estate digital marketing + AI ecosystem; raiya AI does ChatGPT-powered texting plus AI voice calls and live transfers for lead follow-up.",
+      "pricing": "Not public (demo required). Third-party estimates: platform ~$295-500/mo, setup fee $1,000-2,000, realistic all-in $600-800/mo minimum and $1,500-3,500+/mo for teams including ad spend (luxurypresence.com, inboundrem.com, theclose.com).",
+      "pricing_sources": ["https://www.luxurypresence.com/blogs/ylopo-pricing/", "https://inboundrem.com/ylopo-review-with-pricing/", "https://theclose.com/ylopo-reviews/"],
+      "target": "US real-estate teams and brokerages with ad budgets.",
+      "proof": "Category leader in AI lead follow-up reviews (swiftleadsai comparison, theclose).",
+      "weaknesses": "Requires buying the whole Ylopo ecosystem + ad spend; not a la carte (swiftleadsai.com comparison). US-only focus."
+    },
+    {
+      "name": "Verse.ai (formerly Agentology)",
+      "website": "https://verse.ai/",
+      "category": "real_estate_ai_isa",
+      "positioning": "Human + AI hybrid lead conversion concierge (24/7 SMS-first outreach and qualification) — effectively an outsourced ISA service, not just software.",
+      "pricing": "Not public ('does not list pricing on its site at all' — hooquest). Third-party: ~$1,800+/mo enterprise-level concierge (itqlick.com, hooquest.com).",
+      "pricing_sources": ["https://hooquest.com/isa/verse/", "https://www.itqlick.com/agentology/pricing"],
+      "target": "Real-estate teams, brokerages, and other lead-heavy SMBs (US).",
+      "proof": "Long-running category presence; hooquest ISA rankings.",
+      "weaknesses": "Priced for US enterprise teams; opaque pricing; service layer proves demand for done-for-you but at recurring cost far above a one-time $5-10k build."
+    },
+    {
+      "name": "Conversion Monster",
+      "website": "https://hooquest.com/isa/",
+      "category": "real_estate_ai_isa",
+      "positioning": "Human ISA service that calls/nurtures/qualifies real-estate leads on the agent's behalf.",
+      "pricing": "Third-party reported: from ~$795+/mo (hooquest ISA roundup). Not confirmed on vendor site in this research.",
+      "pricing_sources": ["https://hooquest.com/isa/"],
+      "target": "US agents/teams with inbound lead flow.",
+      "proof": "Listed among best ISA companies (hooquest).",
+      "weaknesses": "Pure human service — recurring $9.5k+/yr cost; benchmark showing businesses already pay service prices for outcomes SaaS alone doesn't deliver."
+    },
+    {
+      "name": "Smith.ai",
+      "website": "https://smith.ai/pricing/receptionists",
+      "category": "clinic_front_desk",
+      "positioning": "24/7 virtual receptionists (human) + AI Receptionist product; answering, intake, scheduling for professional services incl. medical/dental-adjacent SMBs.",
+      "pricing": "PUBLIC: human receptionist plans ~$292.50/mo for 30 calls (~$9.75/call), $765/mo for 90 calls, $1,950/mo for 300 calls; AI Receptionist from $95/mo (~60 calls) with $1.60-$2.40 per-call rates (smith.ai pricing pages; corroborated by schedulingkit.com, loman.ai).",
+      "pricing_sources": ["https://smith.ai/pricing/receptionists", "https://smith.ai/pricing/ai-receptionist", "https://schedulingkit.com/pricing-guides/smith-ai-pricing"],
+      "target": "US law firms, home services, medical/dental offices, SMBs.",
+      "proof": "Large review footprint; published per-call model.",
+      "weaknesses": "Per-call costs scale painfully with volume ($9.75+/call human); generic scripts, not deep integration into a clinic's PMS/EHR or a hotel's stack; US business hours/accents focus."
+    },
+    {
+      "name": "Weave",
+      "website": "https://www.getweave.com/pricing/",
+      "category": "clinic_front_desk",
+      "positioning": "All-in-one phone + patient communication platform (VoIP, texting, reminders, reviews, payments, AI assistant) for dental, optometry, vet, medical practices.",
+      "pricing": "Partially public: entry ~$199-249/mo per office (getweave.com pricing page & costbench), realistic $249-350+/mo per third parties, plus one-time $750 setup fee and $200 forms-upload fee (emitrr.com, themolarreport.com).",
+      "pricing_sources": ["https://www.getweave.com/pricing/", "https://www.themolarreport.com/learn/weave-pricing", "https://emitrr.com/blog/weave-pricing/"],
+      "target": "US small-to-mid healthcare practices.",
+      "proof": "Publicly traded (NYSE: WEAV); large install base.",
+      "weaknesses": "Setup fees and hidden add-on costs are a documented complaint (emitrr, quo.com); US-only telephony; still a toolbox the practice must configure and staff must adopt."
+    },
+    {
+      "name": "Solutionreach",
+      "website": "https://www.solutionreach.com/pricing",
+      "category": "clinic_front_desk",
+      "positioning": "Patient engagement/communication platform (reminders, recall, messaging) for dental/medical.",
+      "pricing": "Partially public: starts ~$329/mo; third parties report realistic $400-800/mo for small practices, $1,500+/mo for larger orgs (softwarefinder.com, itqlick.com).",
+      "pricing_sources": ["https://www.solutionreach.com/pricing", "https://softwarefinder.com/emr-software/solutionreach", "https://www.itqlick.com/solutionreach/pricing"],
+      "target": "US dental and medical practices.",
+      "proof": "Long-established category incumbent.",
+      "weaknesses": "Legacy platform; contract + custom-quote model; configuration burden on practice staff (per review-site complaints)."
+    },
+    {
+      "name": "Klara (ModMed)",
+      "website": "https://www.klara.com/",
+      "category": "clinic_front_desk",
+      "positioning": "HIPAA-compliant patient messaging and communication platform, now part of ModMed.",
+      "pricing": "Not public — demo/sales required (emitrr.com, capterra); some directories cite ~$12/user/mo base but this is unverified and likely not reflective of deployment cost.",
+      "pricing_sources": ["https://emitrr.com/blog/klara-pricing/", "https://www.capterra.com/p/203066/Klara/"],
+      "target": "US medical practices, esp. dermatology/specialty (ModMed EHR base).",
+      "proof": "ModMed acquisition; established brand.",
+      "weaknesses": "Opaque pricing; tied to US EHR ecosystem; irrelevant to non-US clinics without those systems."
+    },
+    {
+      "name": "Freed Front Desk",
+      "website": "https://www.getfreed.ai/front-desk",
+      "category": "clinic_front_desk",
+      "positioning": "AI receptionist that answers clinic calls 24/7 (launched Apr 2026 by AI-scribe company Freed); 'no IT setup required'.",
+      "pricing": "PUBLIC: Starter $149/mo per block of 250 calls (getfreed.ai; Businesswire launch release).",
+      "pricing_sources": ["https://www.getfreed.ai/front-desk", "https://www.businesswire.com/news/home/20260414562168/en/Freed-Launches-Front-Desk-an-AI-Receptionist-That-Answers-Clinic-Calls-247"],
+      "target": "US small clinics already using Freed's AI scribe.",
+      "proof": "Freed's existing clinician user base; press coverage.",
+      "weaknesses": "New product (2026); phone-only; self-serve — clinic still owns call-flow design, EHR/scheduling integration gaps."
+    },
+    {
+      "name": "Assort Health",
+      "website": "https://www.assorthealth.com/",
+      "category": "clinic_front_desk",
+      "positioning": "Enterprise AI voice agents for healthcare call centers; claims 190M+ patient interactions.",
+      "pricing": "Not public. Third-party: ~$1,500/mo starting, to $10,000+/mo for larger groups; quote-only (flexbone.ai comparison).",
+      "pricing_sources": ["https://flexbone.ai/compare/assort-health-alternatives/", "https://www.assorthealth.com/"],
+      "target": "US multi-site specialty groups and health systems.",
+      "proof": "190M+ patient interactions claim; enterprise logos.",
+      "weaknesses": "Enterprise sales motion and price point; inaccessible to small clinics — leaves the SMB clinic segment to cheap self-serve tools or nothing."
+    },
+    {
+      "name": "Arini",
+      "website": "https://www.arini.ai/",
+      "category": "clinic_front_desk",
+      "positioning": "'The leading AI receptionist for dentists' — AI phone scheduling for dental practices and DSOs.",
+      "pricing": "Not public.",
+      "pricing_sources": ["https://www.arini.ai/"],
+      "target": "US/Canada dental groups and DSOs.",
+      "proof": "YC-backed; dental-vertical focus cited in AI receptionist roundups (theaiagentreport.com).",
+      "weaknesses": "Dental-only, US-only, phone-only. ASSUMPTION: no SEA/Indonesia capability."
+    },
+    {
+      "name": "Kata.ai",
+      "website": "https://kata.ai/",
+      "category": "indonesia_sea_agencies",
+      "positioning": "Indonesia's flagship conversational AI company — enterprise Indonesian-language NLP chatbots/WhatsApp for telcos, banks, FMCG.",
+      "pricing": "Not public; described as 'premium for SMEs' in Indonesian chatbot comparisons (udeskglobal).",
+      "pricing_sources": ["https://id.udeskglobal.com/blog/5-platform-chatbot-terbaik-indonesia-2026-review-perbandingan-harga"],
+      "target": "Indonesian enterprises (Telkomsel-class), not SMBs.",
+      "proof": "Best-in-class Bahasa Indonesia NLP reputation (udeskglobal comparison).",
+      "weaknesses": "Enterprise pricing and sales cycle put it out of reach of Bali SMBs — leaves the villa/clinic/agency segment unserved."
+    },
+    {
+      "name": "Mekari Qontak",
+      "website": "https://qontak.com/en/pricing/",
+      "category": "indonesia_sea_agencies",
+      "positioning": "Indonesian omnichannel CRM + WhatsApp Business API + AI chatbot platform (part of Mekari SaaS group).",
+      "pricing": "PUBLIC: from ~IDR 400,000/month (~USD 25) plus Meta WhatsApp conversation fees (e.g., marketing conversation ~Rp 596/message) (qontak.com pricing; mekari.com WA API price guide).",
+      "pricing_sources": ["https://qontak.com/en/pricing/", "https://mekari.com/blog/harga-whatsapp-business-api/"],
+      "target": "Indonesian SMEs and mid-market across industries.",
+      "proof": "Part of Mekari, one of Indonesia's largest B2B SaaS companies.",
+      "weaknesses": "Horizontal tool, not a vertical solution: an SMB still has to design flows, write content, integrate calendars/PMS, and maintain it — no done-for-you implementation for hospitality/clinics. Bahasa-first UX may not fit expat-owned Bali businesses."
+    },
+    {
+      "name": "Qiscus",
+      "website": "https://www.qiscus.com/",
+      "category": "indonesia_sea_agencies",
+      "positioning": "Indonesian omnichannel/WhatsApp API and chat SDK provider, developer-friendly, AI-powered automation.",
+      "pricing": "Not public — sales contact required (ycloud.com provider roundup).",
+      "pricing_sources": ["https://www.ycloud.com/blog/top-whatsapp-business-api-solution-providers-indonesia"],
+      "target": "Indonesian businesses needing custom chat infrastructure; developer teams.",
+      "proof": "Established Meta BSP in Indonesia.",
+      "weaknesses": "Developer-oriented — assumes the customer has engineers; SMB without tech staff can't self-implement."
+    },
+    {
+      "name": "WIZ.AI",
+      "website": "https://www.wiz.ai/",
+      "category": "indonesia_sea_agencies",
+      "positioning": "Singapore-based enterprise voice AI ('talkbots') for SEA; Bahasa Indonesia incl. Javanese/Sundanese support; banking, telco, healthcare enterprise deployments.",
+      "pricing": "Not public.",
+      "pricing_sources": ["https://www.wiz.ai/"],
+      "target": "SEA enterprises and government; 30+ large clients.",
+      "proof": "Series B funding led by SMBC Asia Rising Fund (prnewswire.com); localized SEA language stack.",
+      "weaknesses": "Enterprise-only motion; a Bali villa or clinic cannot buy WIZ.AI — confirms the SEA SMB gap."
+    },
+    {
+      "name": "AI Avenue Bali",
+      "website": "https://aiavenue.id/",
+      "category": "indonesia_sea_agencies",
+      "positioning": "Self-described 'Bali's Leading AI Automation Agency' — tailor-made AI solutions for hospitality, real estate, retail, agencies, personal brands.",
+      "pricing": "Not public (site fetch blocked; no published packages found via search).",
+      "pricing_sources": ["https://aiavenue.id/"],
+      "target": "Bali businesses across hospitality/real estate/retail.",
+      "proof": "Not verified — no public case studies surfaced in search. ASSUMPTION: early-stage/boutique operation.",
+      "weaknesses": "ASSUMPTION: low proof/case-study visibility; generic multi-vertical positioning rather than productized offers. Direct positional competitor to Selena Systems."
+    },
+    {
+      "name": "AI Consulting Bali",
+      "website": "https://aiconsultingbali.com/",
+      "category": "indonesia_sea_agencies",
+      "positioning": "Bali AI consultancy publishing hospitality-focused content (hotel chatbots, resort automation, dynamic pricing for villas/resorts/boutique hotels).",
+      "pricing": "Not public.",
+      "pricing_sources": ["https://aiconsultingbali.com/ai-automation-for-bali-hospitality-villas-resorts-and-boutique-hotels/"],
+      "target": "Bali villas, resorts, boutique hotels.",
+      "proof": "Content marketing citing generic industry stats; no named client case studies found in search. ASSUMPTION: SEO-content-led, thin delivery evidence.",
+      "weaknesses": "ASSUMPTION: appears content-site-first; no published pricing, packages, or verifiable client proof. Direct positional competitor in Bali hospitality AI."
+    },
+    {
+      "name": "H-Studio",
+      "website": "https://www.h-studio.id/en",
+      "category": "indonesia_sea_agencies",
+      "positioning": "Bali/Indonesia digital studio: websites, villa/hotel booking systems, WhatsApp automation, CRM integrations, AI chatbots, custom software.",
+      "pricing": "Not public.",
+      "pricing_sources": ["https://www.h-studio.id/en"],
+      "target": "Bali/Indonesia villas, hotels, local businesses.",
+      "proof": "Established web/booking-system portfolio per its site. ASSUMPTION: AI is an add-on service line, not core competency.",
+      "weaknesses": "ASSUMPTION: web-dev DNA — AI/automation likely shallower than a dedicated AI implementer; closest local competitor for done-for-you WhatsApp automation."
+    },
+    {
+      "name": "Konten.ai",
+      "website": "https://www.konten.ai/",
+      "category": "indonesia_sea_agencies",
+      "positioning": "Done-for-you AI content agency (Gianyar, Bali) — sets up and manages AI agents that auto-generate and post social content for villas, hotels, guesthouses, SMEs.",
+      "pricing": "PUBLIC (per site copy surfaced in search): from Rp 500K/month (~USD 30/mo).",
+      "pricing_sources": ["https://www.konten.ai/"],
+      "target": "Bali villas, hotels, guesthouses, SMEs.",
+      "proof": "Not verified beyond own site.",
+      "weaknesses": "Content/social-only — does not touch guest messaging, bookings, lead follow-up, or operations; price point signals a low-ticket productized service, different tier than $5-10k implementations."
+    },
+    {
+      "name": "CallSphere",
+      "website": "https://callsphere.ai/blog/bali-vacation-rental-management-ai",
+      "category": "indonesia_sea_agencies",
+      "positioning": "AI voice/call agent vendor publishing SEO content targeting Bali vacation rental management with AI agents.",
+      "pricing": "Not public in sources reviewed.",
+      "pricing_sources": ["https://callsphere.ai/blog/bali-vacation-rental-management-ai"],
+      "target": "Vacation rental operators (content targets Bali explicitly).",
+      "proof": "Not verified; blog content only. ASSUMPTION: remote SaaS vendor using Bali as an SEO keyword, no local presence.",
+      "weaknesses": "ASSUMPTION: no on-the-ground implementation, no PMS/WhatsApp integration service — sells software, not outcomes."
+    }
+  ],
+  "saas_vs_service_gap": "The pattern across all four verticals: self-serve SaaS is cheap ($5-10/property/mo HostBuddy, $99-300/mo hotel chatbots, $149/mo Freed, IDR 400k/mo Qontak) but it sells a tool, not an outcome — and the tool's value is gated on work the SMB owner can't or won't do. Concretely: (1) Integration prerequisites — nearly every hospitality AI assumes a PMS (Hostaway/Guesty/Cloudbeds) and every US clinic tool assumes a US EHR/phone stack; many Bali villas, agencies and clinics run on WhatsApp + spreadsheets + local OTAs, so the SaaS literally cannot connect. (2) Setup and knowledge-base burden — implementation guides admit 2-4 months for advanced setups and 1-3 week vendor onboarding (upmarket.cloud), automation ceilings of 30-50% when hosts self-configure (Besty/HostBuddy user reports), and only 23% of hotel guests satisfied with chatbot interactions largely because bots aren't wired into reservation data (vertize.io). (3) Staff adoption and maintenance — tools fail when nobody trains staff, monitors edge cases, or updates content (vertize.io, EHL insights). (4) The high end proves buyers pay service prices for outcomes: Verse.ai ~$1,800/mo, Conversion Monster $795/mo, Smith.ai $9.75/call, Assort Health $1,500-10,000/mo, Weave's own $750 setup fee — but these are US-centric, recurring, and enterprise-gated. A one-time $5-10k done-for-you implementation wins exactly where these two curves miss: the buyer wants the Verse/Assort outcome (someone else makes it work end-to-end, integrated with their actual messy stack, staff trained, maintained) at a total cost far below $20k+/yr recurring service fees — and in Bali/SEA specifically, where enterprise vendors won't go, US SaaS doesn't localize (Bahasa, WhatsApp-first, Traveloka/local workflows), and local players are either enterprise-only (Kata.ai, WIZ.AI), horizontal tools (Qontak, Qiscus), or thin boutique agencies with no published proof (AI Avenue Bali, AI Consulting Bali).",
+  "gaps": "Identified gaps Selena Systems can own: (1) Bali/SEA SMB vertical implementations — no credible player does done-for-you AI for villas/guesthouses without a PMS, WhatsApp-first, multilingual (English + Bahasa + guest languages); local 'AI agencies' have no visible case studies or pricing, so the first firm to publish proof and productized $5-10k packages wins by default. (2) The 'no-PMS' hospitality segment — every guest-messaging SaaS assumes Hostaway/Guesty; a service that builds the messaging layer directly on WhatsApp Business API + Google Sheets/Airtable/simple booking stacks serves the majority of small Bali operators the SaaS ignores. (3) Real-estate AI ISA outside the US — Structurely/Ylopo/Verse are US-only and English-only; Bali/SEA property developers and villa sales agencies (high-ticket, WhatsApp leads, long nurture) have zero vertical options. (4) Clinic front-desk for medical-tourism/expat clinics in Bali — US tools (Weave, Klara, Freed) are locked to US telephony/EHRs; Assort-class voice AI is enterprise-only; aesthetic/dental/wellness clinics serving foreign patients need multilingual WhatsApp+voice intake nobody sells locally. (5) Fixed-price outcome packaging — competitors are either opaque quote-only (Asksuite, Enso, Verse, Kata.ai) or per-unit SaaS; publishing transparent $5-10k fixed-scope packages with an optional care/retainer plan differentiates on trust. (6) Maintenance retainer upsell — documented SaaS failure mode is post-launch drift (stale knowledge bases, unmonitored edge cases); a monthly optimization retainer converts one-time projects into recurring revenue that undercuts $795-1,800/mo US services. ASSUMPTION labels above mark inferences; all pricing claims carry source URLs or 'not public'."
+}
