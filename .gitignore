@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+makeup_coach.db
+apps/api/makeup_coach.db
