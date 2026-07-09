@@ -11,6 +11,7 @@ Implemented screens:
 - Tutorial Player
 
 The mobile app calls the live backend API. It does not duplicate matching logic.
+Mock store offers appear only after backend readiness reports return shopping gaps, and are labeled as demo availability.
 
 ## Configuration
 

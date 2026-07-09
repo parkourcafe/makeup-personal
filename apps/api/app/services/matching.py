@@ -87,6 +87,7 @@ def _match_role(role: LookRole, products: list[UserProduct]) -> RoleMatch:
     shopping_gap = None
     if role.required and chosen.status in {"missing", "not_suitable"}:
         shopping_gap = ShoppingGap(
+            gap_id=f"look-{role.look_id}-role-{role.id}",
             needed_category=role.native_category,
             needed_description=f"{role.title}: {role.description}",
         )

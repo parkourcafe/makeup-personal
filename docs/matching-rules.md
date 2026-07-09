@@ -69,6 +69,20 @@ A required role creates a `shopping_gap` only when its status is:
 
 `needs_confirmation` does not create a shopping gap yet because the user may already own a suitable product.
 
+Each shopping gap includes a deterministic `gap_id` in the format:
+
+```txt
+look-{look_id}-role-{look_role_id}
+```
+
+The `gap_id` can be used to fetch mock offers from:
+
+```txt
+GET /shopping-gaps/{gap_id}/mock-offers
+```
+
+Those offers are demo data only and must be labeled: "Mock availability for demo. Not live inventory."
+
 ## Overall Status Rules
 
 The readiness report uses this precedence:

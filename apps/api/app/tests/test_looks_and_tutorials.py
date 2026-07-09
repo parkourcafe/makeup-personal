@@ -6,7 +6,7 @@ def test_looks_list_returns_seeded_looks(client: TestClient) -> None:
 
     assert response.status_code == 200
     looks = response.json()
-    assert len(looks) == 4
+    assert len(looks) == 12
     assert {look["slug"] for look in looks} >= {
         "soft-rose-everyday",
         "latte-soft-smoke",
@@ -33,3 +33,13 @@ def test_tutorial_returns_ordered_steps(client: TestClient, soft_rose_look_id: i
     step_numbers = [step["step_number"] for step in tutorial["steps"]]
     assert step_numbers == sorted(step_numbers)
     assert step_numbers == list(range(1, len(step_numbers) + 1))
+
+
+def test_all_seeded_looks_have_minimum_pass3_content(client: TestClient) -> None:
+    looks = client.get("/looks").json()
+
+    for look in looks:
+        detail = client.get(f"/looks/{look['id']}").json()
+        tutorial = client.get(f"/looks/{look['id']}/tutorial").json()
+        assert 6 <= len(detail["roles"]) <= 10
+        assert 6 <= len(tutorial["steps"]) <= 10

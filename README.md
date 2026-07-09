@@ -16,7 +16,8 @@ Implemented in this pass:
 - demo seed data
 - pytest coverage for the product loop
 - Expo mobile vertical slice in `apps/mobile`
-- placeholder admin folder for future Pass 3
+- API-only admin endpoints for content and mock offers
+- expanded Pass 3 demo content and mock store availability
 
 See `apps/api/README.md` for local setup and validation commands.
 See `apps/mobile/README.md` for mobile setup.

@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 def test_user_products_can_be_created_listed_and_deleted(client: TestClient) -> None:
     initial = client.get("/users/1/products")
     assert initial.status_code == 200
-    assert len(initial.json()) == 20
+    assert len(initial.json()) == 32
 
     payload = {
         "brand": "Test Brand",
@@ -25,11 +25,11 @@ def test_user_products_can_be_created_listed_and_deleted(client: TestClient) -> 
 
     after_create = client.get("/users/1/products")
     assert after_create.status_code == 200
-    assert len(after_create.json()) == 21
+    assert len(after_create.json()) == 33
 
     deleted = client.delete(f"/users/1/products/{product_id}")
     assert deleted.status_code == 204
 
     after_delete = client.get("/users/1/products")
     assert after_delete.status_code == 200
-    assert len(after_delete.json()) == 20
+    assert len(after_delete.json()) == 32

@@ -6,7 +6,7 @@ import { api } from "../api/client";
 import { DEMO_USER_ID } from "../config";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { Screen } from "../components/Screen";
-import type { ReadinessReport, RootStackParamList, UserProduct } from "../types";
+import type { MockOffer, ReadinessReport, RootStackParamList, UserProduct } from "../types";
 import { categoryLabel, overallLabels, statusLabels } from "../utils/labels";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ReadinessReport">;
@@ -14,6 +14,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "ReadinessReport">;
 export function ReadinessReportScreen({ navigation, route }: Props) {
   const [report, setReport] = useState<ReadinessReport | null>(null);
   const [products, setProducts] = useState<UserProduct[]>([]);
+  const [mockOffersByGap, setMockOffersByGap] = useState<Record<string, MockOffer[]>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,6 +28,13 @@ export function ReadinessReportScreen({ navigation, route }: Props) {
       ]);
       setProducts(nextProducts);
       setReport(nextReport);
+      const gapIds = nextReport.role_matches
+        .map((match) => match.shopping_gap?.gap_id)
+        .filter((gapId): gapId is string => Boolean(gapId));
+      const offerEntries = await Promise.all(
+        gapIds.map(async (gapId) => [gapId, await api.getMockOffers(gapId)] as const)
+      );
+      setMockOffersByGap(Object.fromEntries(offerEntries));
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Не удалось сформировать отчет");
     } finally {
@@ -70,6 +78,17 @@ export function ReadinessReportScreen({ navigation, route }: Props) {
                     <View style={styles.gapBox}>
                       <Text style={styles.gapTitle}>Пробел: {categoryLabel(match.shopping_gap.needed_category)}</Text>
                       <Text style={styles.gapText}>{match.shopping_gap.needed_description}</Text>
+                      <Text style={styles.mockLabel}>Mock availability for demo. Not live inventory.</Text>
+                      {(mockOffersByGap[match.shopping_gap.gap_id] ?? []).map((offer) => (
+                        <View key={offer.id} style={styles.offerRow}>
+                          <Text style={styles.offerName}>
+                            {offer.brand} · {offer.product_name}
+                          </Text>
+                          <Text style={styles.offerMeta}>
+                            {offer.store?.name ?? "Mock store"} · {offer.price} {offer.currency}
+                          </Text>
+                        </View>
+                      ))}
                     </View>
                   ) : null}
                 </View>
@@ -172,5 +191,27 @@ const styles = StyleSheet.create({
     color: "#7c4a03",
     fontSize: 13,
     lineHeight: 18
+  },
+  mockLabel: {
+    color: "#7c4a03",
+    fontSize: 12,
+    fontWeight: "800",
+    marginTop: 4
+  },
+  offerRow: {
+    backgroundColor: "rgba(255,255,255,0.58)",
+    borderRadius: 8,
+    gap: 3,
+    marginTop: 4,
+    padding: 8
+  },
+  offerName: {
+    color: "#5f3f0a",
+    fontSize: 13,
+    fontWeight: "800"
+  },
+  offerMeta: {
+    color: "#7c4a03",
+    fontSize: 12
   }
 });

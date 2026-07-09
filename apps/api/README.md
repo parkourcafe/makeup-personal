@@ -37,8 +37,15 @@ uvicorn app.main:app --reload
 - `POST /users/{user_id}/products`
 - `DELETE /users/{user_id}/products/{product_id}`
 - `POST /users/{user_id}/looks/{look_id}/readiness`
+- `GET /shopping-gaps/{gap_id}/mock-offers`
+- `POST|PUT|DELETE /admin/looks`
+- `POST|PUT|DELETE /admin/look-roles`
+- `POST|PUT|DELETE /admin/tutorials`
+- `POST|PUT|DELETE /admin/tutorial-steps`
+- `POST|PUT|DELETE /admin/stores`
+- `POST|PUT|DELETE /admin/store-offers`
 
-The demo seed creates user `1` (`Алина`), four active looks, tutorials, and 20 manually entered user products.
+The demo seed creates user `1` (`Алина`), 12 active looks, tutorials, 32 manually entered user products, 3 mock stores, and mock store offers.
 
 ## Deployment
 
@@ -59,6 +66,14 @@ Docker smoke command:
 docker build -t makeup-personal-api .
 docker run --rm -p 8000:8000 -e SEED_ON_STARTUP=true makeup-personal-api
 ```
+
+## Seed Reset
+
+```bash
+python -m app.seed.run
+```
+
+The seed command resets demo tables and recreates deterministic demo data.
 
 ## Matching
 

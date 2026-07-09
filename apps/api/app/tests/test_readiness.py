@@ -31,6 +31,7 @@ def test_missing_required_role_creates_shopping_gap(client: TestClient, soft_ros
 
     assert matches["glow_balm"]["status"] == "missing"
     assert matches["glow_balm"]["shopping_gap"] == {
+        "gap_id": f"look-{soft_rose_look_id}-role-{matches['glow_balm']['look_role_id']}",
         "needed_category": "highlighter",
         "needed_description": "Деликатное сияние: Прозрачное сияние на скулах без заметных блесток.",
     }

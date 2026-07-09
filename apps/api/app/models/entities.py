@@ -138,3 +138,37 @@ class UserProduct(TimestampMixin, Base):
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     user: Mapped[User] = relationship(back_populates="products")
+
+
+class Store(TimestampMixin, Base):
+    __tablename__ = "stores"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String(160), nullable=False)
+    city: Mapped[str] = mapped_column(String(120), nullable=False)
+    country: Mapped[str] = mapped_column(String(120), nullable=False)
+    latitude: Mapped[float] = mapped_column(Float, nullable=False)
+    longitude: Mapped[float] = mapped_column(Float, nullable=False)
+
+    offers: Mapped[list["StoreOffer"]] = relationship(
+        back_populates="store",
+        cascade="all, delete-orphan",
+        order_by="StoreOffer.id",
+    )
+
+
+class StoreOffer(TimestampMixin, Base):
+    __tablename__ = "store_offers"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    store_id: Mapped[int] = mapped_column(ForeignKey("stores.id", ondelete="CASCADE"), nullable=False)
+    product_name: Mapped[str] = mapped_column(String(200), nullable=False)
+    brand: Mapped[str] = mapped_column(String(160), nullable=False)
+    category: Mapped[str] = mapped_column(String(80), nullable=False)
+    color_family: Mapped[str | None] = mapped_column(String(80))
+    price: Mapped[float] = mapped_column(Float, nullable=False)
+    currency: Mapped[str] = mapped_column(String(12), nullable=False)
+    availability_status: Mapped[str] = mapped_column(String(80), nullable=False)
+    source_label: Mapped[str] = mapped_column(String(160), nullable=False)
+
+    store: Mapped[Store] = relationship(back_populates="offers")

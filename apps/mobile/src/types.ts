@@ -72,6 +72,7 @@ export type UserProduct = {
 export type ProductCreate = Omit<UserProduct, "id" | "user_id">;
 
 export type ShoppingGap = {
+  gap_id: string;
   needed_category: string;
   needed_description: string;
 };
@@ -94,6 +95,29 @@ export type ReadinessReport = {
   overall_status: OverallStatus;
   readiness_score: number;
   role_matches: RoleMatch[];
+};
+
+export type Store = {
+  id: number;
+  name: string;
+  city: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+};
+
+export type MockOffer = {
+  id: number;
+  store_id: number;
+  product_name: string;
+  brand: string;
+  category: string;
+  color_family: string | null;
+  price: number;
+  currency: string;
+  availability_status: string;
+  source_label: string;
+  store: Store | null;
 };
 
 export type RootStackParamList = {

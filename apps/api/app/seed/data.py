@@ -1,7 +1,7 @@
 from sqlalchemy import delete
 from sqlalchemy.orm import Session
 
-from app.models import Look, LookRole, Tutorial, TutorialStep, User, UserProduct
+from app.models import Look, LookRole, Store, StoreOffer, Tutorial, TutorialStep, User, UserProduct
 
 
 def seed_demo_data(db: Session, reset: bool = True) -> None:
@@ -23,11 +23,13 @@ def seed_demo_data(db: Session, reset: bool = True) -> None:
     for look_data in _looks():
         _create_look(db, look_data)
 
+    _create_mock_stores(db)
+
     db.commit()
 
 
 def _reset(db: Session) -> None:
-    for model in [UserProduct, TutorialStep, Tutorial, LookRole, Look, User]:
+    for model in [StoreOffer, Store, UserProduct, TutorialStep, Tutorial, LookRole, Look, User]:
         db.execute(delete(model))
     db.commit()
 
@@ -277,6 +279,7 @@ def _looks() -> list[dict]:
                 _role("soft_powder", "Soft setting veil", "A sheer powder used only where shine breaks through.", "powder", ["powder"], accepted_color_families=["translucent"], accepted_finishes=["matte"], accepted_textures=["powder"], accepted_coverage=["sheer"], intensity_min=0, intensity_max=2),
                 _role("brow_shape", "Brow shape", "A brow pencil or gel that quietly defines the brow.", "eyebrow_pencil", ["eyebrow_pencil", "brow_gel"], accepted_color_families=["brown", "clear"], accepted_finishes=["matte", "natural"], accepted_textures=["pencil", "gel"], intensity_min=0, intensity_max=6),
                 _role("cream_flush", "Cream pink flush", "A small amount of pink cream blush.", "blush", ["blush"], accepted_color_families=["pink", "rose"], accepted_undertones=["cool", "neutral"], accepted_finishes=["dewy", "satin"], accepted_textures=["cream", "liquid"], intensity_min=2, intensity_max=5),
+                _role("clean_mascara", "Clean lash lift", "A restrained mascara layer that keeps the look polished.", "mascara", ["mascara"], accepted_color_families=["black", "brown"], accepted_finishes=["natural"], accepted_textures=["cream"], intensity_min=2, intensity_max=6),
                 _role("clear_lip", "Clear lip balm", "Clear balm or low-pigment shine.", "lip_balm", ["lip_balm", "lip_gloss"], accepted_color_families=["clear", "nude"], accepted_finishes=["gloss", "natural"], accepted_textures=["balm", "gel"], accepted_coverage=["sheer"], intensity_min=0, intensity_max=2),
             ],
             "tutorial": {
@@ -287,6 +290,7 @@ def _looks() -> list[dict]:
                     _step("soft_powder", "Set strategically", "Powder the sides of the nose and center of the forehead.", "Keep cheekbones unpowdered.", "Powdering the whole face removes freshness."),
                     _step("brow_shape", "Shape brows", "Brush brows up and define sparse areas.", "Use short strokes.", "Drawing a solid block looks less polished."),
                     _step("cream_flush", "Place blush high", "Tap blush high and sheer it out.", "Blend before adding more.", "Too much blush makes the look less restrained."),
+                    _step("clean_mascara", "Lift lashes", "Apply one clean layer of mascara.", "Comb through once while wet.", "Multiple coats can make the look heavier."),
                     _step("clear_lip", "Add clear shine", "Finish with a clear balm or gloss.", "Keep edges soft.", "Overlining changes the clean feel."),
                 ],
             },
@@ -319,7 +323,64 @@ def _looks() -> list[dict]:
                 ],
             },
         },
+    ] + _generated_looks()
+
+
+def _generated_looks() -> list[dict]:
+    specs = [
+        ("soft-coral-brunch", "Мягкий коралл для бранча", "Свежий коралловый акцент, легкая кожа и мягкие ресницы.", "beginner", "daily", "coral", "peach", "brown", "nude"),
+        ("office-neutral-polish", "Нейтральный офисный макияж", "Собранный дневной образ с нейтральной гаммой и аккуратными бровями.", "beginner", "work", "nude", "beige", "taupe", "rose"),
+        ("golden-hour-glow", "Golden hour glow", "Теплый сияющий образ для мягкого вечернего света.", "intermediate", "evening", "champagne", "bronze", "brown", "peach"),
+        ("soft-plum-focus", "Мягкий сливовый акцент", "Сливовый фокус на губах и спокойная кожа без тяжелого контура.", "intermediate", "date night", "plum", "mauve", "plum", "plum"),
+        ("rose-matte-workday", "Розовый матовый workday", "Матовый розово-бежевый образ для долгого рабочего дня.", "beginner", "work", "rose", "beige", "brown", "rose"),
+        ("espresso-lashline", "Espresso lashline", "Кофейная линия у ресниц, нейтральные щеки и мягкая губа.", "intermediate", "evening", "brown", "bronze", "brown", "nude"),
+        ("fresh-peach-weekend", "Свежий персиковый weekend", "Персиковый румянец, мягкий тон и прозрачная губа.", "beginner", "daily", "peach", "beige", "taupe", "clear"),
+        ("cool-mauve-minimal", "Минималистичный cool mauve", "Холодный mauve-акцент с деликатной базой и спокойной тушью.", "intermediate", "date night", "mauve", "pink", "mauve", "mauve"),
     ]
+    return [_generated_look(*spec) for spec in specs]
+
+
+def _generated_look(
+    slug: str,
+    title: str,
+    description: str,
+    difficulty: str,
+    occasion: str,
+    cheek_color: str,
+    base_color: str,
+    eye_color: str,
+    lip_color: str,
+) -> dict:
+    roles = [
+        _role("skin_base", "Легкая база", "Тон или тинт, который выравнивает кожу без плотной маски.", "foundation", ["foundation", "skin_tint"], accepted_color_families=["beige", base_color], accepted_undertones=["neutral", "warm", "cool"], accepted_finishes=["natural", "dewy", "satin"], accepted_textures=["liquid", "cream"], accepted_coverage=["light", "medium"], intensity_min=1, intensity_max=5),
+        _role("target_conceal", "Точечная коррекция", "Консилер только там, где нужна дополнительная аккуратность.", "concealer", ["concealer"], accepted_color_families=["beige", "peach"], accepted_undertones=["neutral", "warm"], accepted_finishes=["natural"], accepted_textures=["cream", "liquid"], accepted_coverage=["medium", "full"], intensity_min=1, intensity_max=5),
+        _role("cheek_color", "Цвет на щеках", "Основной цветовой акцент на щеках в тон образа.", "blush", ["blush", "lip_tint"], accepted_color_families=[cheek_color, "rose", "pink", "peach", "plum"], accepted_undertones=["neutral", "warm", "cool"], accepted_finishes=["satin", "dewy", "matte"], accepted_textures=["cream", "liquid", "powder"], intensity_min=2, intensity_max=7),
+        _role("eye_wash", "Мягкий цвет на глазах", "Растушеванный оттенок на веке без жесткой графики.", "eyeshadow", ["eyeshadow"], accepted_color_families=[eye_color, "brown", "bronze", "mauve", "taupe"], accepted_undertones=["neutral", "warm", "cool"], accepted_finishes=["matte", "satin"], accepted_textures=["powder", "cream"], intensity_min=2, intensity_max=7),
+        _role("lash_definition", "Ресницы", "Один или два слоя туши для чистого обрамления глаз.", "mascara", ["mascara"], accepted_color_families=["black", "brown"], accepted_finishes=["natural"], accepted_textures=["cream"], intensity_min=3, intensity_max=8),
+        _role("lip_finish", "Финиш губ", "Губы поддерживают общий цветовой акцент, но не спорят с глазами и щеками.", "lipstick", ["lipstick", "lip_tint", "lip_balm"], accepted_color_families=[lip_color, "nude", "rose", "berry", "clear"], accepted_undertones=["neutral", "warm", "cool"], accepted_finishes=["satin", "gloss", "natural", "matte"], accepted_textures=["cream", "liquid", "balm", "gel"], intensity_min=0, intensity_max=8),
+    ]
+    steps = [
+        _step("skin_base", "Собери базу", "Нанеси тонкий слой базы только там, где нужно выравнивание.", "Начинай с центра лица.", "Не перекрывай естественную кожу полностью."),
+        _step("target_conceal", "Скорректируй точечно", "Добавь консилер на покраснения или тени.", "Растушевывай похлопывающими движениями.", "Не растягивай консилер слишком далеко."),
+        _step("cheek_color", "Добавь цвет щекам", "Нанеси цвет маленькими порциями и растушуй к вискам.", "Сначала проверь интенсивность при дневном свете.", "Слишком низкое нанесение визуально опускает лицо."),
+        _step("eye_wash", "Растушуй глаза", "Нанеси мягкий оттенок близко к ресницам и растушуй вверх.", "Край должен исчезать постепенно.", "Жесткая граница делает образ тяжелее."),
+        _step("lash_definition", "Оформи ресницы", "Прокрась ресницы от корней к кончикам.", "Убери лишнюю тушь со щеточки.", "Комочки утяжеляют мягкий образ."),
+        _step("lip_finish", "Заверши губы", "Нанеси выбранный финиш губ тонким слоем.", "Поддержи оттенок щек или глаз.", "Слишком яркий слой может перетянуть фокус."),
+    ]
+    return {
+        "slug": slug,
+        "title": title,
+        "description": description,
+        "difficulty": difficulty,
+        "occasion": occasion,
+        "reference_image_url": f"https://example.com/reference/{slug}.jpg",
+        "roles": roles,
+        "tutorial": {
+            "title": f"Урок: {title}",
+            "summary": "Двигайся от кожи к цветовым акцентам, затем заверши ресницами и губами.",
+            "steps": steps,
+        },
+    }
 
 
 def _demo_products(user_id: int) -> list[dict]:
@@ -344,6 +405,18 @@ def _demo_products(user_id: int) -> list[dict]:
         _product(user_id, "Clinique", "Cheek Pop Pink Honey", "blush", "pink", "cool", "dewy", "powder", "medium", 5),
         _product(user_id, "Make Up For Ever", "Aqua Resist Black", "eyeliner", "black", "neutral", "matte", "pencil", "medium", 6),
         _product(user_id, "Huda Beauty", "Lavender Shimmer Shadow", "eyeshadow", "lavender", "cool", "shimmer", "powder", "medium", 4),
+        _product(user_id, "Dior", "Backstage Face & Body 2N", "foundation", "beige", "neutral", "natural", "liquid", "medium", 4),
+        _product(user_id, "Kiko Milano", "Smart Colour Peach Blush", "blush", "peach", "warm", "satin", "powder", "medium", 4),
+        _product(user_id, "NYX", "Soft Matte Cannes", "lipstick", "rose", "neutral", "matte", "cream", "medium", 5),
+        _product(user_id, "Sephora Collection", "Taupe Cream Shadow", "eyeshadow", "taupe", "neutral", "satin", "cream", "medium", 4),
+        _product(user_id, "Max Factor", "Brown Volume Mascara", "mascara", "brown", "neutral", "natural", "cream", "medium", 5),
+        _product(user_id, "Catrice", "Liquid Camouflage Neutral", "concealer", "beige", "neutral", "natural", "liquid", "medium", 3),
+        _product(user_id, "Essence", "Make Me Brow Clear", "brow_gel", "clear", "neutral", "natural", "gel", "sheer", 1),
+        _product(user_id, "ColourPop", "Super Shock Bronze", "eyeshadow", "bronze", "warm", "satin", "cream", "medium", 6),
+        _product(user_id, "Pat McGrath", "Plum Satin Lip", "lipstick", "plum", "cool", "satin", "cream", "full", 7),
+        _product(user_id, "Milk Makeup", "Werk Lip + Cheek", "lip_tint", "rose", "neutral", "satin", "cream", "sheer", 4, is_multi_use_safe=True),
+        _product(user_id, "Anastasia Beverly Hills", "Brow Wiz Dark Brown", "eyebrow_pencil", "brown", "neutral", "matte", "pencil", "medium", 5),
+        _product(user_id, "L'Oreal Paris", "True Match Powder", "powder", "translucent", "neutral", "matte", "powder", "sheer", 1),
     ]
 
 
@@ -375,4 +448,51 @@ def _product(
         "is_multi_use_safe": is_multi_use_safe,
         "source": "manual",
         "confidence": confidence,
+    }
+
+
+def _create_mock_stores(db: Session) -> None:
+    stores = [
+        Store(name="Mock Beauty Central", city="Bali", country="Indonesia", latitude=-8.6500, longitude=115.2167),
+        Store(name="Mock Sephora Corner", city="Bali", country="Indonesia", latitude=-8.6725, longitude=115.1900),
+        Store(name="Mock Makeup Studio", city="Bali", country="Indonesia", latitude=-8.7042, longitude=115.2600),
+    ]
+    db.add_all(stores)
+    db.flush()
+
+    offers = [
+        _offer(stores[0].id, "Hollywood Flawless Filter", "Charlotte Tilbury", "highlighter", "champagne", 52.0, "USD", "mock_in_stock"),
+        _offer(stores[1].id, "Positive Light Liquid Luminizer", "Rare Beauty", "highlighter", "champagne", 30.0, "USD", "mock_limited"),
+        _offer(stores[2].id, "Baby Cheeks Highlighter Balm", "Westman Atelier", "highlighter", "clear", 48.0, "USD", "mock_in_stock"),
+        _offer(stores[0].id, "Lip Maximizer Nude", "Dior", "lip_gloss", "nude", 42.0, "USD", "mock_in_stock"),
+        _offer(stores[1].id, "Gloss Bomb Fenty Glow", "Fenty Beauty", "lip_gloss", "nude", 26.0, "USD", "mock_limited"),
+        _offer(stores[2].id, "Juicy Tube Neutral", "Lancome", "lip_gloss", "nude", 24.0, "USD", "mock_in_stock"),
+        _offer(stores[0].id, "Cloud Paint Puff", "Glossier", "blush", "pink", 22.0, "USD", "mock_in_stock"),
+        _offer(stores[1].id, "Sky High Mascara Brownish Black", "Maybelline", "mascara", "brown", 15.0, "USD", "mock_in_stock"),
+        _offer(stores[2].id, "Soft Matte Complete Concealer", "NARS", "concealer", "beige", 32.0, "USD", "mock_in_stock"),
+        _offer(stores[0].id, "Hydrating Skin Tint", "ILIA", "skin_tint", "beige", 48.0, "USD", "mock_limited"),
+    ]
+    db.add_all(StoreOffer(**offer) for offer in offers)
+
+
+def _offer(
+    store_id: int,
+    product_name: str,
+    brand: str,
+    category: str,
+    color_family: str,
+    price: float,
+    currency: str,
+    availability_status: str,
+) -> dict:
+    return {
+        "store_id": store_id,
+        "product_name": product_name,
+        "brand": brand,
+        "category": category,
+        "color_family": color_family,
+        "price": price,
+        "currency": currency,
+        "availability_status": availability_status,
+        "source_label": "Mock availability for demo. Not live inventory.",
     }

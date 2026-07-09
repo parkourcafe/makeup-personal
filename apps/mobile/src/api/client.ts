@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "../config";
-import type { Look, ProductCreate, ReadinessReport, Tutorial, UserProduct } from "../types";
+import type { Look, MockOffer, ProductCreate, ReadinessReport, Tutorial, UserProduct } from "../types";
 
 type RequestOptions = {
   method?: "GET" | "POST" | "DELETE";
@@ -42,5 +42,6 @@ export const api = {
   deleteUserProduct: (userId: number, productId: number) =>
     request<void>(`/users/${userId}/products/${productId}`, { method: "DELETE" }),
   getReadinessReport: (userId: number, lookId: number) =>
-    request<ReadinessReport>(`/users/${userId}/looks/${lookId}/readiness`, { method: "POST" })
+    request<ReadinessReport>(`/users/${userId}/looks/${lookId}/readiness`, { method: "POST" }),
+  getMockOffers: (gapId: string) => request<MockOffer[]>(`/shopping-gaps/${gapId}/mock-offers`)
 };
