@@ -10,7 +10,7 @@ FastAPI backend for Pass 1 of the Makeup AI Personal Coach MVP.
 - Alembic
 - Pydantic v2
 - Pytest
-- SQLite by default
+- SQLite by default for local development; Postgres is supported through `DATABASE_URL`
 
 `DATABASE_URL` is supported. If unset, local commands use `sqlite:///./makeup_coach.db`.
 
@@ -30,6 +30,11 @@ uvicorn app.main:app --reload
 ## API Endpoints
 
 - `GET /health`
+- `POST /auth/register`
+- `POST /auth/login`
+- `GET /auth/me`
+- `POST /auth/logout`
+- `GET /vocabulary`
 - `GET /looks`
 - `GET /looks/{look_id}`
 - `GET /looks/{look_id}/tutorial`
@@ -38,12 +43,12 @@ uvicorn app.main:app --reload
 - `DELETE /users/{user_id}/products/{product_id}`
 - `POST /users/{user_id}/looks/{look_id}/readiness`
 - `GET /shopping-gaps/{gap_id}/mock-offers`
-- `POST|PUT|DELETE /admin/looks`
-- `POST|PUT|DELETE /admin/look-roles`
-- `POST|PUT|DELETE /admin/tutorials`
-- `POST|PUT|DELETE /admin/tutorial-steps`
-- `POST|PUT|DELETE /admin/stores`
-- `POST|PUT|DELETE /admin/store-offers`
+- `GET|POST|PUT|DELETE /admin/looks`
+- `GET|POST|PUT|DELETE /admin/look-roles`
+- `GET|POST|PUT|DELETE /admin/tutorials`
+- `GET|POST|PUT|DELETE /admin/tutorial-steps`
+- `GET|POST|PUT|DELETE /admin/stores`
+- `GET|POST|PUT|DELETE /admin/store-offers`
 
 The demo seed creates user `1` (`Алина`), 12 active looks, tutorials, 32 manually entered user products, 3 mock stores, and mock store offers.
 
@@ -52,14 +57,7 @@ The demo seed creates user `1` (`Алина`), 12 active looks, tutorials, 32 ma
 `render.yaml`, `Dockerfile`, and `scripts/start.sh` are included for a simple hosted demo API.
 Vercel deployment config is included through `pyproject.toml`, `api/index.py`, `.python-version`, and `vercel.json`.
 
-Default deployment behavior:
-
-- runs Alembic migrations;
-- seeds demo data when `SEED_ON_STARTUP=true`;
-- starts Uvicorn on `$PORT`;
-- allows mobile clients through `CORS_ORIGINS`.
-
-For a persistent production-like environment, replace the default SQLite `DATABASE_URL` with Postgres and decide whether seed reset on startup should stay enabled.
+For production, set `DATABASE_URL` to Postgres, run `alembic upgrade head`, and seed once with `python -m app.seed.run`. Add `--reset` only for local/demo resets.
 
 Current Vercel demo API:
 
@@ -67,7 +65,7 @@ Current Vercel demo API:
 https://makeup-personal-api.vercel.app
 ```
 
-The Vercel demo uses:
+The current Vercel deployment still uses demo storage until Neon terms are accepted and a Postgres resource is connected:
 
 ```bash
 DATABASE_URL=sqlite:///:memory:
@@ -90,7 +88,7 @@ docker run --rm -p 8000:8000 -e SEED_ON_STARTUP=true makeup-personal-api
 python -m app.seed.run
 ```
 
-The seed command resets demo tables and recreates deterministic demo data.
+The seed command skips when looks already exist. Use `python -m app.seed.run --reset` to delete and recreate deterministic demo data.
 
 ## Matching
 

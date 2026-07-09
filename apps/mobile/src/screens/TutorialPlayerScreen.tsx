@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { api } from "../api/client";
-import { DEMO_USER_ID } from "../config";
+import { useAuth } from "../auth/AuthContext";
 import { Screen } from "../components/Screen";
 import type { ReadinessReport, RootStackParamList, Tutorial, UserProduct } from "../types";
 import { statusLabels } from "../utils/labels";
@@ -11,6 +11,7 @@ import { statusLabels } from "../utils/labels";
 type Props = NativeStackScreenProps<RootStackParamList, "TutorialPlayer">;
 
 export function TutorialPlayerScreen({ route }: Props) {
+  const auth = useAuth();
   const [tutorial, setTutorial] = useState<Tutorial | null>(null);
   const [report, setReport] = useState<ReadinessReport | null>(null);
   const [products, setProducts] = useState<UserProduct[]>([]);
@@ -21,10 +22,13 @@ export function TutorialPlayerScreen({ route }: Props) {
     setLoading(true);
     setError(null);
     try {
+      if (!auth.user) {
+        throw new Error("Нет активного пользователя");
+      }
       const [nextTutorial, nextProducts, nextReport] = await Promise.all([
         api.getTutorial(route.params.lookId),
-        api.getUserProducts(DEMO_USER_ID),
-        api.getReadinessReport(DEMO_USER_ID, route.params.lookId)
+        api.getUserProducts(auth.user.id),
+        api.getReadinessReport(auth.user.id, route.params.lookId)
       ]);
       setTutorial(nextTutorial);
       setProducts(nextProducts);
@@ -34,7 +38,7 @@ export function TutorialPlayerScreen({ route }: Props) {
     } finally {
       setLoading(false);
     }
-  }, [route.params.lookId]);
+  }, [auth.user, route.params.lookId]);
 
   useEffect(() => {
     void loadTutorial();

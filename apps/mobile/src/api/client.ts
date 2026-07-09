@@ -1,16 +1,33 @@
 import { API_BASE_URL } from "../config";
-import type { Look, MockOffer, ProductCreate, ReadinessReport, Tutorial, UserProduct } from "../types";
+import type {
+  AuthRegisterPayload,
+  AuthResponse,
+  Look,
+  MockOffer,
+  ProductCreate,
+  ReadinessReport,
+  Tutorial,
+  User,
+  UserProduct
+} from "../types";
 
 type RequestOptions = {
-  method?: "GET" | "POST" | "DELETE";
+  method?: "GET" | "POST" | "PUT" | "DELETE";
   body?: unknown;
 };
+
+let authToken: string | null = null;
+
+export function setApiAuthToken(token: string | null) {
+  authToken = token;
+}
 
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const init: RequestInit = {
     method: options.method ?? "GET",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      ...(authToken ? { Authorization: `Bearer ${authToken}` } : {})
     }
   };
 
@@ -33,6 +50,10 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 }
 
 export const api = {
+  register: (payload: AuthRegisterPayload) => request<AuthResponse>("/auth/register", { method: "POST", body: payload }),
+  login: (email: string, password: string) => request<AuthResponse>("/auth/login", { method: "POST", body: { email, password } }),
+  getCurrentUser: () => request<User>("/auth/me"),
+  logout: () => request<void>("/auth/logout", { method: "POST" }),
   getLooks: () => request<Look[]>("/looks"),
   getLook: (lookId: number) => request<Look>(`/looks/${lookId}`),
   getTutorial: (lookId: number) => request<Tutorial>(`/looks/${lookId}/tutorial`),

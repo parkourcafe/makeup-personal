@@ -15,11 +15,15 @@ def sqlite_connect_args(database_url: str) -> dict[str, bool]:
     return {}
 
 
+def is_ephemeral_database(database_url: str = DATABASE_URL) -> bool:
+    return database_url in {"sqlite://", "sqlite:///:memory:"}
+
+
 engine_kwargs: dict[str, object] = {
     "connect_args": sqlite_connect_args(DATABASE_URL),
     "future": True,
 }
-if DATABASE_URL in {"sqlite://", "sqlite:///:memory:"}:
+if is_ephemeral_database():
     engine_kwargs["poolclass"] = StaticPool
 
 engine = create_engine(DATABASE_URL, **engine_kwargs)

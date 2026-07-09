@@ -4,6 +4,7 @@ Expo React Native vertical slice for Pass 2.
 
 Implemented screens:
 
+- Auth
 - Look Library
 - Look Detail
 - Makeup Bag
@@ -19,7 +20,6 @@ Create `.env` from `.env.example`:
 
 ```bash
 EXPO_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
-EXPO_PUBLIC_DEMO_USER_ID=1
 ```
 
 Use the deployed API URL for device testing:
@@ -50,6 +50,15 @@ npm install
 npm run typecheck
 npm run lint
 npm start
+```
+
+## Native Production
+
+`eas.json` contains `preview` and `production` profiles for iOS/Android. The profiles point at the Vercel API through `EXPO_PUBLIC_API_BASE_URL`.
+
+```bash
+npm run eas:preview
+npm run eas:production
 ```
 
 ## Product Notes

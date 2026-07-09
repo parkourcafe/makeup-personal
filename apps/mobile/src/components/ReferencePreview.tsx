@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 import type { Look } from "../types";
 import { referenceTheme } from "../utils/reference";
@@ -10,16 +11,28 @@ type ReferencePreviewProps = {
 
 export function ReferencePreview({ look, compact = false }: ReferencePreviewProps) {
   const theme = referenceTheme(look.slug);
+  const [imageFailed, setImageFailed] = useState(false);
+  const imageUrl = look.reference_image_url && !imageFailed ? look.reference_image_url : null;
 
   return (
     <View style={[styles.frame, { backgroundColor: theme.background }, compact ? styles.compactFrame : null]}>
-      <View style={styles.face}>
-        <View style={[styles.eye, styles.leftEye, { backgroundColor: theme.secondary }]} />
-        <View style={[styles.eye, styles.rightEye, { backgroundColor: theme.secondary }]} />
-        <View style={[styles.cheek, styles.leftCheek, { backgroundColor: theme.primary }]} />
-        <View style={[styles.cheek, styles.rightCheek, { backgroundColor: theme.primary }]} />
-        <View style={[styles.lip, { backgroundColor: theme.lip }]} />
-      </View>
+      {imageUrl ? (
+        <Image
+          accessibilityLabel={`Референс образа ${look.title}`}
+          onError={() => setImageFailed(true)}
+          resizeMode="cover"
+          source={{ uri: imageUrl }}
+          style={styles.image}
+        />
+      ) : (
+        <View style={styles.face}>
+          <View style={[styles.eye, styles.leftEye, { backgroundColor: theme.secondary }]} />
+          <View style={[styles.eye, styles.rightEye, { backgroundColor: theme.secondary }]} />
+          <View style={[styles.cheek, styles.leftCheek, { backgroundColor: theme.primary }]} />
+          <View style={[styles.cheek, styles.rightCheek, { backgroundColor: theme.primary }]} />
+          <View style={[styles.lip, { backgroundColor: theme.lip }]} />
+        </View>
+      )}
       <View style={styles.swatches}>
         <View style={[styles.swatch, { backgroundColor: theme.primary }]} />
         <View style={[styles.swatch, { backgroundColor: theme.secondary }]} />
@@ -50,6 +63,11 @@ const styles = StyleSheet.create({
     height: 138,
     position: "relative",
     width: 116
+  },
+  image: {
+    borderRadius: 8,
+    height: 150,
+    width: "100%"
   },
   eye: {
     borderRadius: 4,

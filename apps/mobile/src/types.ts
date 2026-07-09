@@ -71,6 +71,29 @@ export type UserProduct = {
 
 export type ProductCreate = Omit<UserProduct, "id" | "user_id">;
 
+export type User = {
+  id: number;
+  email: string | null;
+  display_name: string;
+  language: string;
+  skin_depth: string | null;
+  skin_undertone: string | null;
+};
+
+export type AuthResponse = {
+  access_token: string;
+  token_type: "bearer";
+  user: User;
+};
+
+export type AuthRegisterPayload = {
+  email: string;
+  password: string;
+  display_name: string;
+  skin_depth?: string | null;
+  skin_undertone?: string | null;
+};
+
 export type ShoppingGap = {
   gap_id: string;
   needed_category: string;

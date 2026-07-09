@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Pressable, StyleSheet, Switch, Text, TextInput, View } from "react-native";
 
 import { api } from "../api/client";
-import { DEMO_USER_ID } from "../config";
+import { useAuth } from "../auth/AuthContext";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { Screen } from "../components/Screen";
 import type { ProductCreate, RootStackParamList, UserProduct } from "../types";
@@ -39,7 +39,10 @@ const initialForm: ProductForm = {
   is_multi_use_safe: false
 };
 
+const categoryOptions = ["foundation", "concealer", "blush", "bronzer", "eyeshadow", "eyeliner", "mascara", "lipstick", "lip_tint", "lip_gloss"];
+
 export function MakeupBagScreen({ navigation, route }: Props) {
+  const auth = useAuth();
   const [products, setProducts] = useState<UserProduct[]>([]);
   const [form, setForm] = useState<ProductForm>(initialForm);
   const [loading, setLoading] = useState(true);
@@ -50,13 +53,16 @@ export function MakeupBagScreen({ navigation, route }: Props) {
     setLoading(true);
     setError(null);
     try {
-      setProducts(await api.getUserProducts(DEMO_USER_ID));
+      if (!auth.user) {
+        return;
+      }
+      setProducts(await api.getUserProducts(auth.user.id));
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Не удалось загрузить косметичку");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [auth.user]);
 
   useEffect(() => {
     void loadProducts();
@@ -86,7 +92,10 @@ export function MakeupBagScreen({ navigation, route }: Props) {
         confidence: parseNullableNumber(form.confidence),
         expires_at: null
       };
-      const created = await api.createUserProduct(DEMO_USER_ID, payload);
+      if (!auth.user) {
+        throw new Error("Нет активного пользователя");
+      }
+      const created = await api.createUserProduct(auth.user.id, payload);
       setProducts((current) => [...current, created]);
       setForm(initialForm);
     } catch (caught) {
@@ -97,9 +106,12 @@ export function MakeupBagScreen({ navigation, route }: Props) {
   };
 
   const removeProduct = async (productId: number) => {
-    setError(null);
+      setError(null);
     try {
-      await api.deleteUserProduct(DEMO_USER_ID, productId);
+      if (!auth.user) {
+        throw new Error("Нет активного пользователя");
+      }
+      await api.deleteUserProduct(auth.user.id, productId);
       setProducts((current) => current.filter((product) => product.id !== productId));
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Не удалось удалить продукт");
@@ -109,15 +121,31 @@ export function MakeupBagScreen({ navigation, route }: Props) {
   return (
     <Screen error={error} loading={loading}>
       <View style={styles.header}>
-        <Text style={styles.title}>Косметичка Алины</Text>
-        <Text style={styles.subtitle}>Добавь продукт вручную или проверь текущий набор для выбранного образа.</Text>
+        <Text style={styles.title}>Косметичка</Text>
+        <Text style={styles.subtitle}>{auth.user?.display_name}: продукты сохраняются в твоем аккаунте.</Text>
       </View>
 
       <View style={styles.form}>
         <Text style={styles.formTitle}>Новый продукт</Text>
         <FormInput label="Бренд" value={form.brand} onChangeText={(value) => setForm({ ...form, brand: value })} />
         <FormInput label="Название" value={form.name} onChangeText={(value) => setForm({ ...form, name: value })} />
-        <FormInput label="Категория" value={form.category} onChangeText={(value) => setForm({ ...form, category: value })} />
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Категория</Text>
+          <View style={styles.chips}>
+            {categoryOptions.map((category) => (
+              <Pressable
+                accessibilityRole="button"
+                key={category}
+                onPress={() => setForm({ ...form, category })}
+                style={[styles.chip, form.category === category ? styles.chipActive : null]}
+              >
+                <Text style={[styles.chipText, form.category === category ? styles.chipTextActive : null]}>
+                  {categoryLabel(category)}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        </View>
         <FormInput label="Цветовая семья" value={form.color_family} onChangeText={(value) => setForm({ ...form, color_family: value })} />
         <FormInput label="Подтон" value={form.undertone} onChangeText={(value) => setForm({ ...form, undertone: value })} />
         <FormInput label="Финиш" value={form.finish} onChangeText={(value) => setForm({ ...form, finish: value })} />
@@ -221,8 +249,8 @@ const styles = StyleSheet.create({
     lineHeight: 21
   },
   form: {
-    backgroundColor: "#fff",
-    borderColor: "#e5ded5",
+    backgroundColor: "#fffaf4",
+    borderColor: "#e2d5c8",
     borderRadius: 8,
     borderWidth: 1,
     gap: 10,
@@ -242,14 +270,39 @@ const styles = StyleSheet.create({
     fontWeight: "700"
   },
   input: {
-    backgroundColor: "#f7f4ef",
-    borderColor: "#ded6cd",
+    backgroundColor: "#f6efe7",
+    borderColor: "#ded1c4",
     borderRadius: 8,
     borderWidth: 1,
     color: "#20201f",
     fontSize: 15,
     minHeight: 44,
     paddingHorizontal: 12
+  },
+  chips: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8
+  },
+  chip: {
+    backgroundColor: "#f6efe7",
+    borderColor: "#ded1c4",
+    borderRadius: 8,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 8
+  },
+  chipActive: {
+    backgroundColor: "#231f20",
+    borderColor: "#231f20"
+  },
+  chipText: {
+    color: "#5b554e",
+    fontSize: 12,
+    fontWeight: "800"
+  },
+  chipTextActive: {
+    color: "#fffaf4"
   },
   switchRow: {
     alignItems: "center",
@@ -266,8 +319,8 @@ const styles = StyleSheet.create({
   },
   productRow: {
     alignItems: "center",
-    backgroundColor: "#fff",
-    borderColor: "#e5ded5",
+    backgroundColor: "#fffaf4",
+    borderColor: "#e2d5c8",
     borderRadius: 8,
     borderWidth: 1,
     flexDirection: "row",

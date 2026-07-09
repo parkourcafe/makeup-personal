@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { api } from "../api/client";
-import { DEMO_USER_ID } from "../config";
+import { useAuth } from "../auth/AuthContext";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { Screen } from "../components/Screen";
 import type { MockOffer, ReadinessReport, RootStackParamList, UserProduct } from "../types";
@@ -12,6 +12,7 @@ import { categoryLabel, overallLabels, statusLabels } from "../utils/labels";
 type Props = NativeStackScreenProps<RootStackParamList, "ReadinessReport">;
 
 export function ReadinessReportScreen({ navigation, route }: Props) {
+  const auth = useAuth();
   const [report, setReport] = useState<ReadinessReport | null>(null);
   const [products, setProducts] = useState<UserProduct[]>([]);
   const [mockOffersByGap, setMockOffersByGap] = useState<Record<string, MockOffer[]>>({});
@@ -22,9 +23,12 @@ export function ReadinessReportScreen({ navigation, route }: Props) {
     setLoading(true);
     setError(null);
     try {
+      if (!auth.user) {
+        throw new Error("Нет активного пользователя");
+      }
       const [nextProducts, nextReport] = await Promise.all([
-        api.getUserProducts(DEMO_USER_ID),
-        api.getReadinessReport(DEMO_USER_ID, route.params.lookId)
+        api.getUserProducts(auth.user.id),
+        api.getReadinessReport(auth.user.id, route.params.lookId)
       ]);
       setProducts(nextProducts);
       setReport(nextReport);
@@ -40,7 +44,7 @@ export function ReadinessReportScreen({ navigation, route }: Props) {
     } finally {
       setLoading(false);
     }
-  }, [route.params.lookId]);
+  }, [auth.user, route.params.lookId]);
 
   useEffect(() => {
     void loadReport();
@@ -78,7 +82,7 @@ export function ReadinessReportScreen({ navigation, route }: Props) {
                     <View style={styles.gapBox}>
                       <Text style={styles.gapTitle}>Пробел: {categoryLabel(match.shopping_gap.needed_category)}</Text>
                       <Text style={styles.gapText}>{match.shopping_gap.needed_description}</Text>
-                      <Text style={styles.mockLabel}>Mock availability for demo. Not live inventory.</Text>
+                      <Text style={styles.mockLabel}>Техническая демонстрация доступности. Не live-остатки.</Text>
                       {(mockOffersByGap[match.shopping_gap.gap_id] ?? []).map((offer) => (
                         <View key={offer.id} style={styles.offerRow}>
                           <Text style={styles.offerName}>

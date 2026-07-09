@@ -11,7 +11,7 @@ def test_shopping_gap_returns_mock_offers(client: TestClient, soft_rose_look_id:
     offers = response.json()
     assert len(offers) >= 1
     assert {offer["category"] for offer in offers} == {"highlighter"}
-    assert all(offer["source_label"] == "Mock availability for demo. Not live inventory." for offer in offers)
+    assert all(offer["source_label"] == "Техническая демонстрация доступности. Не live-остатки." for offer in offers)
 
 
 def test_unknown_shopping_gap_returns_404(client: TestClient) -> None:

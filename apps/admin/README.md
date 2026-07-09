@@ -1,34 +1,24 @@
-# Admin
+# Makeup Personal Admin
 
-Pass 3 uses API-only admin endpoints instead of a separate web app.
+Vite/React admin UI for managing looks, look roles, tutorial steps, stores, and store offers.
 
-Admin endpoints are exposed in FastAPI OpenAPI docs at `/docs`.
-
-Implemented CRUD resources:
-
-- `POST|PUT|DELETE /admin/looks`
-- `POST|PUT|DELETE /admin/look-roles`
-- `POST|PUT|DELETE /admin/tutorials`
-- `POST|PUT|DELETE /admin/tutorial-steps`
-- `POST|PUT|DELETE /admin/stores`
-- `POST|PUT|DELETE /admin/store-offers`
-
-Example:
+## Configuration
 
 ```bash
-curl -X POST http://127.0.0.1:8000/admin/store-offers \
-  -H "Content-Type: application/json" \
-  -d '{
-    "store_id": 1,
-    "product_name": "Mock Gloss",
-    "brand": "Mock Brand",
-    "category": "lip_gloss",
-    "color_family": "nude",
-    "price": 18,
-    "currency": "USD",
-    "availability_status": "mock_in_stock",
-    "source_label": "Mock availability for demo. Not live inventory."
-  }'
+VITE_API_BASE_URL=http://127.0.0.1:8000
 ```
 
-There is no production authentication in this MVP pass.
+For Vercel production:
+
+```bash
+VITE_API_BASE_URL=https://makeup-personal-api.vercel.app
+```
+
+## Run
+
+```bash
+cd apps/admin
+npm install
+npm run build
+npm run dev
+```

@@ -6,8 +6,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.db.base import Base
-from app.db.session import SessionLocal, engine
-from app.routers import admin, health, looks, matching, shopping, user_products
+from app.db.session import SessionLocal, engine, is_ephemeral_database
+from app.routers import admin, auth, health, looks, matching, shopping, user_products, vocabulary
 from app.seed.data import seed_demo_data
 
 
@@ -27,7 +27,7 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     if should_auto_seed_demo():
         Base.metadata.create_all(bind=engine)
         with SessionLocal() as db:
-            seed_demo_data(db, reset=True)
+            seed_demo_data(db, reset=is_ephemeral_database())
     yield
 
 
@@ -47,8 +47,10 @@ app.add_middleware(
 )
 
 app.include_router(health.router)
+app.include_router(auth.router)
 app.include_router(admin.router)
 app.include_router(looks.router)
 app.include_router(user_products.router)
 app.include_router(matching.router)
 app.include_router(shopping.router)
+app.include_router(vocabulary.router)

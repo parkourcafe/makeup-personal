@@ -2,6 +2,10 @@ from fastapi.testclient import TestClient
 
 
 def test_admin_can_crud_look(client: TestClient) -> None:
+    listed = client.get("/admin/looks")
+    assert listed.status_code == 200
+    assert len(listed.json()) == 12
+
     payload = {
         "slug": "admin-test-look",
         "title": "Admin Test Look",
@@ -44,7 +48,7 @@ def test_admin_can_crud_store_offer(client: TestClient) -> None:
         "price": 18.0,
         "currency": "USD",
         "availability_status": "mock_in_stock",
-        "source_label": "Mock availability for demo. Not live inventory.",
+        "source_label": "Техническая демонстрация доступности. Не live-остатки.",
     }
     offer_response = client.post("/admin/store-offers", json=offer_payload)
     assert offer_response.status_code == 201
@@ -56,3 +60,25 @@ def test_admin_can_crud_store_offer(client: TestClient) -> None:
 
     assert client.delete(f"/admin/store-offers/{offer_id}").status_code == 204
     assert client.delete(f"/admin/stores/{store_id}").status_code == 204
+
+
+def test_admin_can_list_roles_tutorials_and_offers(client: TestClient, soft_rose_look_id: int) -> None:
+    roles = client.get(f"/admin/look-roles?look_id={soft_rose_look_id}")
+    assert roles.status_code == 200
+    assert len(roles.json()) >= 1
+
+    tutorials = client.get(f"/admin/tutorials?look_id={soft_rose_look_id}")
+    assert tutorials.status_code == 200
+    tutorial_id = tutorials.json()[0]["id"]
+
+    steps = client.get(f"/admin/tutorial-steps?tutorial_id={tutorial_id}")
+    assert steps.status_code == 200
+    assert len(steps.json()) >= 1
+
+    stores = client.get("/admin/stores")
+    assert stores.status_code == 200
+    assert len(stores.json()) == 3
+
+    offers = client.get("/admin/store-offers")
+    assert offers.status_code == 200
+    assert len(offers.json()) == 10

@@ -106,6 +106,8 @@ class User(TimestampMixin, Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    email: Mapped[str | None] = mapped_column(String(320), unique=True, index=True)
+    password_hash: Mapped[str | None] = mapped_column(String(320))
     display_name: Mapped[str] = mapped_column(String(160), nullable=False)
     language: Mapped[str] = mapped_column(String(20), default="en", nullable=False)
     skin_depth: Mapped[str | None] = mapped_column(String(40))
@@ -116,6 +118,22 @@ class User(TimestampMixin, Base):
         cascade="all, delete-orphan",
         order_by="UserProduct.id",
     )
+    sessions: Mapped[list["AuthSession"]] = relationship(
+        back_populates="user",
+        cascade="all, delete-orphan",
+        order_by="AuthSession.id",
+    )
+
+
+class AuthSession(TimestampMixin, Base):
+    __tablename__ = "auth_sessions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    token_hash: Mapped[str] = mapped_column(String(128), unique=True, index=True, nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+    user: Mapped[User] = relationship(back_populates="sessions")
 
 
 class UserProduct(TimestampMixin, Base):

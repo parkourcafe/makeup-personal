@@ -81,7 +81,7 @@ The `gap_id` can be used to fetch mock offers from:
 GET /shopping-gaps/{gap_id}/mock-offers
 ```
 
-Those offers are demo data only and must be labeled: "Mock availability for demo. Not live inventory."
+Those offers are demo data only and must be labeled: "Техническая демонстрация доступности. Не live-остатки."
 
 ## Overall Status Rules
 

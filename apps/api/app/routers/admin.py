@@ -33,6 +33,14 @@ router = APIRouter(prefix="/admin", tags=["admin"])
 ModelT = TypeVar("ModelT")
 
 
+@router.get("/looks", response_model=list[LookRead])
+def list_admin_looks(include_inactive: bool = True, db: Session = Depends(get_db)) -> list[Look]:
+    statement = select(Look).options(selectinload(Look.roles)).order_by(Look.id)
+    if not include_inactive:
+        statement = statement.where(Look.is_active.is_(True))
+    return list(db.scalars(statement).all())
+
+
 @router.post("/looks", response_model=LookRead, status_code=status.HTTP_201_CREATED)
 def create_look(payload: LookCreate, db: Session = Depends(get_db)) -> Look:
     look = Look(**payload.model_dump())
@@ -55,6 +63,14 @@ def delete_look(look_id: int, db: Session = Depends(get_db)) -> Response:
     db.delete(look)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.get("/look-roles", response_model=list[LookRoleRead])
+def list_look_roles(look_id: int | None = None, db: Session = Depends(get_db)) -> list[LookRole]:
+    statement = select(LookRole).order_by(LookRole.look_id, LookRole.sort_order, LookRole.id)
+    if look_id is not None:
+        statement = statement.where(LookRole.look_id == look_id)
+    return list(db.scalars(statement).all())
 
 
 @router.post("/look-roles", response_model=LookRoleRead, status_code=status.HTTP_201_CREATED)
@@ -84,6 +100,14 @@ def delete_look_role(role_id: int, db: Session = Depends(get_db)) -> Response:
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
+@router.get("/tutorials", response_model=list[TutorialRead])
+def list_tutorials(look_id: int | None = None, db: Session = Depends(get_db)) -> list[Tutorial]:
+    statement = select(Tutorial).options(selectinload(Tutorial.steps)).order_by(Tutorial.look_id, Tutorial.id)
+    if look_id is not None:
+        statement = statement.where(Tutorial.look_id == look_id)
+    return list(db.scalars(statement).all())
+
+
 @router.post("/tutorials", response_model=TutorialRead, status_code=status.HTTP_201_CREATED)
 def create_tutorial(payload: TutorialCreate, db: Session = Depends(get_db)) -> Tutorial:
     _get_or_404(db, Look, payload.look_id, "look not found")
@@ -107,6 +131,14 @@ def delete_tutorial(tutorial_id: int, db: Session = Depends(get_db)) -> Response
     db.delete(tutorial)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.get("/tutorial-steps", response_model=list[TutorialStepRead])
+def list_tutorial_steps(tutorial_id: int | None = None, db: Session = Depends(get_db)) -> list[TutorialStep]:
+    statement = select(TutorialStep).order_by(TutorialStep.tutorial_id, TutorialStep.step_number, TutorialStep.id)
+    if tutorial_id is not None:
+        statement = statement.where(TutorialStep.tutorial_id == tutorial_id)
+    return list(db.scalars(statement).all())
 
 
 @router.post("/tutorial-steps", response_model=TutorialStepRead, status_code=status.HTTP_201_CREATED)
@@ -140,6 +172,11 @@ def delete_tutorial_step(step_id: int, db: Session = Depends(get_db)) -> Respons
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
+@router.get("/stores", response_model=list[StoreRead])
+def list_stores(db: Session = Depends(get_db)) -> list[Store]:
+    return list(db.scalars(select(Store).order_by(Store.name)).all())
+
+
 @router.post("/stores", response_model=StoreRead, status_code=status.HTTP_201_CREATED)
 def create_store(payload: StoreCreate, db: Session = Depends(get_db)) -> Store:
     store = Store(**payload.model_dump())
@@ -164,6 +201,14 @@ def delete_store(store_id: int, db: Session = Depends(get_db)) -> Response:
     db.delete(store)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.get("/store-offers", response_model=list[StoreOfferRead])
+def list_store_offers(store_id: int | None = None, db: Session = Depends(get_db)) -> list[StoreOffer]:
+    statement = select(StoreOffer).options(selectinload(StoreOffer.store)).order_by(StoreOffer.id)
+    if store_id is not None:
+        statement = statement.where(StoreOffer.store_id == store_id)
+    return list(db.scalars(statement).all())
 
 
 @router.post("/store-offers", response_model=StoreOfferRead, status_code=status.HTTP_201_CREATED)

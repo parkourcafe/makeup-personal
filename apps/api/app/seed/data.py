@@ -1,12 +1,22 @@
-from sqlalchemy import delete
+from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
-from app.models import Look, LookRole, Store, StoreOffer, Tutorial, TutorialStep, User, UserProduct
+from app.models import AuthSession, Look, LookRole, Store, StoreOffer, Tutorial, TutorialStep, User, UserProduct
 
 
-def seed_demo_data(db: Session, reset: bool = True) -> None:
+REFERENCE_IMAGE_URLS = [
+    "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=900&q=80",
+]
+
+
+def seed_demo_data(db: Session, reset: bool = True) -> bool:
     if reset:
         _reset(db)
+    elif db.scalar(select(Look.id).limit(1)) is not None:
+        return False
 
     user = User(
         display_name="Алина",
@@ -26,10 +36,11 @@ def seed_demo_data(db: Session, reset: bool = True) -> None:
     _create_mock_stores(db)
 
     db.commit()
+    return True
 
 
 def _reset(db: Session) -> None:
-    for model in [StoreOffer, Store, UserProduct, TutorialStep, Tutorial, LookRole, Look, User]:
+    for model in [AuthSession, StoreOffer, Store, UserProduct, TutorialStep, Tutorial, LookRole, Look, User]:
         db.execute(delete(model))
     db.commit()
 
@@ -130,7 +141,7 @@ def _looks() -> list[dict]:
             "description": "Носимый розовый макияж с чистой кожей, мягким акцентом на глазах и спокойной губой.",
             "difficulty": "beginner",
             "occasion": "daily",
-            "reference_image_url": "https://example.com/reference/soft-rose-everyday.jpg",
+            "reference_image_url": REFERENCE_IMAGE_URLS[0],
             "roles": [
                 _role(
                     "skin_prep",
@@ -245,53 +256,53 @@ def _looks() -> list[dict]:
             "description": "Теплая коричневая растушевка, сбалансированная кожа и мягкая скульптура щек.",
             "difficulty": "intermediate",
             "occasion": "evening",
-            "reference_image_url": "https://example.com/reference/latte-soft-smoke.jpg",
+            "reference_image_url": REFERENCE_IMAGE_URLS[1],
             "roles": [
-                _role("natural_base", "Natural satin base", "A satin base that keeps the skin balanced.", "foundation", ["foundation", "skin_tint"], accepted_color_families=["beige"], accepted_undertones=["neutral", "warm"], accepted_finishes=["natural", "satin"], accepted_textures=["liquid", "cream"], accepted_coverage=["light", "medium"], intensity_min=1, intensity_max=5),
-                _role("soft_conceal", "Targeted concealer", "Concealer only where brightness is needed.", "concealer", ["concealer"], accepted_color_families=["beige", "peach"], accepted_undertones=["neutral", "warm"], accepted_finishes=["natural"], accepted_textures=["cream", "liquid"], accepted_coverage=["medium", "full"], intensity_min=1, intensity_max=4),
-                _role("warm_sculpt", "Warm soft sculpt", "Warm bronzer softly placed under cheekbones.", "bronzer", ["bronzer"], accepted_color_families=["bronze", "brown"], accepted_undertones=["warm", "neutral"], accepted_finishes=["matte", "satin"], accepted_textures=["powder", "cream"], intensity_min=3, intensity_max=7),
-                _role("brown_smoke", "Brown smoke lid", "Warm brown shadow blended close to the lashes.", "eyeshadow", ["eyeshadow"], accepted_color_families=["brown", "bronze"], accepted_undertones=["warm", "neutral"], accepted_finishes=["matte", "satin"], accepted_textures=["powder", "cream"], intensity_min=3, intensity_max=7),
-                _role("lash_frame", "Defined lashes", "Mascara that frames the soft smoke.", "mascara", ["mascara"], accepted_color_families=["black", "brown"], accepted_finishes=["natural"], accepted_textures=["cream"], intensity_min=4, intensity_max=8),
-                _role("muted_lip", "Muted warm lip", "A muted warm lip that stays below the eye intensity.", "lipstick", ["lipstick", "lip_tint"], accepted_color_families=["nude", "rose", "brown"], accepted_undertones=["warm", "neutral"], accepted_finishes=["satin", "matte"], accepted_textures=["cream", "liquid"], intensity_min=2, intensity_max=6),
+                _role("natural_base", "Сатиновая база", "Сатиновый тон или тинт, который выравнивает кожу и не перегружает ее.", "foundation", ["foundation", "skin_tint"], accepted_color_families=["beige"], accepted_undertones=["neutral", "warm"], accepted_finishes=["natural", "satin"], accepted_textures=["liquid", "cream"], accepted_coverage=["light", "medium"], intensity_min=1, intensity_max=5),
+                _role("soft_conceal", "Точечный консилер", "Консилер только там, где нужно добавить свежести или скрыть покраснение.", "concealer", ["concealer"], accepted_color_families=["beige", "peach"], accepted_undertones=["neutral", "warm"], accepted_finishes=["natural"], accepted_textures=["cream", "liquid"], accepted_coverage=["medium", "full"], intensity_min=1, intensity_max=4),
+                _role("warm_sculpt", "Мягкая теплая скульптура", "Теплый бронзер под скулой и по периметру лица без жесткой полосы.", "bronzer", ["bronzer"], accepted_color_families=["bronze", "brown"], accepted_undertones=["warm", "neutral"], accepted_finishes=["matte", "satin"], accepted_textures=["powder", "cream"], intensity_min=3, intensity_max=7),
+                _role("brown_smoke", "Коричневая дымка на веке", "Теплый коричневый оттенок, растушеванный близко к линии ресниц.", "eyeshadow", ["eyeshadow"], accepted_color_families=["brown", "bronze"], accepted_undertones=["warm", "neutral"], accepted_finishes=["matte", "satin"], accepted_textures=["powder", "cream"], intensity_min=3, intensity_max=7),
+                _role("lash_frame", "Выразительные ресницы", "Тушь, которая собирает мягкую коричневую растушевку и добавляет глубину.", "mascara", ["mascara"], accepted_color_families=["black", "brown"], accepted_finishes=["natural"], accepted_textures=["cream"], intensity_min=4, intensity_max=8),
+                _role("muted_lip", "Приглушенная теплая губа", "Теплая спокойная губа, которая не спорит с интенсивностью глаз.", "lipstick", ["lipstick", "lip_tint"], accepted_color_families=["nude", "rose", "brown"], accepted_undertones=["warm", "neutral"], accepted_finishes=["satin", "matte"], accepted_textures=["cream", "liquid"], intensity_min=2, intensity_max=6),
             ],
             "tutorial": {
-                "title": "Latte Soft Smoke Tutorial",
-                "summary": "Layer warm browns in thin passes to keep the smoke wearable.",
+                "title": "Урок: латте soft smoke",
+                "summary": "Наслаивай теплые коричневые оттенки тонко, чтобы дымка осталась носимой.",
                 "steps": [
-                    _step("natural_base", "Lay down base", "Blend a satin base only where needed.", "Use thin layers.", "Do not erase all skin texture."),
-                    _step("soft_conceal", "Brighten selectively", "Tap concealer under the inner eye and around redness.", "Keep the outer eye flexible.", "Too much concealer can crease under shadow."),
-                    _step("warm_sculpt", "Warm the cheek", "Sweep bronzer softly under cheekbones and around the temples.", "Blend edges before adding eye color.", "A harsh sculpt line breaks the softness."),
-                    _step("brown_smoke", "Build the smoke", "Blend brown shadow from the lash line upward.", "Stop below the crease for a soft version.", "Over-blending too high changes the eye shape."),
-                    _step("lash_frame", "Frame lashes", "Apply mascara after the shadow is blended.", "Focus on the outer lashes.", "Wet mascara can transfer onto shadow."),
-                    _step("muted_lip", "Mute the lip", "Apply a warm muted lip in a thin layer.", "Blot once for a softer finish.", "A glossy bright lip competes with the smoke."),
+                    _step("natural_base", "Собери сатиновую базу", "Растушуй тонкий слой только там, где нужно выравнивание.", "Работай тонкими слоями.", "Не стирай всю естественную текстуру кожи."),
+                    _step("soft_conceal", "Подсвети точечно", "Похлопывающими движениями добавь консилер у внутреннего уголка глаза и на покраснения.", "Оставь внешний угол глаза подвижным.", "Избыток консилера может собраться в складках под тенями."),
+                    _step("warm_sculpt", "Согрей щеку", "Мягко проведи бронзером под скулой и у висков.", "Растушуй края до теней.", "Жесткая скульптурная линия ломает мягкость образа."),
+                    _step("brown_smoke", "Построй дымку", "Растушуй коричневый оттенок от линии ресниц вверх.", "Для мягкой версии остановись ниже складки века.", "Слишком высокая растушевка меняет форму глаза."),
+                    _step("lash_frame", "Оформи ресницы", "Нанеси тушь после того, как тени растушеваны.", "Сфокусируйся на внешних ресницах.", "Влажная тушь может отпечататься на тенях."),
+                    _step("muted_lip", "Приглуши губы", "Нанеси теплый приглушенный оттенок тонким слоем.", "Промокни один раз для более мягкого финиша.", "Яркая глянцевая губа спорит с коричневой дымкой."),
                 ],
             },
         },
         {
             "slug": "clean-girl-polished",
-            "title": "Clean girl polished",
+            "title": "Чистый polished-макияж",
             "description": "Сдержанный ухоженный макияж с бровями, мягкой кожей и прозрачным блеском на губах.",
             "difficulty": "beginner",
             "occasion": "work",
-            "reference_image_url": "https://example.com/reference/clean-girl-polished.jpg",
+            "reference_image_url": REFERENCE_IMAGE_URLS[2],
             "roles": [
-                _role("skin_tint", "Barely-there tint", "Light coverage that looks like skin.", "skin_tint", ["skin_tint", "foundation"], accepted_color_families=["beige"], accepted_undertones=["neutral"], accepted_finishes=["natural", "dewy"], accepted_textures=["liquid", "cream"], accepted_coverage=["light"], intensity_min=1, intensity_max=3),
-                _role("soft_powder", "Soft setting veil", "A sheer powder used only where shine breaks through.", "powder", ["powder"], accepted_color_families=["translucent"], accepted_finishes=["matte"], accepted_textures=["powder"], accepted_coverage=["sheer"], intensity_min=0, intensity_max=2),
-                _role("brow_shape", "Brow shape", "A brow pencil or gel that quietly defines the brow.", "eyebrow_pencil", ["eyebrow_pencil", "brow_gel"], accepted_color_families=["brown", "clear"], accepted_finishes=["matte", "natural"], accepted_textures=["pencil", "gel"], intensity_min=0, intensity_max=6),
-                _role("cream_flush", "Cream pink flush", "A small amount of pink cream blush.", "blush", ["blush"], accepted_color_families=["pink", "rose"], accepted_undertones=["cool", "neutral"], accepted_finishes=["dewy", "satin"], accepted_textures=["cream", "liquid"], intensity_min=2, intensity_max=5),
-                _role("clean_mascara", "Clean lash lift", "A restrained mascara layer that keeps the look polished.", "mascara", ["mascara"], accepted_color_families=["black", "brown"], accepted_finishes=["natural"], accepted_textures=["cream"], intensity_min=2, intensity_max=6),
-                _role("clear_lip", "Clear lip balm", "Clear balm or low-pigment shine.", "lip_balm", ["lip_balm", "lip_gloss"], accepted_color_families=["clear", "nude"], accepted_finishes=["gloss", "natural"], accepted_textures=["balm", "gel"], accepted_coverage=["sheer"], intensity_min=0, intensity_max=2),
+                _role("skin_tint", "Почти невидимый тинт", "Легкое покрытие, которое выглядит как собственная кожа.", "skin_tint", ["skin_tint", "foundation"], accepted_color_families=["beige"], accepted_undertones=["neutral"], accepted_finishes=["natural", "dewy"], accepted_textures=["liquid", "cream"], accepted_coverage=["light"], intensity_min=1, intensity_max=3),
+                _role("soft_powder", "Тонкая фиксирующая вуаль", "Прозрачная пудра только там, где появляется лишний блеск.", "powder", ["powder"], accepted_color_families=["translucent"], accepted_finishes=["matte"], accepted_textures=["powder"], accepted_coverage=["sheer"], intensity_min=0, intensity_max=2),
+                _role("brow_shape", "Форма бровей", "Карандаш или гель, который спокойно собирает форму брови.", "eyebrow_pencil", ["eyebrow_pencil", "brow_gel"], accepted_color_families=["brown", "clear"], accepted_finishes=["matte", "natural"], accepted_textures=["pencil", "gel"], intensity_min=0, intensity_max=6),
+                _role("cream_flush", "Кремовый розовый румянец", "Небольшое количество розовых кремовых румян.", "blush", ["blush"], accepted_color_families=["pink", "rose"], accepted_undertones=["cool", "neutral"], accepted_finishes=["dewy", "satin"], accepted_textures=["cream", "liquid"], intensity_min=2, intensity_max=5),
+                _role("clean_mascara", "Чистый лифтинг ресниц", "Сдержанный слой туши, который сохраняет образ аккуратным.", "mascara", ["mascara"], accepted_color_families=["black", "brown"], accepted_finishes=["natural"], accepted_textures=["cream"], intensity_min=2, intensity_max=6),
+                _role("clear_lip", "Прозрачный бальзам", "Прозрачный бальзам или блеск с минимальным пигментом.", "lip_balm", ["lip_balm", "lip_gloss"], accepted_color_families=["clear", "nude"], accepted_finishes=["gloss", "natural"], accepted_textures=["balm", "gel"], accepted_coverage=["sheer"], intensity_min=0, intensity_max=2),
             ],
             "tutorial": {
-                "title": "Clean Girl Polished Tutorial",
-                "summary": "Keep each layer controlled and visible only where it improves the finish.",
+                "title": "Урок: чистый polished-макияж",
+                "summary": "Каждый слой должен быть заметен только там, где он улучшает финиш.",
                 "steps": [
-                    _step("skin_tint", "Tint only where needed", "Blend tint through the center of the face.", "Use fingers for a skin-like finish.", "Applying everywhere can look heavier than intended."),
-                    _step("soft_powder", "Set strategically", "Powder the sides of the nose and center of the forehead.", "Keep cheekbones unpowdered.", "Powdering the whole face removes freshness."),
-                    _step("brow_shape", "Shape brows", "Brush brows up and define sparse areas.", "Use short strokes.", "Drawing a solid block looks less polished."),
-                    _step("cream_flush", "Place blush high", "Tap blush high and sheer it out.", "Blend before adding more.", "Too much blush makes the look less restrained."),
-                    _step("clean_mascara", "Lift lashes", "Apply one clean layer of mascara.", "Comb through once while wet.", "Multiple coats can make the look heavier."),
-                    _step("clear_lip", "Add clear shine", "Finish with a clear balm or gloss.", "Keep edges soft.", "Overlining changes the clean feel."),
+                    _step("skin_tint", "Нанеси тинт только где нужно", "Растушуй тинт через центр лица.", "Для эффекта кожи используй пальцы.", "Нанесение на все лицо может выглядеть тяжелее, чем задумано."),
+                    _step("soft_powder", "Зафиксируй стратегически", "Припудри крылья носа и центр лба.", "Скулы оставь без пудры.", "Пудра на всем лице убирает свежесть."),
+                    _step("brow_shape", "Собери брови", "Зачеши брови вверх и заполни редкие зоны.", "Делай короткие штрихи.", "Сплошной блок выглядит менее ухоженно."),
+                    _step("cream_flush", "Поставь румянец высоко", "Похлопывающими движениями нанеси румяна высоко и растушуй тонко.", "Растушуй перед тем, как добавить еще.", "Слишком много румян делает образ менее сдержанным."),
+                    _step("clean_mascara", "Приподними ресницы", "Нанеси один чистый слой туши.", "Прочеши ресницы, пока тушь влажная.", "Несколько слоев могут утяжелить образ."),
+                    _step("clear_lip", "Добавь прозрачное сияние", "Заверши прозрачным бальзамом или блеском.", "Края губ оставь мягкими.", "Сильный оверлайн меняет чистое настроение."),
                 ],
             },
         },
@@ -301,25 +312,25 @@ def _looks() -> list[dict]:
             "description": "Макияж с ягодной губой, сбалансированными щеками, выразительными ресницами и аккуратной базой.",
             "difficulty": "intermediate",
             "occasion": "date night",
-            "reference_image_url": "https://example.com/reference/berry-date-night.jpg",
+            "reference_image_url": REFERENCE_IMAGE_URLS[3],
             "roles": [
-                _role("polished_base", "Polished base", "Medium coverage with a natural finish.", "foundation", ["foundation"], accepted_color_families=["beige"], accepted_undertones=["neutral"], accepted_finishes=["natural", "satin"], accepted_textures=["liquid", "cream"], accepted_coverage=["medium"], intensity_min=2, intensity_max=5),
-                _role("soft_correct", "Soft correction", "Peach or beige correction where discoloration shows.", "concealer", ["concealer"], accepted_color_families=["beige", "peach"], accepted_undertones=["neutral", "warm"], accepted_finishes=["natural"], accepted_textures=["cream"], accepted_coverage=["medium", "full"], intensity_min=2, intensity_max=5),
-                _role("berry_cheek", "Berry cheek stain", "A sheer berry tone on the cheeks.", "blush", ["blush", "lip_tint"], accepted_color_families=["berry", "plum"], accepted_undertones=["cool", "neutral"], accepted_finishes=["satin", "dewy"], accepted_textures=["cream", "liquid", "powder"], intensity_min=3, intensity_max=7),
-                _role("mauve_eye", "Mauve eye wash", "A mauve or plum wash across the lid.", "eyeshadow", ["eyeshadow"], accepted_color_families=["mauve", "plum"], accepted_undertones=["cool", "neutral"], accepted_finishes=["satin", "matte"], accepted_textures=["cream", "powder"], intensity_min=2, intensity_max=6),
-                _role("defined_lash", "Defined lash", "Black mascara to anchor the berry tones.", "mascara", ["mascara"], accepted_color_families=["black"], accepted_finishes=["natural"], accepted_textures=["cream"], intensity_min=4, intensity_max=8),
-                _role("berry_lip", "Berry lip", "A berry or plum lip in a soft satin finish.", "lipstick", ["lipstick", "lip_tint"], accepted_color_families=["berry", "plum"], accepted_undertones=["cool", "neutral"], accepted_finishes=["satin"], accepted_textures=["cream", "liquid"], intensity_min=4, intensity_max=8),
+                _role("polished_base", "Аккуратная база", "Среднее покрытие с естественным финишем.", "foundation", ["foundation"], accepted_color_families=["beige"], accepted_undertones=["neutral"], accepted_finishes=["natural", "satin"], accepted_textures=["liquid", "cream"], accepted_coverage=["medium"], intensity_min=2, intensity_max=5),
+                _role("soft_correct", "Мягкая коррекция", "Персиковая или бежевая коррекция только там, где видна неоднородность.", "concealer", ["concealer"], accepted_color_families=["beige", "peach"], accepted_undertones=["neutral", "warm"], accepted_finishes=["natural"], accepted_textures=["cream"], accepted_coverage=["medium", "full"], intensity_min=2, intensity_max=5),
+                _role("berry_cheek", "Ягодный тинт на щеках", "Прозрачный ягодный оттенок на щеках.", "blush", ["blush", "lip_tint"], accepted_color_families=["berry", "plum"], accepted_undertones=["cool", "neutral"], accepted_finishes=["satin", "dewy"], accepted_textures=["cream", "liquid", "powder"], intensity_min=3, intensity_max=7),
+                _role("mauve_eye", "Mauve-вуаль на веках", "Mauve или сливовый оттенок, мягко растушеванный по веку.", "eyeshadow", ["eyeshadow"], accepted_color_families=["mauve", "plum"], accepted_undertones=["cool", "neutral"], accepted_finishes=["satin", "matte"], accepted_textures=["cream", "powder"], intensity_min=2, intensity_max=6),
+                _role("defined_lash", "Четкие ресницы", "Черная тушь, которая собирает ягодную гамму.", "mascara", ["mascara"], accepted_color_families=["black"], accepted_finishes=["natural"], accepted_textures=["cream"], intensity_min=4, intensity_max=8),
+                _role("berry_lip", "Ягодная губа", "Ягодная или сливовая губа с мягким сатиновым финишем.", "lipstick", ["lipstick", "lip_tint"], accepted_color_families=["berry", "plum"], accepted_undertones=["cool", "neutral"], accepted_finishes=["satin"], accepted_textures=["cream", "liquid"], intensity_min=4, intensity_max=8),
             ],
             "tutorial": {
-                "title": "Berry Date Night Tutorial",
-                "summary": "Keep the berry tones coordinated so the lip remains the focus.",
+                "title": "Урок: ягодный вечерний акцент",
+                "summary": "Держи ягодные оттенки в одной гамме, чтобы губа осталась главным фокусом.",
                 "steps": [
-                    _step("polished_base", "Polish the base", "Apply medium coverage in thin layers.", "Let each layer settle.", "Heavy base can fight with the berry lip."),
-                    _step("soft_correct", "Correct small areas", "Correct darkness or redness only where it distracts.", "Use a tapping motion.", "Wide concealer placement can flatten the face."),
-                    _step("berry_cheek", "Add berry cheek", "Sheer berry color over the upper cheek.", "Use a small amount first.", "A saturated cheek competes with the lip."),
-                    _step("mauve_eye", "Wash the lid", "Blend mauve tone softly across the mobile lid.", "Keep edges diffused.", "A hard edge looks too graphic for this look."),
-                    _step("defined_lash", "Anchor lashes", "Use black mascara to define the eye.", "Comb through before it dries.", "Clumps make the look less polished."),
-                    _step("berry_lip", "Apply berry lip", "Apply berry color, then soften the edge with a fingertip.", "Blot once for control.", "Skipping edge softening can make the lip look severe."),
+                    _step("polished_base", "Отполируй базу", "Нанеси среднее покрытие тонкими слоями.", "Дай каждому слою осесть.", "Плотная база может спорить с ягодной губой."),
+                    _step("soft_correct", "Скорректируй малые зоны", "Скорректируй тени или покраснения только там, где они отвлекают.", "Работай похлопывающими движениями.", "Широкое нанесение консилера может уплощать лицо."),
+                    _step("berry_cheek", "Добавь ягодный румянец", "Растушуй прозрачный ягодный цвет по верхней части щеки.", "Сначала возьми маленькое количество.", "Насыщенная щека конкурирует с губой."),
+                    _step("mauve_eye", "Сделай вуаль на веке", "Мягко растушуй mauve-оттенок по подвижному веку.", "Края должны быть рассеянными.", "Жесткая граница выглядит слишком графично для этого образа."),
+                    _step("defined_lash", "Закрепи ресницы", "Используй черную тушь, чтобы обозначить глаз.", "Прочеши ресницы до высыхания.", "Комочки делают образ менее аккуратным."),
+                    _step("berry_lip", "Нанеси ягодную губу", "Нанеси ягодный цвет, затем смягчи край подушечкой пальца.", "Промокни один раз для контроля.", "Без смягчения края губа может выглядеть слишком жестко."),
                 ],
             },
         },
@@ -330,11 +341,11 @@ def _generated_looks() -> list[dict]:
     specs = [
         ("soft-coral-brunch", "Мягкий коралл для бранча", "Свежий коралловый акцент, легкая кожа и мягкие ресницы.", "beginner", "daily", "coral", "peach", "brown", "nude"),
         ("office-neutral-polish", "Нейтральный офисный макияж", "Собранный дневной образ с нейтральной гаммой и аккуратными бровями.", "beginner", "work", "nude", "beige", "taupe", "rose"),
-        ("golden-hour-glow", "Golden hour glow", "Теплый сияющий образ для мягкого вечернего света.", "intermediate", "evening", "champagne", "bronze", "brown", "peach"),
+        ("golden-hour-glow", "Сияние золотого часа", "Теплый сияющий образ для мягкого вечернего света.", "intermediate", "evening", "champagne", "bronze", "brown", "peach"),
         ("soft-plum-focus", "Мягкий сливовый акцент", "Сливовый фокус на губах и спокойная кожа без тяжелого контура.", "intermediate", "date night", "plum", "mauve", "plum", "plum"),
-        ("rose-matte-workday", "Розовый матовый workday", "Матовый розово-бежевый образ для долгого рабочего дня.", "beginner", "work", "rose", "beige", "brown", "rose"),
-        ("espresso-lashline", "Espresso lashline", "Кофейная линия у ресниц, нейтральные щеки и мягкая губа.", "intermediate", "evening", "brown", "bronze", "brown", "nude"),
-        ("fresh-peach-weekend", "Свежий персиковый weekend", "Персиковый румянец, мягкий тон и прозрачная губа.", "beginner", "daily", "peach", "beige", "taupe", "clear"),
+        ("rose-matte-workday", "Розовый матовый рабочий день", "Матовый розово-бежевый образ для долгого рабочего дня.", "beginner", "work", "rose", "beige", "brown", "rose"),
+        ("espresso-lashline", "Эспрессо у линии ресниц", "Кофейная линия у ресниц, нейтральные щеки и мягкая губа.", "intermediate", "evening", "brown", "bronze", "brown", "nude"),
+        ("fresh-peach-weekend", "Свежий персиковый выходной", "Персиковый румянец, мягкий тон и прозрачная губа.", "beginner", "daily", "peach", "beige", "taupe", "clear"),
         ("cool-mauve-minimal", "Минималистичный cool mauve", "Холодный mauve-акцент с деликатной базой и спокойной тушью.", "intermediate", "date night", "mauve", "pink", "mauve", "mauve"),
     ]
     return [_generated_look(*spec) for spec in specs]
@@ -373,7 +384,7 @@ def _generated_look(
         "description": description,
         "difficulty": difficulty,
         "occasion": occasion,
-        "reference_image_url": f"https://example.com/reference/{slug}.jpg",
+        "reference_image_url": REFERENCE_IMAGE_URLS[sum(ord(character) for character in slug) % len(REFERENCE_IMAGE_URLS)],
         "roles": roles,
         "tutorial": {
             "title": f"Урок: {title}",
@@ -494,5 +505,5 @@ def _offer(
         "price": price,
         "currency": currency,
         "availability_status": availability_status,
-        "source_label": "Mock availability for demo. Not live inventory.",
+        "source_label": "Техническая демонстрация доступности. Не live-остатки.",
     }

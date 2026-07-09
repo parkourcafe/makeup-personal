@@ -1,7 +1,20 @@
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+from app.domain.vocabulary import (
+    COLOR_FAMILIES,
+    COVERAGE_LEVELS,
+    FINISHES,
+    OFFER_STATUSES,
+    PRODUCT_CATEGORIES,
+    PRODUCT_SOURCES,
+    TEXTURES,
+    UNDERTONES,
+    validate_token,
+    validate_tokens,
+)
 
 
 MatchStatus = Literal["enough", "use_differently", "not_suitable", "missing", "needs_confirmation"]
@@ -80,6 +93,41 @@ class LookRoleCreate(BaseModel):
     intensity_max: int | None = Field(default=None, ge=0, le=10)
     sort_order: int = 0
 
+    @field_validator("native_category")
+    @classmethod
+    def validate_native_category(cls, value: str) -> str:
+        return validate_token("native_category", value, PRODUCT_CATEGORIES) or value
+
+    @field_validator("accepted_categories")
+    @classmethod
+    def validate_accepted_categories(cls, value: list[str]) -> list[str]:
+        return validate_tokens("accepted_categories", value, PRODUCT_CATEGORIES) or []
+
+    @field_validator("accepted_color_families")
+    @classmethod
+    def validate_accepted_color_families(cls, value: list[str]) -> list[str]:
+        return validate_tokens("accepted_color_families", value, COLOR_FAMILIES) or []
+
+    @field_validator("accepted_undertones")
+    @classmethod
+    def validate_accepted_undertones(cls, value: list[str]) -> list[str]:
+        return validate_tokens("accepted_undertones", value, UNDERTONES) or []
+
+    @field_validator("accepted_finishes")
+    @classmethod
+    def validate_accepted_finishes(cls, value: list[str]) -> list[str]:
+        return validate_tokens("accepted_finishes", value, FINISHES) or []
+
+    @field_validator("accepted_textures")
+    @classmethod
+    def validate_accepted_textures(cls, value: list[str]) -> list[str]:
+        return validate_tokens("accepted_textures", value, TEXTURES) or []
+
+    @field_validator("accepted_coverage")
+    @classmethod
+    def validate_accepted_coverage(cls, value: list[str]) -> list[str]:
+        return validate_tokens("accepted_coverage", value, COVERAGE_LEVELS) or []
+
 
 class LookRoleUpdate(BaseModel):
     role_key: str | None = Field(default=None, min_length=1, max_length=120)
@@ -96,6 +144,41 @@ class LookRoleUpdate(BaseModel):
     intensity_min: int | None = Field(default=None, ge=0, le=10)
     intensity_max: int | None = Field(default=None, ge=0, le=10)
     sort_order: int | None = None
+
+    @field_validator("native_category")
+    @classmethod
+    def validate_native_category(cls, value: str | None) -> str | None:
+        return validate_token("native_category", value, PRODUCT_CATEGORIES)
+
+    @field_validator("accepted_categories")
+    @classmethod
+    def validate_accepted_categories(cls, value: list[str] | None) -> list[str] | None:
+        return validate_tokens("accepted_categories", value, PRODUCT_CATEGORIES)
+
+    @field_validator("accepted_color_families")
+    @classmethod
+    def validate_accepted_color_families(cls, value: list[str] | None) -> list[str] | None:
+        return validate_tokens("accepted_color_families", value, COLOR_FAMILIES)
+
+    @field_validator("accepted_undertones")
+    @classmethod
+    def validate_accepted_undertones(cls, value: list[str] | None) -> list[str] | None:
+        return validate_tokens("accepted_undertones", value, UNDERTONES)
+
+    @field_validator("accepted_finishes")
+    @classmethod
+    def validate_accepted_finishes(cls, value: list[str] | None) -> list[str] | None:
+        return validate_tokens("accepted_finishes", value, FINISHES)
+
+    @field_validator("accepted_textures")
+    @classmethod
+    def validate_accepted_textures(cls, value: list[str] | None) -> list[str] | None:
+        return validate_tokens("accepted_textures", value, TEXTURES)
+
+    @field_validator("accepted_coverage")
+    @classmethod
+    def validate_accepted_coverage(cls, value: list[str] | None) -> list[str] | None:
+        return validate_tokens("accepted_coverage", value, COVERAGE_LEVELS)
 
 
 class TutorialStepRead(BaseModel):
@@ -165,6 +248,41 @@ class ProductBase(BaseModel):
     source: str = Field(default="manual", max_length=80)
     confidence: float | None = Field(default=1.0, ge=0, le=1)
     expires_at: datetime | None = None
+
+    @field_validator("category")
+    @classmethod
+    def validate_category(cls, value: str) -> str:
+        return validate_token("category", value, PRODUCT_CATEGORIES) or value
+
+    @field_validator("color_family")
+    @classmethod
+    def validate_color_family(cls, value: str | None) -> str | None:
+        return validate_token("color_family", value, COLOR_FAMILIES)
+
+    @field_validator("undertone")
+    @classmethod
+    def validate_undertone(cls, value: str | None) -> str | None:
+        return validate_token("undertone", value, UNDERTONES)
+
+    @field_validator("finish")
+    @classmethod
+    def validate_finish(cls, value: str | None) -> str | None:
+        return validate_token("finish", value, FINISHES)
+
+    @field_validator("texture")
+    @classmethod
+    def validate_texture(cls, value: str | None) -> str | None:
+        return validate_token("texture", value, TEXTURES)
+
+    @field_validator("coverage")
+    @classmethod
+    def validate_coverage(cls, value: str | None) -> str | None:
+        return validate_token("coverage", value, COVERAGE_LEVELS)
+
+    @field_validator("source")
+    @classmethod
+    def validate_source(cls, value: str) -> str:
+        return validate_token("source", value, PRODUCT_SOURCES) or value
 
 
 class ProductCreate(ProductBase):
@@ -258,6 +376,21 @@ class StoreOfferCreate(BaseModel):
     availability_status: str = Field(min_length=1, max_length=80)
     source_label: str = Field(min_length=1, max_length=160)
 
+    @field_validator("category")
+    @classmethod
+    def validate_category(cls, value: str) -> str:
+        return validate_token("category", value, PRODUCT_CATEGORIES) or value
+
+    @field_validator("color_family")
+    @classmethod
+    def validate_color_family(cls, value: str | None) -> str | None:
+        return validate_token("color_family", value, COLOR_FAMILIES)
+
+    @field_validator("availability_status")
+    @classmethod
+    def validate_availability_status(cls, value: str) -> str:
+        return validate_token("availability_status", value, OFFER_STATUSES) or value
+
 
 class StoreOfferUpdate(BaseModel):
     store_id: int | None = None
@@ -269,3 +402,48 @@ class StoreOfferUpdate(BaseModel):
     currency: str | None = Field(default=None, min_length=1, max_length=12)
     availability_status: str | None = Field(default=None, min_length=1, max_length=80)
     source_label: str | None = Field(default=None, min_length=1, max_length=160)
+
+    @field_validator("category")
+    @classmethod
+    def validate_category(cls, value: str | None) -> str | None:
+        return validate_token("category", value, PRODUCT_CATEGORIES)
+
+    @field_validator("color_family")
+    @classmethod
+    def validate_color_family(cls, value: str | None) -> str | None:
+        return validate_token("color_family", value, COLOR_FAMILIES)
+
+    @field_validator("availability_status")
+    @classmethod
+    def validate_availability_status(cls, value: str | None) -> str | None:
+        return validate_token("availability_status", value, OFFER_STATUSES)
+
+
+class UserRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    email: str | None
+    display_name: str
+    language: str
+    skin_depth: str | None
+    skin_undertone: str | None
+
+
+class AuthRegister(BaseModel):
+    email: str = Field(min_length=5, max_length=320, pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+    password: str = Field(min_length=8, max_length=128)
+    display_name: str = Field(min_length=1, max_length=160)
+    skin_depth: str | None = Field(default=None, max_length=40)
+    skin_undertone: str | None = Field(default=None, max_length=40)
+
+
+class AuthLogin(BaseModel):
+    email: str = Field(min_length=5, max_length=320, pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+    password: str = Field(min_length=8, max_length=128)
+
+
+class AuthResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: UserRead

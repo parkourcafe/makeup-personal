@@ -3,7 +3,7 @@ import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-nat
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type ScreenProps = {
-  children: ReactNode;
+  children?: ReactNode;
   loading?: boolean;
   error?: string | null;
 };

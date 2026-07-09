@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { api } from "../api/client";
+import { useAuth } from "../auth/AuthContext";
 import { ReferencePreview } from "../components/ReferencePreview";
 import { Screen } from "../components/Screen";
 import type { Look, RootStackParamList } from "../types";
@@ -11,6 +12,7 @@ import { difficultyLabels, occasionLabels } from "../utils/labels";
 type Props = NativeStackScreenProps<RootStackParamList, "LookLibrary">;
 
 export function LookLibraryScreen({ navigation }: Props) {
+  const auth = useAuth();
   const [looks, setLooks] = useState<Look[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -33,8 +35,23 @@ export function LookLibraryScreen({ navigation }: Props) {
 
   return (
     <Screen error={error} loading={loading}>
-      <Text style={styles.title}>Выбери образ</Text>
-      <Text style={styles.subtitle}>Сначала урок, потом проверка твоей косметички.</Text>
+      <View style={styles.topBar}>
+        <View style={styles.titleBlock}>
+          <Text style={styles.title}>Образы</Text>
+          <Text style={styles.subtitle}>{auth.user?.display_name}, собери макияж из своей косметички.</Text>
+        </View>
+        <Pressable accessibilityRole="button" onPress={() => void auth.logout()} style={styles.logoutButton}>
+          <Text style={styles.logoutText}>Выйти</Text>
+        </Pressable>
+      </View>
+      <Pressable
+        accessibilityRole="button"
+        onPress={() => looks[0] ? navigation.navigate("MakeupBag", { lookId: looks[0].id }) : undefined}
+        style={styles.bagCard}
+      >
+        <Text style={styles.bagTitle}>Косметичка</Text>
+        <Text style={styles.bagText}>Добавь продукты один раз, затем проверяй готовность к любому образу.</Text>
+      </Pressable>
       {looks.map((look) => (
         <Pressable
           accessibilityRole="button"
@@ -58,8 +75,18 @@ export function LookLibraryScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
+  topBar: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    gap: 12,
+    justifyContent: "space-between"
+  },
+  titleBlock: {
+    flex: 1,
+    gap: 4
+  },
   title: {
-    color: "#20201f",
+    color: "#231f20",
     fontSize: 28,
     fontWeight: "800"
   },
@@ -68,9 +95,37 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 21
   },
+  logoutButton: {
+    borderColor: "#d4c7ba",
+    borderRadius: 8,
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 9
+  },
+  logoutText: {
+    color: "#4f4740",
+    fontSize: 12,
+    fontWeight: "800"
+  },
+  bagCard: {
+    backgroundColor: "#231f20",
+    borderRadius: 8,
+    gap: 6,
+    padding: 14
+  },
+  bagTitle: {
+    color: "#fffaf4",
+    fontSize: 17,
+    fontWeight: "900"
+  },
+  bagText: {
+    color: "#e7d9cb",
+    fontSize: 14,
+    lineHeight: 20
+  },
   card: {
-    backgroundColor: "#fff",
-    borderColor: "#e5ded5",
+    backgroundColor: "#fffaf4",
+    borderColor: "#e2d5c8",
     borderRadius: 8,
     borderWidth: 1,
     flexDirection: "row",

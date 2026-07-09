@@ -19,6 +19,6 @@
 - Demo user `1` has 32 products.
 - `soft-rose-everyday` readiness includes every `match_status`.
 - Shopping gaps include a `gap_id`.
-- `GET /shopping-gaps/{gap_id}/mock-offers` returns only mock offers and the demo source label.
+- `GET /shopping-gaps/{gap_id}/mock-offers` returns only mock offers and the Russian demo source label.
 - Mobile UI labels are Russian.
 - No UI copy claims AR, scanning, live inventory, or real nearby stock.
