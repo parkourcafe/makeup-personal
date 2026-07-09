@@ -21,3 +21,8 @@ Implemented in this pass:
 
 See `apps/api/README.md` for local setup and validation commands.
 See `apps/mobile/README.md` for mobile setup.
+
+## Vercel Deployments
+
+- Mobile web: https://makeup-personal-mobile.vercel.app
+- API: https://makeup-personal-api.vercel.app

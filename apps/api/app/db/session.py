@@ -3,6 +3,7 @@ from collections.abc import Generator
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.pool import StaticPool
 
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./makeup_coach.db")
@@ -14,11 +15,14 @@ def sqlite_connect_args(database_url: str) -> dict[str, bool]:
     return {}
 
 
-engine = create_engine(
-    DATABASE_URL,
-    connect_args=sqlite_connect_args(DATABASE_URL),
-    future=True,
-)
+engine_kwargs: dict[str, object] = {
+    "connect_args": sqlite_connect_args(DATABASE_URL),
+    "future": True,
+}
+if DATABASE_URL in {"sqlite://", "sqlite:///:memory:"}:
+    engine_kwargs["poolclass"] = StaticPool
+
+engine = create_engine(DATABASE_URL, **engine_kwargs)
 SessionLocal = sessionmaker(
     bind=engine,
     autoflush=False,

@@ -5,6 +5,7 @@ __pycache__/
 .venv/
 node_modules/
 .expo/
+.vercel/
 web-build/
 dist/
 makeup_coach.db

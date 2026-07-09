@@ -1,0 +1,12 @@
+[project]
+name = "makeup-personal-api"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115,<1.0",
+  "SQLAlchemy>=2.0,<3.0",
+  "pydantic>=2.7,<3.0"
+]
+
+[tool.vercel]
+entrypoint = "api.index:app"

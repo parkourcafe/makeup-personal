@@ -50,6 +50,7 @@ The demo seed creates user `1` (`Алина`), 12 active looks, tutorials, 32 ma
 ## Deployment
 
 `render.yaml`, `Dockerfile`, and `scripts/start.sh` are included for a simple hosted demo API.
+Vercel deployment config is included through `pyproject.toml`, `api/index.py`, `.python-version`, and `vercel.json`.
 
 Default deployment behavior:
 
@@ -59,6 +60,22 @@ Default deployment behavior:
 - allows mobile clients through `CORS_ORIGINS`.
 
 For a persistent production-like environment, replace the default SQLite `DATABASE_URL` with Postgres and decide whether seed reset on startup should stay enabled.
+
+Current Vercel demo API:
+
+```txt
+https://makeup-personal-api.vercel.app
+```
+
+The Vercel demo uses:
+
+```bash
+DATABASE_URL=sqlite:///:memory:
+AUTO_SEED_DEMO=true
+CORS_ORIGINS=*
+```
+
+That makes it a deterministic demo deployment. It is not persistent storage.
 
 Docker smoke command:
 

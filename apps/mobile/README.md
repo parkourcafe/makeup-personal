@@ -28,6 +28,18 @@ Use the deployed API URL for device testing:
 EXPO_PUBLIC_API_BASE_URL=https://your-deployed-api.example.com
 ```
 
+Current Vercel web deployment:
+
+```txt
+https://makeup-personal-mobile.vercel.app
+```
+
+Current Vercel API deployment:
+
+```txt
+https://makeup-personal-api.vercel.app
+```
+
 For a physical phone against a local backend, use the computer's LAN IP instead of `127.0.0.1`.
 
 ## Run
