@@ -6,7 +6,7 @@
 
 ## The one-sentence case
 
-O2 is the only offer in this tournament where the buyer's own research file says it out loud: **"Dubai real estate = the standout remote beachhead"** and **"Speed-to-lead is the single most monetizable pain found, across every market."** No other offer sits at the intersection of the #1-ranked market and the #1-ranked pain.
+The research file says it out loud: **"Dubai real estate = the standout remote beachhead"** and **"Speed-to-lead is the single most monetizable pain found, across every market."** No other offer sits at the intersection of the #1-ranked market and the #1-ranked pain.
 
 ## 1. Why this offer can sell FAST
 
