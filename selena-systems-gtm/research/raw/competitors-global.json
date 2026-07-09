@@ -1,0 +1,240 @@
+{
+  "meta": {
+    "prepared_for": "Selena Systems (Bali-based, $5,000-$10,000 AI implementation projects for SMBs)",
+    "date": "2026-07-09",
+    "method": "Public web research only (18 web searches). Direct page fetches to many agency sites were blocked by anti-bot/proxy (HTTP 403), so several profiles rely on search-result excerpts of those sites and third-party directories; where attribution of a number to a specific page is uncertain it is flagged. No one was contacted. Nothing is fabricated: pricing is listed only where publicly stated in a cited source, otherwise 'not public'."
+  },
+  "competitors": [
+    {
+      "name": "LeftClick AI (Nick Saraev)",
+      "website": "https://leftclick.ai/",
+      "positioning": "AI-driven growth systems built on Make.com and n8n; founder-led brand (Nick Saraev, ~400K YouTube subs) that also sells training (Maker School), so the agency doubles as the 'proof' for the education business.",
+      "target_market": "Agencies and B2B service businesses (lead gen / growth systems), primarily US/global English-speaking.",
+      "pricing": "Partially public: 'Engagements typically start at $5K. Most projects range $10K-$50K' (https://www.leftclick.ai/pricing, as surfaced in search results). No contracts, cancel anytime.",
+      "offer_structure": "Project builds of growth/outbound automation systems on Make.com and n8n; no long-term contracts; adjacent paid community/course (Maker School) as second revenue line.",
+      "promises": "Revenue/growth systems 'the same automations we sell to clients' used to scale founder's own businesses ($90K/mo 1SecondCopy, $250K/mo Maker School claims on site).",
+      "proof": "Logo wall claims: Anthropic, MrBeast, Notion, Wix, HeyGen, VEED, Lightricks, Durable (per leftclick.ai). Founder revenue claims are self-reported; no independently verifiable case studies with client-signed ROI numbers found.",
+      "weaknesses": "Floor price starts exactly where Selena plays ($5K) but focus skews to $10K-$50K growth/outbound systems; proof is founder-story-driven and audience-driven rather than SMB-operations case studies; attention split between agency, YouTube and course business; no local/APAC presence.",
+      "sources": ["https://leftclick.ai/", "https://www.leftclick.ai/pricing", "https://nicksaraev.com/"]
+    },
+    {
+      "name": "Morningside AI",
+      "website": "https://www.morningside.ai/",
+      "positioning": "Boutique custom AI agency (Auckland, NZ) helping businesses become 'AI-first'; tool-agnostic, workflow-specialists-first framing; founder Liam Ottley also has a large AI-agency-education audience.",
+      "target_market": "Mid-size businesses and larger custom AI builds; global English-speaking.",
+      "pricing": "not public",
+      "offer_structure": "Custom AI development: chatbots/assistants, AI automation implementation, strategy; scoped per engagement.",
+      "promises": "Chatbot solutions 'can handle up to 90% of customer inquiries automatically' (per third-party listing/search excerpt).",
+      "proof": "Portfolio/brand presence; specific published SMB case studies with hard ROI numbers not found in public search results.",
+      "weaknesses": "Suits bigger custom builds, not fixed-scope $5-10K SMB projects; opaque pricing; long-scoped custom engagements — an SMB wanting a fast, fixed-price outcome has no obvious entry product.",
+      "sources": ["https://www.morningside.ai/", "https://automationagencies.com/listing/morningsideai/", "https://latenode.com/blog/industry-use-cases-solutions/enterprise-automation/17-top-ai-automation-agencies-in-2025-complete-service-comparison-pricing-guide"]
+    },
+    {
+      "name": "Axe Automation",
+      "website": "https://www.axeautomation.co/",
+      "positioning": "'Top AI automation agency' — audits workflows to find highest-ROI opportunities, then builds with a mix of custom code, AI tools, Zapier and Make.com. Anti-busywork productivity framing.",
+      "target_market": "SMBs and growth companies (sales, ops, content, CRM, outbound, payments/contracts workflows).",
+      "pricing": "not public",
+      "offer_structure": "Audit-first: workflow audit to pinpoint ROI, then implementation projects across the client stack.",
+      "promises": "'End busywork and skyrocket productivity'; highest-ROI automations identified via audit.",
+      "proof": "Positions as established Zapier/Make-style workflow shop; no publicly verifiable priced case studies found in search results.",
+      "weaknesses": "No public pricing = friction for SMB buyers; generalist positioning (everything from content to payments) dilutes specialization; audit-first flow adds a step before value.",
+      "sources": ["https://www.axeautomation.co/ai-automation-agency", "https://dappasol.com/guides/best-ai-automation-agencies-for-d2c/"]
+    },
+    {
+      "name": "Goodspeed",
+      "website": "https://goodspeed.studio/",
+      "positioning": "n8n-first automation and AI development agency ('Ship in Weeks'); production-grade workflows and AI agents for ops teams; also strong SEO content machine (n8n pricing/comparison guides).",
+      "target_market": "Ops teams at SMBs/scale-ups; teams that 'need to ship now'; also no-code product builds (Bubble, Framer).",
+      "pricing": "Partially public: 'Most Goodspeed projects range from $10,000 to $50,000 depending on complexity, with simple automation builds starting lower' (per goodspeed.studio blog on n8n agency pricing). Entry 'Signal Sprint' scoping offer exists; sprint price itself not public.",
+      "offer_structure": "Scoping sprint (Signal Sprint: scoped estimate, priority roadmap, build-or-buy recommendation) then project build; productized service pages per platform (n8n agency, business automation).",
+      "promises": "Ship in weeks; production-grade workflows; honest build-or-buy recommendation.",
+      "proof": "Extensive published content and named productized offers; client case studies with hard ROI numbers not surfaced in search results.",
+      "weaknesses": "Core range starts at $10K — above Selena's $5-10K band; UK/EU-centric; SMBs with smaller budgets are explicitly below their sweet spot.",
+      "sources": ["https://goodspeed.studio/n8n-agency", "https://goodspeed.studio/blog/n8n-agency-pricing-what-it-costs-to-work-with-an-n8n-partner", "https://goodspeed.studio/blog/top-n8n-agencies"]
+    },
+    {
+      "name": "AY Automate",
+      "website": "https://www.ayautomate.com/",
+      "positioning": "AI-native n8n agency owning the full lifecycle: strategy, build, post-launch maintenance. Reliability-first rule: 'if it cannot survive real data, real volume, and real failure, it does not ship.'",
+      "target_market": "AI-native automation for SMB/mid-market teams; deep n8n work incl. self-hosting, custom nodes, production hardening.",
+      "pricing": "Partially public (ranges, no fixed packages): 'focused single-workflow builds start in the low four figures and ship in one to two weeks'; full automation systems run 4-8 weeks and are custom-scoped after a discovery/audit call (https://www.ayautomate.com/services/ai-automation-agency).",
+      "offer_structure": "Discovery call -> audit -> scoped build; separate maintenance/monitoring service for production automations.",
+      "promises": "Production reliability, monitored and maintained automations, ship in 1-2 weeks for single workflows.",
+      "proof": "Service pages and editorial content; named client case studies with quantified outcomes not found publicly.",
+      "weaknesses": "'Custom-scoped after a call' pricing creates sales friction vs. a fixed public $5-10K package; brand is young; no vertical focus.",
+      "sources": ["https://www.ayautomate.com/services/ai-automation-agency", "https://www.ayautomate.com/blog/best-n8n-agencies"]
+    },
+    {
+      "name": "NextAutomation",
+      "website": "https://nextautomation.us/",
+      "positioning": "Verticalized AI implementation partner — custom AI systems for real estate investment & development firms (deal sourcing, underwriting copilot, LP reporting, permit tracking, pro-forma generation). 'Live systems in 14 days.'",
+      "target_market": "B2B companies with 10-100 employees, focused on real estate investment/development (multifamily, commercial, residential, industrial).",
+      "pricing": "not public (site claims 'transparent pricing, no hidden retainers' and 'clear project-based pricing' but publishes no numbers in indexed pages).",
+      "offer_structure": "Fixed-scope custom AI systems deployed on the client's own cloud/VPS ('no lock-in, no black boxes'; client owns the system; data not stored/used for training); 14-day deployment; demo library.",
+      "promises": "14-day deployment; client ownership of systems; predictable deal flow for RE firms.",
+      "proof": "Demo systems published; vertical specificity itself is proof of domain knowledge; quantified client case studies not surfaced.",
+      "weaknesses": "Narrow vertical (real estate) leaves every other SMB vertical open; 'transparent pricing' claim without published numbers is exploitable by actually publishing prices.",
+      "sources": ["https://nextautomation.us/", "https://nextautomation.us/demos"]
+    },
+    {
+      "name": "Automation Agency (automationagency.com)",
+      "website": "https://automationagency.com/pricing",
+      "positioning": "Productized unlimited-task 'concierge' automation + marketing service for small businesses; long-running (since 2014, claims 1,000+ businesses served).",
+      "target_market": "Small businesses, coaches, consultants — non-technical owners who want tasks done for them (marketing automation, funnels, integrations, content).",
+      "pricing": "Public: three tiers at $249/month (Assist), $499/month (Delegate), $1,495/month (Elevate); plans include a GoHighLevel-powered platform (valued $97/mo) and $30/mo messaging wallet; month-to-month, unlimited revisions (per automationagency.com pricing pages surfaced in search).",
+      "offer_structure": "Subscription with task/plan tiers; higher tier adds dedicated project manager and weekly strategy calls; white-labeled GoHighLevel stack.",
+      "promises": "30-day money-back guarantee; 'marketing without lifting a finger' at top tier.",
+      "proof": "Longevity claim (since 2014, 1,000+ businesses); testimonial-driven; no deep technical AI implementation case studies.",
+      "weaknesses": "It's really a productized marketing-services subscription on GoHighLevel, not custom AI/workflow implementation — shallow on integrations, custom AI agents, and ops automation; Selena's project depth is a clear differentiator against this price anchor.",
+      "sources": ["https://automationagency.com/pricing", "https://automationagency.com/plan/", "https://automationagency.com/concierge-service-plans/"]
+    },
+    {
+      "name": "Flow Digital",
+      "website": "https://flow.digital/",
+      "positioning": "Certified Zapier (and Attio) partner agency — 25-person team across CRM, automation and development; no-code plus custom code when needed.",
+      "target_market": "SaaS companies, professional services firms, startups; all business sizes.",
+      "pricing": "Partially public: $297 per 75-minute consulting session; monthly retainers starting at $1,950+/month; most Attio projects fall between $1,000 and $10,000 (per flow.digital pricing page and Attio expert directory excerpts).",
+      "offer_structure": "Paid consulting sessions, project builds, and monthly retainers; client gets a PM + CRM specialist + engineers.",
+      "promises": "Dedicated automation partner, full-stack capability (any system with an API).",
+      "proof": "Client names: iHeartMedia, CashApp, Discovery, 'hundreds of SaaS companies' (per Attio directory page).",
+      "weaknesses": "Zapier/CRM-centric rather than AI-agent-centric; US pricing; SMBs wanting AI implementation (not just CRM zaps) are underserved.",
+      "sources": ["https://flow.digital/pricing", "https://attio.com/experts/flow-digital", "https://flow.digital/zapier-consultant"]
+    },
+    {
+      "name": "XRay.Tech",
+      "website": "https://www.xray.tech/",
+      "positioning": "Workflow optimization research & consultancy; 'mindful work' framing; low-code operations department via 'Chief Work Officer Membership'.",
+      "target_market": "SMB-to-mid-market teams wanting an ongoing low-code ops department (Zapier + Make + custom API work).",
+      "pricing": "not public (offers hourly support, retainers, and membership; numbers not published on indexed pages).",
+      "offer_structure": "Flexible hourly support; long-term retainer; membership model covering discovery to training and maintenance; side product (Guardian error monitoring for automations).",
+      "promises": "Claims clients reduced time on tedious tasks by over 90%.",
+      "proof": "Zapier Expert Directory listing; blog content; the 90% time-reduction claim is self-reported without named case-study detail in search results.",
+      "weaknesses": "Membership framing suits ongoing ops, not fixed-outcome projects; opaque pricing; US-centric; AI-agent depth less prominent than classic low-code automation.",
+      "sources": ["https://www.xray.tech/services", "https://zapier.com/experts/xray-tech", "https://www.xray.tech/post/xrays-team-brings-experience-documentation-and-data-to-each-membership"]
+    },
+    {
+      "name": "Makeitfuture (Wemakefuture)",
+      "website": "https://www.makeitfuture.com/",
+      "positioning": "European iPaaS / Automation-as-a-Service provider; certified partner for Zapier, Make and others; 'unlimited automation development' subscription.",
+      "target_market": "European SMBs and mid-market (German + English markets).",
+      "pricing": "Partially public: $70-150/hour per TechBehemoths directory profile (https://techbehemoths.com/company/makeitfuture); AaaS monthly subscription price not published.",
+      "offer_structure": "Automation-as-a-Service subscription: unlimited automation development, proactive monitoring, continuous optimization for a monthly fee; plus project-based work.",
+      "promises": "Predictable monthly fee, continuous optimization, certified-partner expertise.",
+      "proof": "Certified partner listings (Zapier/Make); directory profile; public case studies with hard numbers not surfaced.",
+      "weaknesses": "EU-timezone and EU-market focus; subscription without published price undercuts the 'predictable fee' promise; classic iPaaS focus more than AI agents.",
+      "sources": ["https://www.makeitfuture.com/solutions/zapier-expert", "https://www.makeitfuture.com/services/automation-as-a-service", "https://techbehemoths.com/company/makeitfuture"]
+    },
+    {
+      "name": "The AI Automation Agency (AIAA)",
+      "website": "https://theaiautomationagency.ai/",
+      "positioning": "Advisory-first: tells clients what to do, what systems to use and why, then assists implementation — 'whole of market' broker of cost-effective AI automations and custom agents 'without expensive software company fees'.",
+      "target_market": "SMBs/trades (AI sales bots, customer service, aftercare, job/field management agents).",
+      "pricing": "not public",
+      "offer_structure": "Advisory + recommendation + implementation assistance (explicitly notes they don't directly implement everything themselves).",
+      "promises": "Cost-effective alternative to big-ticket software fees; FAQ addresses revenue/productivity guarantee question (answer not indexed).",
+      "proof": "No public quantified case studies found.",
+      "weaknesses": "Advisory-not-builder model leaves execution gap Selena can fill (she ships working systems); no public pricing or proof.",
+      "sources": ["https://theaiautomationagency.ai/", "https://theaiautomationagency.ai/ai-systems/", "https://theaiautomationagency.ai/about/"]
+    },
+    {
+      "name": "Lindy",
+      "website": "https://www.lindy.ai/",
+      "positioning": "Self-serve 'AI agents for business' SaaS platform — build agents in natural language, 4,000+ app connections. DIY alternative to hiring an agency.",
+      "target_market": "SMBs and solo operators willing to build their own agents.",
+      "pricing": "Public: 7-day free trial; Plus $49.99/mo, Pro $99.99/mo, Max $199.99/mo (per tinycommand.com pricing roundup of Lindy plans).",
+      "offer_structure": "Pure SaaS subscription; templates and agent builder; no implementation services.",
+      "promises": "Build complex automations by describing them in plain English.",
+      "proof": "Product-led; large content library of comparisons.",
+      "weaknesses": "DIY tool — SMB owners still need someone to design, integrate and maintain workflows. Platforms like this are Selena's delivery substrate and objection ('why not just use Lindy?') to pre-empt with done-for-you value.",
+      "sources": ["https://www.lindy.ai/blog/best-ai-agents-small-business", "https://tinycommand.com/ai-agents/lindy-ai-alternatives"]
+    },
+    {
+      "name": "Relevance AI",
+      "website": "https://relevanceai.com/",
+      "positioning": "AI workforce platform — teams of specialized agents (e.g., AI SDR team: sourcer, researcher, copywriter, sender). DIY/product-led.",
+      "target_market": "SMB-to-mid-market sales and ops teams.",
+      "pricing": "Public: Free plan (200 actions/mo); Pro $29/mo; Team $349/mo; annual discounts (per lindy.ai pricing review of Relevance AI).",
+      "offer_structure": "SaaS subscription with agent templates and multi-agent orchestration.",
+      "promises": "An 'AI workforce' where each agent owns one step of a process.",
+      "proof": "Product-led; public template gallery.",
+      "weaknesses": "Same DIY gap as Lindy — requires internal skill to implement well; creates demand for implementers like Selena rather than competing head-on.",
+      "sources": ["https://www.lindy.ai/blog/relevance-ai-pricing", "https://arahi.ai/blog/ai-agents-companies"]
+    },
+    {
+      "name": "AI Avenue Bali",
+      "website": "https://aiavenue.id/",
+      "positioning": "'Bali's Leading AI Automation Agency' — tailor-made AI solutions for hospitality, real estate, retail, agencies and personal brands; cost/staff-reduction framing.",
+      "target_market": "Bali/Indonesia SMBs: hospitality, villas, real estate, retail, personal brands.",
+      "pricing": "not public",
+      "offer_structure": "Custom AI solutions replacing repetitive roles; scoped per client.",
+      "promises": "Save expenses, reduce staffing costs, save time with multitasking AI.",
+      "proof": "No public quantified case studies found in search results.",
+      "weaknesses": "Direct local competitor but with generic claims, no public pricing, no visible proof — Selena can out-position locally with published packages, named case studies, and Western-quality delivery standards.",
+      "sources": ["https://aiavenue.id/", "https://aiautomationbali.com/"]
+    },
+    {
+      "name": "AgentOps Indonesia",
+      "website": "https://www.aiopsindo.com/",
+      "positioning": "AI agents & workflow automation agency for Indonesian businesses — supervised agents across WhatsApp, Excel, email, PDFs, CRM, ERP, HR, finance, reporting.",
+      "target_market": "Indonesian SMBs and local enterprises (WhatsApp-first workflows).",
+      "pricing": "not public",
+      "offer_structure": "Supervised AI agents + workflow automation builds around the Indonesian SMB stack (WhatsApp, Excel, local platforms).",
+      "promises": "Practical automation of Indonesian business channels.",
+      "proof": "No public quantified case studies found.",
+      "weaknesses": "Locally focused (Bahasa/WhatsApp workflows) but early-stage visibility; Selena competing for expat/international-facing Bali & APAC SMBs faces little polished local competition.",
+      "sources": ["https://www.aiopsindo.com/", "https://www.hashmeta.ai/en/blog/top-10-ai-agencies-in-indonesia-the-complete-guide"]
+    }
+  ],
+  "pricing_benchmarks": [
+    {
+      "benchmark": "SMB AI automation projects commonly $1,500-$5,000; mid-market implementations $5,000-$20,000; enterprise $20,000-$100,000+. SMBs automating 2-3 workflows budget $1,000-$3,500/month ongoing.",
+      "source_url": "https://taskip.net/ai-automation-agency-cost/"
+    },
+    {
+      "benchmark": "Chatbot builds: $2,000-$15,000 setup plus $200-$1,000/month. Common agency models: project-based, retainer, hybrid (setup fee + monthly), tiered packages, performance-based.",
+      "source_url": "https://taskip.net/ai-automation-agency-pricing/"
+    },
+    {
+      "benchmark": "n8n consultancies: agencies charge $100-200/hr or $5,000-$25,000 project-based; certified n8n partners $150-300/hr senior; Upwork freelancers $20-60/hr (median ~$35/hr); US regional spread $80-400/hr.",
+      "source_url": "https://ciphernutz.com/blog/hire-n8n-expert-cost-pricing-guide"
+    },
+    {
+      "benchmark": "n8n agency project pricing: ~$5,000 for a small migration or single-system build up to $35,000+ for a production-grade automation stack with AI features.",
+      "source_url": "https://www.nodewave.io/blog/n8n-consultant-how-to-find-and-hire"
+    },
+    {
+      "benchmark": "AI consultants for small business: $5,000-$25,000 per project or $150-$350/hour; most small businesses pay $10,000-$15,000 for a 4-6 week implementation with measurable ROI.",
+      "source_url": "https://aiessentials.us/blog/how-much-does-it-cost-to-hire-an-ai-consultant-for-my-small"
+    },
+    {
+      "benchmark": "Scoped single-purpose AI agent: $1,500-$5,000 (prompting, 1-2 system integrations, 30-day stabilisation window); adding a second integration, voice/WhatsApp channels, or multi-language pushes builds to $5,000-$15,000. (Attribution note: figure appeared in search-result excerpt among buyer's-guide sources; most likely this URL.)",
+      "source_url": "https://www.amasatech.ai/blogs/ai-automation-services-pricing/"
+    },
+    {
+      "benchmark": "SMB AI automation: $3k-$15k to implement plus $500-$2.5k/month, cutting manual work 30-50% with payback in 60-120 days; custom workflows usually $5,000-$30,000 with a 3-6 month payback target.",
+      "source_url": "https://swiftheadway.ai/blog/ai-automation-small-business-guide"
+    },
+    {
+      "benchmark": "Monthly cost bands by category: chatbots $50-$500/mo, voice agents $250-$800/mo, document processing $200-$2,000/mo, multi-agent orchestration $2,000-$25,000/mo; most implementations break even in 2-4 months.",
+      "source_url": "https://hummingagent.ai/blog/ai-automation-cost-pricing-guide-2026"
+    },
+    {
+      "benchmark": "AI Readiness Audits: $5,000-$15,000 for a 2-4 week engagement (common productized entry offer).",
+      "source_url": "https://www.jadasquad.com/blog/ai-automation-agencies"
+    },
+    {
+      "benchmark": "Named agency anchors: LeftClick 'engagements typically start at $5K, most projects $10K-$50K'; Goodspeed 'most projects $10,000-$50,000'; Flow Digital $297/75-min session, retainers from $1,950/mo, most projects $1K-$10K; Automation Agency subscriptions $249/$499/$1,495 per month.",
+      "source_url": "https://www.leftclick.ai/pricing"
+    },
+    {
+      "benchmark": "Productized/retainer market: full-service automation retainers $4,000-$12,000/month; B2B outbound automation packages $1,500-$4,000/month.",
+      "source_url": "https://verygoodproductizedguides.substack.com/p/turn-your-service-into-a-productized"
+    },
+    {
+      "benchmark": "Offshore/managed alternative anchor: vetted n8n automation experts from ~$3,000/month via managed offshore hiring (competes with low-end retainers).",
+      "source_url": "https://www.hireoverseas.com/software-assistant/n8n-expert"
+    }
+  ],
+  "gaps": "1) PRICING TRANSPARENCY: Almost no credible implementation agency publishes fixed prices — 'book a call, custom scope' is the norm (Axe, Morningside, XRay, AY Automate, NextAutomation all hide numbers); the ones that do publish (Automation Agency at $249-$1,495/mo) sell shallow GoHighLevel marketing tasks, not real AI implementation. A published, fixed-scope $5K/$7.5K/$10K package menu with clear deliverables would be nearly unique among quality builders. 2) THE $5K-$10K MIDDLE IS STRUCTURALLY UNDERSERVED: Serious agencies anchor at $10K-$50K (Goodspeed, LeftClick core range); below that sit $20-60/hr Upwork freelancers (no reliability/maintenance) and DIY SaaS (Lindy $50-200/mo, Relevance $29-349/mo) that still needs an implementer. Benchmarks show SMBs expect and pay $5K-$15K for a 4-6 week implementation — exactly Selena's band — yet few firms productize it with published scope, timeline (e.g., 'live in 14 days', which NextAutomation proves is a compelling promise) and a maintenance retainer attached. 3) PROOF & GUARANTEES ARE WEAK EVERYWHERE: Across ~15 competitors, verifiable SMB case studies with hard ROI numbers are rare (mostly logo walls, self-reported founder revenue, or vague '90% time saved' claims); money-back/ROI guarantees are almost absent (Automation Agency's 30-day refund is the notable exception, and it's for a marketing subscription). Publishing 3-5 named case studies with before/after hours-and-dollars metrics plus a scoped outcome guarantee would beat most global competitors' proof. Secondary gaps: (a) vertical specialization is proven (NextAutomation in real estate) but almost every other player is a generalist — Selena can own 1-2 verticals (e.g., hospitality/villas/travel ops, abundant in Bali, or agencies/professional services in AU/APAC timezones); (b) local Bali/Indonesia competitors (AI Avenue Bali, AgentOps Indonesia) have no public pricing, thin proof, and generic claims — the polished international-standard local player position is open; (c) post-launch monitoring/maintenance is usually an afterthought (AY Automate and Makeitfuture are exceptions), so bundling a monitoring retainer ($500-$2.5K/mo per benchmarks) converts projects into recurring revenue. ASSUMPTION: gap analysis is inference from the cited public sources, not insider data."
+}
