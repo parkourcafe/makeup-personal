@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Makeup Coach",
+    "name": "Makeup Personal",
     "slug": "makeup-personal-mobile",
     "version": "0.1.0",
     "orientation": "portrait",
@@ -15,7 +15,12 @@
       "package": "com.parkourcafe.makeuppersonal"
     },
     "web": {
-      "bundler": "metro"
+      "bundler": "metro",
+      "name": "Makeup Personal",
+      "shortName": "Makeup",
+      "lang": "ru",
+      "description": "Личная косметичка, подбор образов и пошаговые уроки макияжа.",
+      "themeColor": "#fffaf4"
     }
   }
 }

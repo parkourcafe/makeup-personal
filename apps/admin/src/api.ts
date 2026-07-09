@@ -1,6 +1,9 @@
 import type { Look, LookRole, Store, StoreOffer, Tutorial, TutorialStep, Vocabulary } from "./types";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8000";
+const LOCAL_API_BASE_URL = "http://127.0.0.1:8000";
+const PRODUCTION_API_BASE_URL = "https://makeup-personal-api.vercel.app";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ?? (import.meta.env.DEV ? LOCAL_API_BASE_URL : PRODUCTION_API_BASE_URL);
 const ADMIN_TOKEN_KEY = "makeup_personal_admin_token";
 let adminToken = readInitialAdminToken();
 
@@ -55,7 +58,9 @@ export const api = {
   createRole: (body: Partial<LookRole>) => request<LookRole>("/admin/look-roles", { method: "POST", body }),
   deleteRole: (id: number) => request<void>(`/admin/look-roles/${id}`, { method: "DELETE" }),
   listTutorials: (lookId: number) => request<Tutorial[]>(`/admin/tutorials?look_id=${lookId}`),
+  createTutorial: (body: Partial<Tutorial>) => request<Tutorial>("/admin/tutorials", { method: "POST", body }),
   updateTutorial: (id: number, body: Partial<Tutorial>) => request<Tutorial>(`/admin/tutorials/${id}`, { method: "PUT", body }),
+  deleteTutorial: (id: number) => request<void>(`/admin/tutorials/${id}`, { method: "DELETE" }),
   createStep: (body: Partial<TutorialStep>) => request<TutorialStep>("/admin/tutorial-steps", { method: "POST", body }),
   deleteStep: (id: number) => request<void>(`/admin/tutorial-steps/${id}`, { method: "DELETE" }),
   listStores: () => request<Store[]>("/admin/stores"),

@@ -22,6 +22,8 @@ Create `.env` from `.env.example`:
 EXPO_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
 ```
 
+If `EXPO_PUBLIC_API_BASE_URL` is not set, development falls back to `http://127.0.0.1:8000` and production builds fall back to the deployed API.
+
 Use the deployed API URL for device testing:
 
 ```bash
@@ -31,7 +33,7 @@ EXPO_PUBLIC_API_BASE_URL=https://your-deployed-api.example.com
 Current Vercel web deployment:
 
 ```txt
-https://makeup-personal-mobile.vercel.app
+https://www.mirari.makeup
 ```
 
 Current Vercel API deployment:

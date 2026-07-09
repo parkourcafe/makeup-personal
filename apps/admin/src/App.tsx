@@ -36,6 +36,11 @@ const emptyStep = {
   look_role_id: ""
 };
 
+const emptyTutorial = {
+  title: "",
+  summary: ""
+};
+
 const emptyStore = {
   name: "",
   city: "Bali",
@@ -67,6 +72,7 @@ export function App() {
   const [lookForm, setLookForm] = useState(emptyLook);
   const [newLookForm, setNewLookForm] = useState(emptyLook);
   const [roleForm, setRoleForm] = useState(emptyRole);
+  const [tutorialForm, setTutorialForm] = useState(emptyTutorial);
   const [stepForm, setStepForm] = useState(emptyStep);
   const [storeForm, setStoreForm] = useState(emptyStore);
   const [offerForm, setOfferForm] = useState(emptyOffer);
@@ -113,6 +119,8 @@ export function App() {
 
   useEffect(() => {
     if (!selectedLook) {
+      setRoles([]);
+      setTutorial(null);
       return;
     }
     setLookForm({
@@ -204,6 +212,32 @@ export function App() {
         summary: tutorial.summary
       });
       setTutorial(updated);
+    });
+  };
+
+  const createTutorial = async () => {
+    if (!selectedLook) {
+      return;
+    }
+    await runSaving(async () => {
+      const created = await api.createTutorial({
+        look_id: selectedLook.id,
+        title: tutorialForm.title,
+        summary: tutorialForm.summary
+      });
+      setTutorial(created);
+      setTutorialForm(emptyTutorial);
+    });
+  };
+
+  const deleteTutorial = async () => {
+    if (!tutorial) {
+      return;
+    }
+    await runSaving(async () => {
+      await api.deleteTutorial(tutorial.id);
+      setTutorial(null);
+      setStepForm(emptyStep);
     });
   };
 
@@ -391,9 +425,14 @@ export function App() {
               <h2>Урок</h2>
               <Field label="Название урока" value={tutorial.title} onChange={(value) => setTutorial({ ...tutorial, title: value })} />
               <Textarea label="Summary" value={tutorial.summary} onChange={(value) => setTutorial({ ...tutorial, summary: value })} />
-              <button disabled={saving} onClick={() => void saveTutorial()} type="button">
-                Сохранить урок
-              </button>
+              <div className="actions">
+                <button disabled={saving} onClick={() => void saveTutorial()} type="button">
+                  Сохранить урок
+                </button>
+                <button className="danger" disabled={saving} onClick={() => void deleteTutorial()} type="button">
+                  Удалить урок
+                </button>
+              </div>
               <div className="list">
                 {tutorial.steps.map((step) => (
                   <div className="row" key={step.id}>
@@ -419,6 +458,15 @@ export function App() {
               </div>
               <button disabled={saving} onClick={() => void createStep()} type="button">
                 Добавить шаг
+              </button>
+            </section>
+          ) : selectedLook ? (
+            <section className="panel">
+              <h2>Урок</h2>
+              <Field label="Название урока" value={tutorialForm.title} onChange={(value) => setTutorialForm({ ...tutorialForm, title: value })} />
+              <Textarea label="Summary" value={tutorialForm.summary} onChange={(value) => setTutorialForm({ ...tutorialForm, summary: value })} />
+              <button disabled={saving} onClick={() => void createTutorial()} type="button">
+                Создать урок
               </button>
             </section>
           ) : null}
