@@ -3,5 +3,9 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .venv/
+node_modules/
+.expo/
+web-build/
+dist/
 makeup_coach.db
 apps/api/makeup_coach.db

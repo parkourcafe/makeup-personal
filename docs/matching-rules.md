@@ -89,8 +89,8 @@ The readiness score is the average score of required roles:
 
 Seeded demo data contains these expected cases for the `soft-rose-everyday` look:
 
-- `enough`: Glow Grip Primer covers skin prep.
-- `use_differently`: Rose Satin Lipstick can be used as cream blush.
+- `enough`: Bobbi Brown Vitamin Enriched Face Base covers skin prep.
+- `use_differently`: Romanovamakeup Sexy Lipstick Pen Rose can be used as cream blush.
 - `not_suitable`: owned lip color does not satisfy the nude glossy lip role.
 - `missing`: no owned product covers glow balm.
-- `needs_confirmation`: Soft Brown Shadow has low confidence for soft liner.
+- `needs_confirmation`: Natasha Denona Mini Nude Matte Brown has low confidence for soft liner.

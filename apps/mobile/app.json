@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "Makeup Coach",
+    "slug": "makeup-personal-mobile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.parkourcafe.makeuppersonal"
+    },
+    "android": {
+      "package": "com.parkourcafe.makeuppersonal"
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}

@@ -38,7 +38,27 @@ uvicorn app.main:app --reload
 - `DELETE /users/{user_id}/products/{product_id}`
 - `POST /users/{user_id}/looks/{look_id}/readiness`
 
-The demo seed creates user `1`, four active looks, tutorials, and 20 manually entered user products.
+The demo seed creates user `1` (`Алина`), four active looks, tutorials, and 20 manually entered user products.
+
+## Deployment
+
+`render.yaml`, `Dockerfile`, and `scripts/start.sh` are included for a simple hosted demo API.
+
+Default deployment behavior:
+
+- runs Alembic migrations;
+- seeds demo data when `SEED_ON_STARTUP=true`;
+- starts Uvicorn on `$PORT`;
+- allows mobile clients through `CORS_ORIGINS`.
+
+For a persistent production-like environment, replace the default SQLite `DATABASE_URL` with Postgres and decide whether seed reset on startup should stay enabled.
+
+Docker smoke command:
+
+```bash
+docker build -t makeup-personal-api .
+docker run --rm -p 8000:8000 -e SEED_ON_STARTUP=true makeup-personal-api
+```
 
 ## Matching
 

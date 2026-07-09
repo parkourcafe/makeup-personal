@@ -1,11 +1,44 @@
 # Mobile App
 
-The Expo mobile app is intentionally not implemented in Pass 1.
+Expo React Native vertical slice for Pass 2.
 
-Pass 2 will build the mobile vertical slice on top of the live API:
+Implemented screens:
 
-- look library;
-- look detail;
-- manual makeup bag;
-- readiness report;
-- tutorial player.
+- Look Library
+- Look Detail
+- Makeup Bag
+- Readiness Report
+- Tutorial Player
+
+The mobile app calls the live backend API. It does not duplicate matching logic.
+
+## Configuration
+
+Create `.env` from `.env.example`:
+
+```bash
+EXPO_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
+EXPO_PUBLIC_DEMO_USER_ID=1
+```
+
+Use the deployed API URL for device testing:
+
+```bash
+EXPO_PUBLIC_API_BASE_URL=https://your-deployed-api.example.com
+```
+
+For a physical phone against a local backend, use the computer's LAN IP instead of `127.0.0.1`.
+
+## Run
+
+```bash
+cd apps/mobile
+npm install
+npm run typecheck
+npm run lint
+npm start
+```
+
+## Product Notes
+
+The UI is Russian in this pass. Preview means a reference look, role map, and tutorial framing. It is not AR try-on and does not claim camera-based shade detection.

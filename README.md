@@ -15,6 +15,8 @@ Implemented in this pass:
 - deterministic matching service
 - demo seed data
 - pytest coverage for the product loop
-- placeholder folders for future mobile and admin passes
+- Expo mobile vertical slice in `apps/mobile`
+- placeholder admin folder for future Pass 3
 
 See `apps/api/README.md` for local setup and validation commands.
+See `apps/mobile/README.md` for mobile setup.

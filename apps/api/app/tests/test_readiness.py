@@ -32,7 +32,7 @@ def test_missing_required_role_creates_shopping_gap(client: TestClient, soft_ros
     assert matches["glow_balm"]["status"] == "missing"
     assert matches["glow_balm"]["shopping_gap"] == {
         "needed_category": "highlighter",
-        "needed_description": "Subtle glow balm: A sheer glow on cheekbones that is not glittery.",
+        "needed_description": "Деликатное сияние: Прозрачное сияние на скулах без заметных блесток.",
     }
 
 
