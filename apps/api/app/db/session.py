@@ -5,8 +5,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
+from app.db.url import normalize_database_url
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./makeup_coach.db")
+
+DATABASE_URL = normalize_database_url(os.getenv("DATABASE_URL", "sqlite:///./makeup_coach.db"))
 
 
 def sqlite_connect_args(database_url: str) -> dict[str, bool]:

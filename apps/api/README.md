@@ -62,22 +62,22 @@ Vercel deployment config is included through `pyproject.toml`, `api/index.py`, `
 
 For production, set `DATABASE_URL` to Postgres, run `alembic upgrade head`, and seed once with `python -m app.seed.run`. Add `--reset` only for local/demo resets.
 
-Current Vercel demo API:
+Current Vercel API:
 
 ```txt
 https://makeup-personal-api.vercel.app
 ```
 
-The current Vercel deployment still uses demo storage until Neon terms are accepted and a Postgres resource is connected:
+The current Vercel deployment is connected to Neon Postgres through the Vercel Marketplace:
 
 ```bash
-DATABASE_URL=sqlite:///:memory:
-AUTO_SEED_DEMO=true
+DATABASE_URL=<Neon Postgres, injected by Vercel>
+AUTO_SEED_DEMO=false
 CORS_ORIGINS=*
 ADMIN_API_TOKEN=<set in production>
 ```
 
-That makes it a deterministic demo deployment. It is not persistent storage.
+Local development still defaults to SQLite when `DATABASE_URL` is unset.
 
 Docker smoke command:
 
