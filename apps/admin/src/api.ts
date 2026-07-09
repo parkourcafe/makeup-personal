@@ -1,6 +1,8 @@
 import type { Look, LookRole, Store, StoreOffer, Tutorial, TutorialStep, Vocabulary } from "./types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8000";
+const ADMIN_TOKEN_KEY = "makeup_personal_admin_token";
+let adminToken = readInitialAdminToken();
 
 type RequestOptions = {
   method?: "GET" | "POST" | "PUT" | "DELETE";
@@ -10,7 +12,10 @@ type RequestOptions = {
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     method: options.method ?? "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...(adminToken ? { "X-Admin-Token": adminToken } : {})
+    },
     body: options.body === undefined ? undefined : JSON.stringify(options.body)
   });
 
@@ -21,6 +26,24 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     return undefined as T;
   }
   return (await response.json()) as T;
+}
+
+export function getAdminToken(): string {
+  return adminToken;
+}
+
+export function setAdminToken(token: string): void {
+  adminToken = token.trim();
+  if (typeof window !== "undefined") {
+    window.localStorage.setItem(ADMIN_TOKEN_KEY, adminToken);
+  }
+}
+
+function readInitialAdminToken(): string {
+  if (typeof window === "undefined") {
+    return "";
+  }
+  return window.localStorage.getItem(ADMIN_TOKEN_KEY) ?? "";
 }
 
 export const api = {

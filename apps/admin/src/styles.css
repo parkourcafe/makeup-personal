@@ -18,8 +18,29 @@ main {
 .top {
   align-items: center;
   display: flex;
+  gap: 16px;
   justify-content: space-between;
   margin-bottom: 18px;
+}
+
+.topActions {
+  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.tokenField {
+  display: grid;
+  gap: 5px;
+  min-width: 260px;
+}
+
+.tokenField span {
+  color: #514941;
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .eyebrow {

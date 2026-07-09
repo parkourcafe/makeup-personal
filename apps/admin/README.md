@@ -2,6 +2,8 @@
 
 Vite/React admin UI for managing looks, look roles, tutorial steps, stores, and store offers.
 
+The API protects `/admin/*` when `ADMIN_API_TOKEN` is set. Paste that value into the admin UI token field; it is sent as `X-Admin-Token` and saved in browser local storage.
+
 ## Configuration
 
 ```bash

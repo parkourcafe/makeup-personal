@@ -7,4 +7,4 @@
 - SQLite is the local default. Use `DATABASE_URL` with Postgres for a persistent deployment.
 - Seed content is demo content, not final expert-approved editorial content.
 - Mobile product entry is manual and intentionally basic.
-- Admin has a deployable web UI, but it is still an internal MVP surface and needs role-based access control before broader use.
+- Admin has a deployable web UI and token-gated API access, but it is still an internal MVP surface and needs role-based RBAC before broader use.

@@ -1,6 +1,19 @@
 from fastapi.testclient import TestClient
 
 
+def test_admin_requires_token_when_configured(client: TestClient, monkeypatch) -> None:
+    monkeypatch.setenv("ADMIN_API_TOKEN", "secret-admin-token")
+
+    missing = client.get("/admin/looks")
+    assert missing.status_code == 401
+
+    invalid = client.get("/admin/looks", headers={"X-Admin-Token": "wrong"})
+    assert invalid.status_code == 401
+
+    valid = client.get("/admin/looks", headers={"X-Admin-Token": "secret-admin-token"})
+    assert valid.status_code == 200
+
+
 def test_admin_can_crud_look(client: TestClient) -> None:
     listed = client.get("/admin/looks")
     assert listed.status_code == 200

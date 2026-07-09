@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
+from app.admin_auth import require_admin_token
 from app.db.session import get_db
 from app.models import Look, LookRole, Store, StoreOffer, Tutorial, TutorialStep
 from app.schemas import (
@@ -29,7 +30,7 @@ from app.schemas import (
 )
 
 
-router = APIRouter(prefix="/admin", tags=["admin"])
+router = APIRouter(prefix="/admin", tags=["admin"], dependencies=[Depends(require_admin_token)])
 ModelT = TypeVar("ModelT")
 
 

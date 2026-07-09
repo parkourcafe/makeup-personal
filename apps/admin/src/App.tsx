@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { api } from "./api";
+import { api, getAdminToken, setAdminToken as persistAdminToken } from "./api";
 import type { Look, LookRole, Store, StoreOffer, Tutorial, TutorialStep, Vocabulary } from "./types";
 
 const emptyLook = {
@@ -70,6 +70,7 @@ export function App() {
   const [stepForm, setStepForm] = useState(emptyStep);
   const [storeForm, setStoreForm] = useState(emptyStore);
   const [offerForm, setOfferForm] = useState(emptyOffer);
+  const [adminToken, setAdminToken] = useState(getAdminToken());
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -99,6 +100,11 @@ export function App() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const saveAdminToken = () => {
+    persistAdminToken(adminToken);
+    void load();
   };
 
   useEffect(() => {
@@ -271,9 +277,24 @@ export function App() {
           <p className="eyebrow">Makeup Personal Admin</p>
           <h1>Контент и каталог</h1>
         </div>
-        <button onClick={() => void load()} type="button">
-          Обновить
-        </button>
+        <div className="topActions">
+          <label className="tokenField">
+            <span>Admin token</span>
+            <input
+              autoComplete="off"
+              value={adminToken}
+              onChange={(event) => setAdminToken(event.target.value)}
+              placeholder="X-Admin-Token"
+              type="password"
+            />
+          </label>
+          <button onClick={saveAdminToken} type="button">
+            Применить
+          </button>
+          <button className="ghost" onClick={() => void load()} type="button">
+            Обновить
+          </button>
+        </div>
       </header>
 
       {error ? <div className="error">{error}</div> : null}

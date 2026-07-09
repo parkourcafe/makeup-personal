@@ -13,6 +13,7 @@ FastAPI backend for Pass 1 of the Makeup AI Personal Coach MVP.
 - SQLite by default for local development; Postgres is supported through `DATABASE_URL`
 
 `DATABASE_URL` is supported. If unset, local commands use `sqlite:///./makeup_coach.db`.
+Set `ADMIN_API_TOKEN` in deployed environments to protect `/admin/*`; local development can leave it unset.
 
 ## Local Setup
 
@@ -71,6 +72,7 @@ The current Vercel deployment still uses demo storage until Neon terms are accep
 DATABASE_URL=sqlite:///:memory:
 AUTO_SEED_DEMO=true
 CORS_ORIGINS=*
+ADMIN_API_TOKEN=<set in production>
 ```
 
 That makes it a deterministic demo deployment. It is not persistent storage.
