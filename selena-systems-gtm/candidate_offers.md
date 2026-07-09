@@ -7,13 +7,13 @@ Twelve candidate productized offers generated from the pain research (`pain_sign
 ## O1. Villa Ops OS — AI Guest & Lead Response System for Villa Management Companies
 
 - **Target customer:** Bali villa/property management companies managing 15–500+ villas (also boutique villa collectives).
-- **Core pain:** 24/7 international inquiries hit WhatsApp/OTA/email around the clock; response SLAs are enforced by hiring humans (documented reservation-agent job posts with "respond within 6 working hours" SLAs); slow replies lose bookings in an oversupplied market (occupancy ~53%, ADR −14%).
-- **Promise:** In 14 days: no inquiry waits more than 2 minutes for a useful first response, ever — and every conversation lands in one pipeline.
+- **Core pain:** 24/7 international inquiries hit WhatsApp/IG/email/web (plus OTA apps) around the clock; response SLAs are enforced by hiring humans (documented reservation-agent job posts with "respond within 6 working hours" SLAs); slow replies lose bookings in an oversupplied market (occupancy ~53%, ADR −14%).
+- **Promise:** In 14 days: 95% of inquiries get a useful first response within 2 minutes (median under 60s), and every covered-channel conversation lands in one pipeline. (SLA wording per red team R9; OTA-native chat excluded per R5 — see winning_offer.md §4.)
 - **Deliverables:** WhatsApp Business API AI first responder (multilingual EN/ID + guest languages), availability/pricing FAQ answering from a synced sheet/PMS, lead capture into a simple CRM pipeline, escalation rules to human staff, guest pre-arrival/upsell message flows, owner-facing weekly report automation, 90-min team training, handover docs.
 - **Price:** $6,500–$8,500 depending on portfolio size.
 - **Why they pay:** One reservation agent salary ≈ $250–400/month plus churn; missed after-hours bookings are direct revenue loss; oversupply makes conversion rate existential.
-- **Lead sourcing:** Google Maps + villa PM directories (65 Bali leads already in `lead_list.csv`); in-person visits; expat founder networks.
-- **Sales angle:** "Your guests message at 2am from Sydney and 11pm from Berlin. Who answers?"
+- **Lead sourcing:** Google Maps + villa PM directories (19 villa-PM leads in `lead_list.csv` + 46 adjacent Bali leads; refill to ≥50 villa PMs per winning_offer.md §18 — red team R3); in-person visits (if legally cleared); expat founder networks.
+- **Sales angle:** "Your guests message at 1am from Berlin and 6am from Sydney. Who answers?"
 - **Risks:** Smaller PMs can't pay; WhatsApp API onboarding friction; legal gate for Indonesian entities (see red team R1).
 - **Proof needed:** One live demo bot on a sample villa + response-time before/after from first client.
 - **Complexity:** Medium (WhatsApp API + sheet/PMS sync + CRM). ROI logic: 2 saved bookings/month at $150+/night × multi-night stays ≈ system pays back in <90 days (client-side numbers gathered on call).

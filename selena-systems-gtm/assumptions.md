@@ -14,6 +14,15 @@ Every assumption made during this research is logged here. Items are updated as 
 | A6 | "Start outreach within 24 hours" means manual, personalized, low-volume outreach (10–30 contacts/day), not mass automation. | Guardrails prohibit spam; low-volume personalized outreach needs no paid tools. | None significant. |
 | A7 | Founder timezone: WITA (UTC+8), which overlaps well with Singapore/Perth (0h), Dubai (−4h), Sydney (+2h), and poorly with US afternoons. | Bali location given. | If targeting US clients, calls land early morning Bali time; factored into market scoring. |
 
+## Legal & platform assumptions (added after red team)
+
+| # | Assumption | Notes |
+|---|-----------|-------|
+| L1 | The founder's current visa does NOT permit in-person selling or paid work performed in Indonesia. | DEFAULT-SAFE assumption per red team R1, held until the Task Zero lawyer consult says otherwise. All walk-in/local scripts are locked behind this gate. |
+| L2 | A workable share of Bali targets can be contracted compliantly is UNKNOWN — note that PT PMAs are Indonesian entities, so "foreign-owned" does not mean "offshore client". | Replaces the earlier, too-optimistic reading of O1a. |
+| L3 | Assumption A3 (international invoicing capability) is now Task Zero item 0 — it gates Dubai as well as Bali and must be confirmed before any outreach. | Red team R11. |
+| L4 | WhatsApp Business API constraints: inbound replies within the 24h window are unrestricted; ALL proactive messaging requires recorded opt-in + Meta-approved templates; cold WhatsApp outreach risks number bans. | Red team R4; product architecture in delivery_process.md §3b. |
+
 ## Research-method assumptions
 
 | # | Assumption | Notes |
@@ -30,7 +39,7 @@ Every assumption made during this research is logged here. Items are updated as 
 |---|-----------|-------|
 | O1a | A meaningful share (≥8–10) of the 65 Bali-regional leads bill through non-Indonesian entities and can be contracted compliantly. | UNVERIFIED — this is Task Zero in `winning_offer.md` §17. Go/no-go threshold set by tournament Judge 2; if it fails, Backup Offer O2 (Dubai) becomes primary. |
 | O1b | Bali real estate commissions ≈ 5% on foreign-buyer transactions. | Industry-typical figure, not verified per agency; flagged inline in `candidate_offers.md` and `backup_offers.md`. Verify on each discovery call. |
-| O1c | WhatsApp Business API access can be provisioned for a Bali business within the 14-day sprint window. | Provisioning starts day 0 for this reason; timeline shifts day-for-day if it slips (stated in proposal). |
+| O1c | WhatsApp Business API access can be provisioned for a Bali business within the 14-day sprint window. | Application is filed at contract signing and day 0 is defined as API-approved for this reason (red team R8); timeline shifts day-for-day if it slips (stated in proposal). |
 | O1d | The founder can build a credible demo agent within ~1 day using public villa listings. | Follows from assumption A1 (technical capability). If false, the 24-hour plan stretches to 48–72h. |
 | O1e | Client-side tool costs of $50–150/month (WhatsApp BSP + AI API + CRM) are representative for a 15–150 villa operation. | Based on published BSP/AI pricing tiers seen in competitor research; estimated exactly per client at kickoff. |
 

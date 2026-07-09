@@ -4,8 +4,8 @@ Goal: outreach live within 24 hours, first audit videos delivered, discovery cal
 
 ## Hour 0–2 — Decisions & Task Zero (legal)
 
-- [ ] Read `winning_offer.md` end to end. Decide: accept the founding-client price ($5,000, case study + 2 intros) — recommended.
-- [ ] **Task Zero:** book a 1-hour consult with an Indonesian business/immigration lawyer for today/tomorrow (~$100–500; searchable: Bali legal consultants for foreign founders). Question to bring: "Given my exact visa status, may I contract with (a) foreign-owned Bali businesses billing through offshore entities, (b) Indonesian PT/PT PMA entities, and what structure makes each clean?" Until answered: **outreach only to leads whose billing entity is plausibly offshore, and all Dubai leads** (always clean).
+- [ ] Read `winning_offer.md` and `red_team_report.md` end to end. Decide: accept the founding-client price ($5,000, case study + 2 intros) — recommended.
+- [ ] **Task Zero (BLOCKING for anything Bali-local):** book a 1-hour consult with an Indonesian business/immigration lawyer for today/tomorrow (~$100–500). The question is about YOUR activity, not the client's entity: "On my exact visa, may I conduct in-person sales meetings and perform paid implementation work while physically in Indonesia — and under what structure would it be legal?" **Until answered: no walk-ins, no local pitching, no publishing the Bali landing page** (red team R1/R2). Remote outreach to Dubai and other foreign clients is unaffected — start it today.
 - [ ] Set up payment rails if not done: Wise/Stripe invoicing in USD from your existing entity (assumption A3 — verify it's true today).
 
 ## Hour 2–5 — Build the demo asset (the portfolio substitute)
@@ -36,14 +36,13 @@ Goal: outreach live within 24 hours, first audit videos delivered, discovery cal
 
 ## Hour 16–24 — In-person circuit prep + first walk-ins
 
-- [ ] Map tomorrow's circuit: 8–10 offices from the lead list in one area cluster (Canggu OR Seminyak first — wherever you live; minimize travel). Note owner names from websites/LinkedIn where public.
-- [ ] Do 2–3 walk-ins today if hours allow (script §8) — the goal of walk-in #1 is calibration, not a close.
+- [ ] IF (and only if) the legal consult has cleared it: map tomorrow's circuit — 3–4 offices in one area cluster (red team R6 capacity: 3–4 visits/day, not 10). Note owner names from websites/LinkedIn where public. If not yet cleared: spend this block on 3 more Dubai/remote video audits and Bali *relationship* mapping (coworking events, expat business groups — no pitching).
 - [ ] Evening: log every touch, schedule follow-up 1 (day 3) and follow-up 2 (day 10) reminders, review what confused people, adjust one thing.
 
 ## The only metrics that matter this week
 
 1. Audit videos delivered (target: 5 by hour 24, 15 by day 3)
-2. Discovery calls booked (target: 3 by day 3)
+2. Discovery calls booked (target: 3 by day 3; pivot trigger per winning_offer.md §18: <2 by day 14 → promote Backup 1)
 3. Founding-client agreements signed (target: 1 by day 10–14)
 
 ## Standing rules (from guardrails + red team)

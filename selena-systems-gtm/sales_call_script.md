@@ -32,7 +32,7 @@ Goal: close $5,000–$10,000 fixed-scope implementations. Tone throughout: calm 
 **Agenda (2 min):** "Three parts: I map how inquiries work here today — you talk, I draw. Then I show the system on your own villas. Then we do the math together and I give you a fixed price. Stop me anywhere."
 
 **Part A — Diagnosis (20 min).** Map on shared screen/paper: every inquiry channel → who monitors → response SLA by hour-of-day → where it's recorded → follow-up? → booking → what falls through. Questions that surface cost:
-- "What time zones do your guests mostly inquire from?" → overlay their coverage hours; the gap draws itself.
+- "What time zones do your guests mostly inquire from?" → overlay their coverage hours; the gap draws itself. Then volunteer the OTA boundary (red team R5): "One honest limit: Airbnb and Booking chat can't be integrated without a PMS — their APIs are closed. We cover WhatsApp, your site, Instagram, email, and we parse OTA notification emails into the pipeline. Your OTA apps keep doing what they already do." Volunteering this is a credibility win.
 - "Show me where last Tuesday's inquiries live right now." *(The squirm here is the sale.)*
 - "How many of the questions your team answered today were one of the same twenty questions?"
 - "What happened the last time ⟨reservations person⟩ was sick or on leave?"
@@ -40,7 +40,7 @@ Goal: close $5,000–$10,000 fixed-scope implementations. Tone throughout: calm 
 
 **Part B — Demo (10 min).** Live: inquiry in English about real dates/rates → 2-min accurate answer; same in German/Bahasa; then a trap question ("can I get 40% off for 3 months?") → watch it escalate to a human with context, *not* answer. "That's the most important thing you'll see today: what it does when it doesn't know."
 
-**Part C — The math + close (13 min).** ROI framework (§4) with their numbers, then: "Fixed scope, fixed price: ⟨$7,500 / founding $5,000⟩. $1,500 starts it; the balance is only due at go-live, after your team has watched it draft replies for a week. If by day seven you wouldn't let those drafts send, you stop and owe nothing more. I can start ⟨date⟩. Proposal in your inbox today — want it addressed to you or a partner too?"
+**Part C — The math + close (13 min).** ROI framework (§4) with their numbers, then: "Fixed scope, fixed price: ⟨$7,500 / founding $5,000⟩. $2,000 starts it; the balance is due at go-live — objectively defined, day 10–17 — after your team has watched it draft replies for a week. If it fails the measured day-7 gate, you stop and owe nothing more. I can start ⟨date⟩. Proposal in your inbox today — want it addressed to you or a partner too?"
 
 ## 3. Diagnosis framework (the mental model)
 
@@ -87,7 +87,7 @@ Say: "I'm not going to promise you revenue — anyone who does is guessing with 
 
 ## 6. Closing script
 
-"Let me summarize what we found: ⟨N⟩ inquiries a month, ⟨X hours⟩ typical after-hours wait, no single pipeline, and the math you just did says roughly ⟨$Y⟩/month walking away. The fix is fixed-scope: live in 14 days at ⟨price⟩, $1,500 to start, balance at go-live, and the day-7 kill switch if the drafts don't convince you. The only real decision today is whether we start ⟨date A⟩ or ⟨date B⟩ — which works?"
+"Let me summarize what we found: ⟨N⟩ inquiries a month, ⟨X hours⟩ typical after-hours wait, no single pipeline, and the math you just did says roughly ⟨$Y⟩/month walking away. The fix is fixed-scope: live in 14 days at ⟨price⟩, $2,000 to start, balance at go-live, and the measured day-7 kill switch if the drafts don't convince you. The only real decision today is whether we start ⟨date A⟩ or ⟨date B⟩ — which works?"
 
 *(Then be quiet. If yes:)* "Good decision. Proposal and starter invoice today; kickoff workshop is two hours — bring whoever knows the villas best. Welcome aboard."
 
@@ -100,7 +100,7 @@ Hi ⟨name⟩ — good working session today. What we established, in your numbe
 - No unified pipeline — lost leads are invisible today
 - Your estimate of recoverable revenue: ~⟨$Y⟩/month at the uplift you chose
 
-The plan: Villa Ops OS, live in 14 days, fixed at ⟨price⟩ — deliverables, timeline, and guarantee in the attached proposal. $1,500 begins it; the balance only at go-live after your team approves shadow-mode quality. Earliest kickoff: ⟨date⟩. If you want ⟨partner⟩ to see the demo first, I'll happily run it again — 15 minutes.
+The plan: Villa Ops OS, live in 14 days, fixed at ⟨price⟩ — deliverables, timeline, and guarantee in the attached proposal. $2,000 begins it; the balance only at go-live after the day-7 gate passes on your own inquiries. Earliest kickoff: ⟨date⟩. If you want ⟨partner⟩ to see the demo first, I'll happily run it again — 15 minutes.
 — Selena
 
 ## 8. Proposal outline (full template: `proposal_template.md`)
@@ -109,18 +109,18 @@ The plan: Villa Ops OS, live in 14 days, fixed at ⟨price⟩ — deliverables, 
 
 ## 9. Payment terms — recommendation
 
-**Use: $1,500 fixed starter + balance at go-live (day 10), for the first ~3 (founding) clients.** Then move to **50% / 50%**.
+**Use: $2,000 fixed starter + balance at objectively-defined go-live (day 10–17), for the first ~3 (founding) clients.** Then move to **50% / 50%**. (Starter raised from $1,500 per red team R13 — it must cover the real cost of days 0–7, since a stopping client keeps their KB content.)
 
-Why not 100% upfront: with zero case studies, a $7,500 upfront wire to a new solo vendor is the single hardest ask in the whole funnel (Judge 3: it "fails first contact"); the trust ladder converts strictly better and the shadow-mode gate caps Selena's downside to well-paid discovery work. Why not 50/50 immediately: $3,750 upfront is still a big blind bet on a no-proof vendor; $1,500 is under the "meeting-worthy risk" threshold for this buyer and gets more starts, which is what the case-study engine needs most right now. Once 2–3 case studies exist, 50/50 (then 100% with a discount as an *option*) both derisks Selena's calendar and signals scarcity honestly. Always: invoice in USD (or AED for Dubai) to offshore entities; never net-30 in Indonesia (45% of B2B invoices there run overdue — sourced in `market_research.md`).
+Why not 100% upfront: with zero case studies, a $7,500 upfront wire to a new solo vendor is the single hardest ask in the whole funnel (Judge 3: it "fails first contact"); the trust ladder converts strictly better and the shadow-mode gate caps Selena's downside to well-paid discovery work. Why not 50/50 immediately: $3,750 upfront is still a big blind bet on a no-proof vendor; $2,000 stays near the "meeting-worthy risk" threshold for this buyer and gets more starts, which is what the case-study engine needs most right now. Once 2–3 case studies exist, 50/50 (then 100% with a discount as an *option*) both derisks Selena's calendar and signals scarcity honestly. Always: invoice in USD (or AED for Dubai) to offshore entities; never net-30 in Indonesia (45% of B2B invoices there run overdue — sourced in `market_research.md`).
 
 ## 10. Delivery kickoff checklist (run within 48h of signing)
 
 - [ ] Starter invoice paid (no work before payment — policy)
+- [ ] WhatsApp Business API application filed + client verification docs collected AT SIGNING (day 0 can't start without approval — red team R8)
 - [ ] Signed proposal/SOW on file
 - [ ] Kickoff workshop booked (2h, decision-maker + best-knowledge staffer)
 - [ ] Onboarding form sent & returned (villas, channels, tone, policies, FAQs)
 - [ ] Access checklist delivered (WhatsApp number decision, availability source, form/IG access, FAQ docs)
-- [ ] WhatsApp Business API application started (longest external lead time — day 0)
 - [ ] Daily 15-min check-in slot agreed (their timezone)
 - [ ] Case-study + referral clause acknowledged (founding clients)
 - [ ] Client's tool accounts created in THEIR name (their billing, their ownership)

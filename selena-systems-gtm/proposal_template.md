@@ -27,10 +27,12 @@ On ⟨date⟩ we mapped how inquiries flow through ⟨Company⟩ today. In your 
 
 Within 14 days of kickoff, ⟨Company⟩ will have:
 
-- Every inquiry answered accurately within ~2 minutes, 24/7, in ⟨languages⟩
-- Every lead from every channel in one pipeline your team can see and act on
+- 95% of inquiries answered accurately within 2 minutes (median under 60 seconds), 24/7, in ⟨languages⟩
+- Every lead from WhatsApp, website, Instagram, and email in one pipeline your team can see and act on *(native Airbnb/Booking.com chat is excluded — their APIs are restricted to PMS vendors; OTA notification emails are parsed into the pipeline where available)*
 - Automatic escalation of sensitive conversations to your staff, with context
 - A dashboard proving the before/after: response times, out-of-hours coverage, leads captured
+
+Then, in weeks 3–4 (inside your included support window): guest-journey flows and owner reporting (§3, items 6–7).
 
 ## 3. Scope & deliverables
 
@@ -40,22 +42,32 @@ Within 14 days of kickoff, ⟨Company⟩ will have:
 | 2 | Availability/pricing integration | Connected to ⟨their source⟩; safe request-routing fallback if data can't be verified |
 | 3 | Unified lead pipeline | ⟨CRM tool⟩ configured: source, status, value, owner |
 | 4 | Escalation rules | Defined with you at kickoff; implemented and tested |
-| 5 | Response dashboard | Median first response, out-of-hours volume, lead counts |
-| 6 | Guest journey flows | Pre-arrival, in-stay check-in, checkout & review request |
-| 7 | Owner reporting | Monthly owner-statement drafts from booking data |
+| 5 | Response dashboard | Median first response, out-of-hours volume, lead counts, WhatsApp quality rating |
 | 8 | Training & handover | 90-min recorded training; full documentation; all credentials owned by you |
 | 9 | Post-launch support | 30 days of fixes and tuning included |
+
+**Included fast-follow — delivered days 15–30, inside the support window:**
+
+| # | Deliverable | Description |
+|---|---|---|
+| 6 | Guest journey flows | Pre-arrival, in-stay check-in, checkout & review request — proactive messages sent only to opted-in guests via Meta-approved templates (email fallback otherwise) |
+| 7 | Owner reporting | Monthly owner-statement drafts from booking data |
 
 ## 4. Timeline
 
 | Days | Milestone | Gate |
 |---|---|---|
-| 0 | Kickoff workshop (2h) + access checklist | Starter payment received |
-| 1–3 | API setup, knowledge base v1, pipeline build | — |
-| 4–7 | **Shadow mode** — AI drafts, your team approves every reply | **Day-7 review: your go/no-go** |
-| 8–10 | Supervised go-live on real inquiries | Balance due at go-live |
+| Signing → day 0 | WhatsApp Business API application filed same day; you complete the access checklist | **Day 0 begins when: starter paid AND API approved AND access complete** |
+| 0 | Kickoff workshop (2h) | — |
+| 1–3 | Agent build, knowledge base v1, pipeline, template submissions | — |
+| 4–7 | **Shadow mode** — AI drafts, your team approves every reply | **Day-7 review: measured gate (§7)** |
+| 8–10 | Supervised go-live on real inquiries | Balance due at go-live (§6) |
 | 11–13 | Integration hardening, dashboard, edge cases | — |
-| 14 | Handover: training, docs, before/after numbers | Project complete |
+| 14 | Handover: training, docs, before/after numbers | Sprint complete |
+| 15–30 | Fast-follow: guest-journey flows, owner reporting + included support | — |
+
+**Go-live definition:** day 10, or when the day-7 acceptance gate is passed, whichever is later — and no later than day 17 unless you've given a written defect list. The balance is due at go-live so defined.
+**WhatsApp number:** default is a new dedicated API number (your existing number auto-replies/forwards to it). Migrating your existing primary number to the API is available as a written opt-in with its risks explained — it leaves the WhatsApp app permanently and chat history does not carry over.
 
 ## 5. What we need from you
 
@@ -72,8 +84,8 @@ Within 14 days of kickoff, ⟨Company⟩ will have:
 
 | When | Amount |
 |---|---|
-| To begin (reserves your slot, covers days 0–7) | $1,500 |
-| At go-live (day ~10) | ⟨balance⟩ |
+| To begin (reserves your slot, covers work through day 7) | $2,000 |
+| At go-live (as defined in §4) | ⟨balance⟩ |
 
 - Invoiced in USD to ⟨entity⟩; payment by ⟨bank transfer / Wise / card⟩.
 - You pay your own tool subscriptions directly (WhatsApp API + AI usage + CRM: typically **$50–150/month** — estimated exactly at kickoff, billed to your accounts, no markup).
@@ -81,11 +93,20 @@ Within 14 days of kickoff, ⟨Company⟩ will have:
 
 ## 7. The Shadow-Mode Guarantee
 
-If at the day-7 review you would not let the AI's draft replies be sent to real guests, you may stop the project. You owe nothing beyond the starter payment, and you keep the knowledge base and pipeline built to that point. *(We can make this promise because the system proves itself on your real inquiries — not in a slide deck.)*
+If at the day-7 review the system does not pass its acceptance gate — a scripted test suite of 40 inquiry types per language (pass/fail per intent), plus your team's review of drafts on real inquiries (target: ≥80% approved without edits) — you may stop the project. You owe nothing beyond the starter payment, and you keep your knowledge-base **content** and all your data (they were always yours); the configured agent and prompt system are not included in a stopped project. *(We can make this promise because the system proves itself on your real inquiries — not in a slide deck.)*
 
 ## 8. Not included
 
-PMS/channel-manager migration · OTA account management · advertising & content marketing · voice/phone AI · custom apps · ongoing maintenance beyond 30 days (available separately: **Care Plan, $⟨250–500⟩/month** — monitoring, tuning, monthly report).
+Native OTA chat integration (Airbnb/Booking messaging APIs are restricted to PMS partners — OTA notification-email parsing is included instead) · PMS/channel-manager migration · OTA account management · advertising & content marketing · voice/phone AI · custom apps · ongoing maintenance beyond 30 days (available separately: **Care Plan, $⟨400–600⟩/month** — monitoring, tuning, WhatsApp quality-rating watch, monthly metrics report).
+
+## 8b. Legal terms (summary — full annex attached)
+
+- **Liability:** Selena Systems' total liability is capped at fees paid under this agreement; neither party is liable for indirect or consequential loss.
+- **Data processing:** guest data (names, contact details, stay dates) is processed only to operate the system, inside accounts you own; subprocessors are limited to those named in the annex (BSP, AI API provider, automation platform); no data is used to train AI models; deletion on request. A short DPA is attached for GDPR-relevant guests.
+- **Ownership:** you own all accounts, data, and knowledge-base content; Selena Systems retains ownership of its reusable methods, templates, and prompt frameworks.
+- **Confidentiality:** mutual.
+
+*(⚠️ Founder note, not client-facing: have a lawyer review this annex once, alongside the Task Zero consult, and price professional-indemnity insurance — red team R10.)*
 
 ## 9. After go-live
 

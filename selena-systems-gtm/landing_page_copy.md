@@ -2,15 +2,17 @@
 
 Full copy for a one-page site built around the winning offer. Premium, direct, high-trust; no hype, no fake urgency, no invented case studies. Do not publish claims of results until real ones exist — placeholders are marked ⟨ ⟩ and must stay out of the live page until true.
 
+> **⚠️ DO NOT PUBLISH UNTIL TASK ZERO RESOLVES (red team R2).** This page publicly markets services to Bali businesses, which the founder may not legally be able to serve on her current visa (`winning_offer.md` §17). If the legal consult clears Bali-local selling → publish as-is. If not (the default assumption) → **publish Variant B instead**: change the hero target from "villa management companies" to *"hospitality and real-estate operators"* generally, aim the copy at international clients (Dubai brokerages, remote hospitality groups), present Bali as the founder's base rather than the served market, and change the form's location wording accordingly. Everything else (process, guarantee, pricing) is market-agnostic and stays.
+
 ---
 
 ## 1. Hero
 
 **Eyebrow:** Selena Systems · Bali
 
-# Your guests message at 2am. Nobody answers until 9.
+# Your guests message from Berlin at 1am. Nobody answers until 9.
 
-**Subhead:** Selena Systems builds AI response systems for villa management companies and hospitality businesses: every inquiry answered accurately within 2 minutes — 24/7, in the guest's language — and every lead in one pipeline. Installed in 14 days at a fixed price.
+**Subhead:** Selena Systems builds AI response systems for villa management companies and hospitality businesses: 95% of inquiries answered accurately within 2 minutes — 24/7, in the guest's language — and every lead in one pipeline. Installed in 14 days at a fixed price.
 
 **[Book a Free AI Audit]** ← primary button
 *Small print under button:* A 3-minute video showing what we'd automate first in your operation. No charge. No obligation.
@@ -19,9 +21,9 @@ Full copy for a one-page site built around the winning offer. Premium, direct, h
 
 **Header: The bookings you never see yourself losing**
 
-Your guests live in Sydney, Singapore, London, and Berlin. They inquire when it suits *them* — which is evening, night, and your day off. Meanwhile:
+Your guests live in Berlin, London, Singapore, and Sydney. They inquire when it suits *them* — Europe messages you overnight, Australia before your team clocks in. Meanwhile:
 
-- Inquiries wait hours because they arrived at 11pm — and the first company to answer usually takes the booking. (Research on inquiry response: replying within 5 minutes makes a lead dramatically more likely to convert than replying even 30 minutes later.)
+- Inquiries wait hours because they arrived at 11pm — and the first company to answer usually takes the booking. (Research on inquiry response: replying within minutes makes a lead dramatically more likely to convert than replying even 30 minutes later.)
 - Conversations live on staff members' personal WhatsApp. When someone's sick, quits, or just misses one — the lead is gone, and nobody knows it existed.
 - Your team answers the same forty questions every day — check-in time, airport pickup, is there a pool fence — instead of doing work that actually needs a human.
 - You're hiring reservation staff to fix it. Salaries recur. Training recurs. Churn recurs. And humans still sleep.
@@ -34,7 +36,7 @@ In a Bali market running at ~53% average occupancy while well-run operations hit
 
 No new platform to learn. No PMS migration. Selena Systems builds directly on WhatsApp, your website, and your existing calendars and sheets:
 
-- **Answers in ~2 minutes, around the clock** — accurate replies about villas, rates, availability, policies, and logistics, from a knowledge base built with you and approved by you.
+- **95% of inquiries answered within 2 minutes, around the clock** — accurate replies about villas, rates, availability, policies, and logistics, from a knowledge base built with you and approved by you. Covers WhatsApp, your website, Instagram, and email (native Airbnb/Booking.com chat stays in those apps — their APIs are locked to PMS vendors; we parse their notification emails into your pipeline where available, and we'll tell you that boundary before you ask).
 - **Never invents an answer.** If the system isn't sure — unusual request, negotiation, complaint — it hands the conversation to your team instantly, with full context. That guardrail is contractual.
 - **Every lead in one pipeline.** WhatsApp, website, Instagram — captured, labeled, and visible. Nothing lives only on a personal phone again.
 - **Speaks your guests' languages.** English, Bahasa Indonesia, and one more of your choice.
@@ -44,7 +46,7 @@ No new platform to learn. No PMS migration. Selena Systems builds directly on Wh
 
 **Header: The Villa Ops OS — live in 14 days, fixed price**
 
-One project. One price. One outcome: no inquiry ever waits again.
+One project. One price. One outcome: inquiries stop waiting.
 
 ## 5. Deliverables
 
@@ -53,8 +55,8 @@ One project. One price. One outcome: no inquiry ever waits again.
 - Unified lead pipeline (simple CRM, configured for your flow)
 - Human escalation rules you define
 - Response-time dashboard: median first response, out-of-hours coverage, leads captured — your before/after in numbers
-- Guest journey flows: pre-arrival, in-stay, checkout & review request
-- Monthly owner-report drafts from your booking data
+- Guest journey flows: pre-arrival, in-stay, checkout & review request *(delivered weeks 3–4, inside your included support window; proactive messages use opted-in, Meta-approved templates)*
+- Monthly owner-report drafts from your booking data *(delivered weeks 3–4)*
 - Team training (90 minutes, recorded) + full documentation + 30 days of post-launch support
 
 ## 6. Process
@@ -130,4 +132,4 @@ Request the free audit. You'll get a short video showing how your inquiries are 
 - Email*
 - How did you hear about us? (optional)
 
-*(Form note under submit: "You'll hear back within one business day — usually much faster. That's rather the point.")*
+*(Form note under submit: "You'll hear back within one business hour, 8am–8pm Bali time. That's rather the point.")*

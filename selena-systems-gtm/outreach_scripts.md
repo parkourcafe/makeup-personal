@@ -2,6 +2,10 @@
 
 All scripts target the winning offer (Bali villa/property management; adapt lines marked ⟨ ⟩ for Backup Offers — real estate / Dubai variants noted inline). Rules baked in: calm, specific, no hype, no fake urgency, personalized from public evidence only, never claim results Selena hasn't achieved, and **send nothing until Task Zero (entity/legal screening) is done**.
 
+> **⚠️ LEGAL GATE (red team R1/R2):** Scripts §4 (local WhatsApp) and §8 (walk-in) are **locked until the Task Zero legal consult clears in-person/local selling** (`winning_offer.md` §17) — the selling activity itself can be the visa violation. If the consult says no: use §1–3, §5–7, §10 for remote/Dubai leads only, and in Bali do relationship-building without pitching.
+
+> **WhatsApp policy (red team R4):** never use WhatsApp for a cold first touch unless the number is published by the business *for business inquiries*; prefer email/LinkedIn/IG/in-person(-if-legal)/referral first. On WhatsApp: one message, no follow-up unless they reply, instant opt-out honored. Unsolicited bulk messaging risks a permanent number ban — on the same number used for sales, delivery, and support.
+
 **Primary CTA everywhere:** "Would it be useful if I sent you a short 3-minute audit showing what I'd automate first?"
 **Secondary CTA:** "Open to a quick 15-minute call this week?"
 
@@ -67,7 +71,7 @@ Since then I put together ⟨a short audit of how ⟨Company⟩ handles inquirie
 
 Hi ⟨name⟩ — last note from me, promise.
 
-One number worth knowing before I go: research on inquiry response found replying within 5 minutes makes a lead ~21x more likely to convert than waiting half an hour. Most Bali villa inquiries wait hours overnight — so whoever fixes this first in ⟨area⟩ gets bookings the others paid to attract.
+One number worth knowing before I go: lead-response research keeps finding the same thing — an inquiry answered within minutes is dramatically more likely to become a booking than one answered after half an hour. Most Bali villa inquiries wait hours overnight — so whoever fixes this first in ⟨area⟩ gets bookings the others paid to attract.
 
 If that's ever worth 15 minutes, my door's open. Either way — good season to you and the team.
 
@@ -87,6 +91,8 @@ If that's ever worth 15 minutes, my door's open. Either way — good season to y
 
 ## 10. Loom / video audit script (the 3-minute audit — the core asset; record per priority lead)
 
+**Secret-shop ethics (red team R14):** one short, ordinary inquiry per business — the kind they answer daily; never a phantom booking that makes staff do real work (no negotiations, no holds, no special requests); if asked directly during outreach whether the inquiry was you, say yes cheerfully ("guilty — it's how I measure response times honestly"). The point is a stopwatch, not a sting.
+
 **[0:00–0:20] Screen: their website/listing.** "Hi ⟨name⟩ — Selena from Selena Systems in Bali. Three minutes on ⟨Company⟩'s inquiry handling — what I found, and what I'd fix first. No fluff, here we go."
 
 **[0:20–1:00] The finding (their reality, from the secret shop).** Screen: the inquiry + timestamps. "I sent this inquiry ⟨Tuesday 9:04pm⟩ through ⟨channel⟩. First reply came ⟨X hours⟩ later. That's typical for the island — but your guests are in Sydney and Berlin, so a big share of inquiries land exactly in that gap. Whoever answers first usually wins the booking."
@@ -101,7 +107,12 @@ If that's ever worth 15 minutes, my door's open. Either way — good season to y
 
 ### Channel priorities & cadence (per lead)
 
-1. **Priority leads (score ≥8):** secret-shop → record video audit → WhatsApp or in-person delivery → FU1 (day 3) → FU2 (day 10). Max 3 touches per channel, ever.
+0. **Pre-outreach row check (red team R15 — 2 minutes, mandatory):** website loads, business still operating, contact channel live, personalization note still true. ~8% of sampled rows had stale fields; "I audited your site" pointed at the wrong site kills the pitch.
+1. **Priority leads (score ≥8):** secret-shop → record video audit → deliver via their published business channel or in person (if legally cleared) → FU1 (day 3) → FU2 (day 10). Max 3 touches per channel, ever.
 2. **Standard leads:** email or IG DM → FU1 → FU2.
 3. Log every touch in your own pipeline (dogfood: run yourself on the same CRM you sell).
 4. Never send the same templated text twice to one company on two channels — vary or don't send.
+
+### Daily capacity (red team R6 — respect it)
+
+Steady state for one founder: **3–4 in-person visits OR 3 recorded video audits per day**, plus ~10 light-touch follow-ups. Dubai async: max 3 audits/week while Bali is primary. During a delivery sprint: follow-ups only. The plan survives on consistency, not heroics.
