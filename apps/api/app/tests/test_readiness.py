@@ -1,8 +1,12 @@
 from fastapi.testclient import TestClient
 
 
-def test_readiness_report_returns_role_level_matches(client: TestClient, soft_rose_look_id: int) -> None:
-    response = client.post(f"/users/1/looks/{soft_rose_look_id}/readiness")
+def test_readiness_report_returns_role_level_matches(
+    client: TestClient,
+    soft_rose_look_id: int,
+    demo_auth_headers: dict[str, str],
+) -> None:
+    response = client.post(f"/users/1/looks/{soft_rose_look_id}/readiness", headers=demo_auth_headers)
 
     assert response.status_code == 200
     report = response.json()
@@ -13,8 +17,12 @@ def test_readiness_report_returns_role_level_matches(client: TestClient, soft_ro
     assert len(report["role_matches"]) == 7
 
 
-def test_matching_golden_cases_from_rules_doc(client: TestClient, soft_rose_look_id: int) -> None:
-    response = client.post(f"/users/1/looks/{soft_rose_look_id}/readiness")
+def test_matching_golden_cases_from_rules_doc(
+    client: TestClient,
+    soft_rose_look_id: int,
+    demo_auth_headers: dict[str, str],
+) -> None:
+    response = client.post(f"/users/1/looks/{soft_rose_look_id}/readiness", headers=demo_auth_headers)
     report = response.json()
     matches = {match["role_key"]: match for match in report["role_matches"]}
 
@@ -25,8 +33,12 @@ def test_matching_golden_cases_from_rules_doc(client: TestClient, soft_rose_look
     assert matches["soft_liner"]["status"] == "needs_confirmation"
 
 
-def test_missing_required_role_creates_shopping_gap(client: TestClient, soft_rose_look_id: int) -> None:
-    response = client.post(f"/users/1/looks/{soft_rose_look_id}/readiness")
+def test_missing_required_role_creates_shopping_gap(
+    client: TestClient,
+    soft_rose_look_id: int,
+    demo_auth_headers: dict[str, str],
+) -> None:
+    response = client.post(f"/users/1/looks/{soft_rose_look_id}/readiness", headers=demo_auth_headers)
     matches = {match["role_key"]: match for match in response.json()["role_matches"]}
 
     assert matches["glow_balm"]["status"] == "missing"
@@ -37,9 +49,28 @@ def test_missing_required_role_creates_shopping_gap(client: TestClient, soft_ros
     }
 
 
-def test_low_confidence_product_returns_needs_confirmation(client: TestClient, soft_rose_look_id: int) -> None:
-    response = client.post(f"/users/1/looks/{soft_rose_look_id}/readiness")
+def test_low_confidence_product_returns_needs_confirmation(
+    client: TestClient,
+    soft_rose_look_id: int,
+    demo_auth_headers: dict[str, str],
+) -> None:
+    response = client.post(f"/users/1/looks/{soft_rose_look_id}/readiness", headers=demo_auth_headers)
     matches = {match["role_key"]: match for match in response.json()["role_matches"]}
 
     assert matches["soft_liner"]["status"] == "needs_confirmation"
     assert "confidence" in matches["soft_liner"]["reason"]
+
+
+def test_readiness_requires_owner_token(client: TestClient, soft_rose_look_id: int) -> None:
+    response = client.post(f"/users/1/looks/{soft_rose_look_id}/readiness")
+    assert response.status_code == 401
+
+    registered = client.post(
+        "/auth/register",
+        json={"email": "other-owner@example.com", "password": "strong-pass-123", "display_name": "Other"},
+    ).json()
+    forbidden = client.post(
+        f"/users/1/looks/{soft_rose_look_id}/readiness",
+        headers={"Authorization": f"Bearer {registered['access_token']}"},
+    )
+    assert forbidden.status_code == 403

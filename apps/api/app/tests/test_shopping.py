@@ -1,8 +1,12 @@
 from fastapi.testclient import TestClient
 
 
-def test_shopping_gap_returns_mock_offers(client: TestClient, soft_rose_look_id: int) -> None:
-    report = client.post(f"/users/1/looks/{soft_rose_look_id}/readiness").json()
+def test_shopping_gap_returns_mock_offers(
+    client: TestClient,
+    soft_rose_look_id: int,
+    demo_auth_headers: dict[str, str],
+) -> None:
+    report = client.post(f"/users/1/looks/{soft_rose_look_id}/readiness", headers=demo_auth_headers).json()
     glow_gap = next(match["shopping_gap"] for match in report["role_matches"] if match["role_key"] == "glow_balm")
 
     response = client.get(f"/shopping-gaps/{glow_gap['gap_id']}/mock-offers")

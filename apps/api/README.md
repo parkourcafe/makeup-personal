@@ -53,6 +53,8 @@ uvicorn app.main:app --reload
 
 The demo seed creates user `1` (`Алина`), 12 active looks, tutorials, 32 manually entered user products, 3 mock stores, and mock store offers.
 
+User-specific `/users/{user_id}/*` endpoints require a bearer token for that same user.
+
 ## Deployment
 
 `render.yaml`, `Dockerfile`, and `scripts/start.sh` are included for a simple hosted demo API.

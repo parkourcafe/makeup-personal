@@ -10,7 +10,7 @@ def test_vocabulary_endpoint_exposes_matching_terms(client: TestClient) -> None:
     assert "satin" in payload["finishes"]
 
 
-def test_product_category_is_validated(client: TestClient) -> None:
+def test_product_category_is_validated(client: TestClient, demo_auth_headers: dict[str, str]) -> None:
     payload = {
         "brand": "Test Brand",
         "name": "Mystery Product",
@@ -24,5 +24,5 @@ def test_product_category_is_validated(client: TestClient) -> None:
         "is_multi_use_safe": False,
         "confidence": 1.0,
     }
-    response = client.post("/users/1/products", json=payload)
+    response = client.post("/users/1/products", json=payload, headers=demo_auth_headers)
     assert response.status_code == 422
