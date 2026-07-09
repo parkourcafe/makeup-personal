@@ -24,6 +24,16 @@ Every assumption made during this research is logged here. Items are updated as 
 | M4 | Websites/listings seen during research are assumed current as of 2026-07-09. | Businesses close/rebrand often in Bali; re-verify before outreach. |
 | M5 | Where a company's size is stated as "unknown", nothing was found publicly; no size was guessed. | |
 
+## Offer-stage assumptions (added after tournament)
+
+| # | Assumption | Notes |
+|---|-----------|-------|
+| O1a | A meaningful share (≥8–10) of the 65 Bali-regional leads bill through non-Indonesian entities and can be contracted compliantly. | UNVERIFIED — this is Task Zero in `winning_offer.md` §17. Go/no-go threshold set by tournament Judge 2; if it fails, Backup Offer O2 (Dubai) becomes primary. |
+| O1b | Bali real estate commissions ≈ 5% on foreign-buyer transactions. | Industry-typical figure, not verified per agency; flagged inline in `candidate_offers.md` and `backup_offers.md`. Verify on each discovery call. |
+| O1c | WhatsApp Business API access can be provisioned for a Bali business within the 14-day sprint window. | Provisioning starts day 0 for this reason; timeline shifts day-for-day if it slips (stated in proposal). |
+| O1d | The founder can build a credible demo agent within ~1 day using public villa listings. | Follows from assumption A1 (technical capability). If false, the 24-hour plan stretches to 48–72h. |
+| O1e | Client-side tool costs of $50–150/month (WhatsApp BSP + AI API + CRM) are representative for a 15–150 villa operation. | Based on published BSP/AI pricing tiers seen in competitor research; estimated exactly per client at kickoff. |
+
 ## Pricing assumptions
 
 | # | Assumption | Notes |
