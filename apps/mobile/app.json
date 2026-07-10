@@ -25,7 +25,9 @@
         }
       ]
     ],
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.parkourcafe.makeuppersonal"
@@ -45,6 +47,12 @@
       "description": "Личная косметичка, подбор образов и пошаговые уроки макияжа.",
       "favicon": "./assets/favicon.png",
       "themeColor": "#fffaf4"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "62395a68-723b-461a-9d15-51022c5f28e6"
+      }
+    },
+    "owner": "selenasela"
   }
 }
