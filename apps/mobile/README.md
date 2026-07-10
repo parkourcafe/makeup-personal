@@ -1,4 +1,4 @@
-# Mobile App
+# Mirari Mobile App
 
 Expo React Native vertical slice for Pass 2.
 
@@ -54,14 +54,27 @@ npm run lint
 npm start
 ```
 
-## Native Production
+## Native Build
 
-`eas.json` contains `preview` and `production` profiles for iOS/Android. The profiles point at the Vercel API through `EXPO_PUBLIC_API_BASE_URL`.
+`app.json` uses the production display name `Mirari`, stable native identifiers, and bundled base assets:
+
+- iOS bundle id: `com.parkourcafe.makeuppersonal`
+- Android package id: `com.parkourcafe.makeuppersonal`
+- Version: `0.1.0`
+- Icon, splash, adaptive icon, and favicon: `assets/`
+
+`eas.json` contains Android-first preview and store production profiles. All native profiles point at the Vercel API through `EXPO_PUBLIC_API_BASE_URL`.
 
 ```bash
+npm run eas:preview:android
+npm run eas:preview:ios
+npm run eas:production:android
+npm run eas:production:ios
 npm run eas:preview
 npm run eas:production
 ```
+
+Production Android builds use an AAB (`android.buildType=app-bundle`). Production iOS builds use store distribution and are ready for TestFlight submission once Apple credentials are configured in EAS.
 
 ## Product Notes
 

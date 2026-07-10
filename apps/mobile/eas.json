@@ -1,6 +1,6 @@
 {
   "cli": {
-    "version": ">= 16.0.0",
+    "version": ">= 20.5.1",
     "appVersionSource": "remote"
   },
   "build": {
@@ -20,14 +20,45 @@
         "EXPO_PUBLIC_API_BASE_URL": "https://makeup-personal-api.vercel.app"
       }
     },
+    "preview-android": {
+      "extends": "preview",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "preview-ios": {
+      "extends": "preview",
+      "ios": {
+        "simulator": true
+      }
+    },
     "production": {
       "autoIncrement": true,
+      "distribution": "store",
       "env": {
         "EXPO_PUBLIC_API_BASE_URL": "https://makeup-personal-api.vercel.app"
+      },
+      "android": {
+        "buildType": "app-bundle"
       }
+    },
+    "production-android": {
+      "extends": "production",
+      "android": {
+        "buildType": "app-bundle"
+      }
+    },
+    "production-ios": {
+      "extends": "production"
     }
   },
   "submit": {
-    "production": {}
+    "production": {},
+    "production-android": {
+      "android": {}
+    },
+    "production-ios": {
+      "ios": {}
+    }
   }
 }

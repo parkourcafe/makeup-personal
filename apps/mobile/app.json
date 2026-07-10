@@ -1,25 +1,49 @@
 {
   "expo": {
-    "name": "Makeup Personal",
+    "name": "Mirari",
     "slug": "makeup-personal-mobile",
     "version": "0.1.0",
+    "description": "Личная косметичка, подбор образов и пошаговые уроки макияжа.",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "scheme": "mirari",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#fffaf4"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash.png",
+          "imageWidth": 180,
+          "resizeMode": "contain",
+          "backgroundColor": "#fffaf4"
+        }
+      ]
+    ],
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.parkourcafe.makeuppersonal"
     },
     "android": {
-      "package": "com.parkourcafe.makeuppersonal"
+      "package": "com.parkourcafe.makeuppersonal",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#fffaf4"
+      }
     },
     "web": {
       "bundler": "metro",
-      "name": "Makeup Personal",
-      "shortName": "Makeup",
+      "name": "Mirari",
+      "shortName": "Mirari",
       "lang": "ru",
       "description": "Личная косметичка, подбор образов и пошаговые уроки макияжа.",
+      "favicon": "./assets/favicon.png",
       "themeColor": "#fffaf4"
     }
   }
