@@ -204,6 +204,7 @@ textarea {
 
 .actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
@@ -224,6 +225,21 @@ textarea {
 }
 
 .row div {
+  display: grid;
+  gap: 3px;
+}
+
+.editableRow {
+  align-items: stretch;
+  display: grid;
+  gap: 12px;
+}
+
+.editableRow .grid {
+  gap: 12px;
+}
+
+.rowTitle {
   display: grid;
   gap: 3px;
 }

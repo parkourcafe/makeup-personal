@@ -17,6 +17,7 @@ const emptyRole = {
   role_key: "",
   title: "",
   description: "",
+  required: true,
   native_category: "blush",
   accepted_categories: "blush",
   accepted_color_families: "",
@@ -25,10 +26,12 @@ const emptyRole = {
   accepted_textures: "",
   accepted_coverage: "",
   intensity_min: "",
-  intensity_max: ""
+  intensity_max: "",
+  sort_order: ""
 };
 
 const emptyStep = {
+  step_number: "",
   title: "",
   instruction: "",
   technique_tip: "",
@@ -182,23 +185,17 @@ export function App() {
     await runSaving(async () => {
       const created = await api.createRole({
         look_id: selectedLook.id,
-        role_key: roleForm.role_key,
-        title: roleForm.title,
-        description: roleForm.description,
-        required: true,
-        native_category: roleForm.native_category,
-        accepted_categories: splitTokens(roleForm.accepted_categories),
-        accepted_color_families: splitTokens(roleForm.accepted_color_families),
-        accepted_undertones: splitTokens(roleForm.accepted_undertones),
-        accepted_finishes: splitTokens(roleForm.accepted_finishes),
-        accepted_textures: splitTokens(roleForm.accepted_textures),
-        accepted_coverage: splitTokens(roleForm.accepted_coverage),
-        intensity_min: parseOptionalNumber(roleForm.intensity_min),
-        intensity_max: parseOptionalNumber(roleForm.intensity_max),
-        sort_order: roles.length + 1
+        ...rolePayload(roleForm, roles.length + 1)
       });
-      setRoles((current) => [...current, created]);
+      setRoles((current) => sortRoles([...current, created]));
       setRoleForm(emptyRole);
+    });
+  };
+
+  const updateRole = async (roleId: number, form: RoleForm) => {
+    await runSaving(async () => {
+      const updated = await api.updateRole(roleId, rolePayload(form));
+      setRoles((current) => sortRoles(current.map((role) => (role.id === updated.id ? updated : role))));
     });
   };
 
@@ -249,46 +246,77 @@ export function App() {
       const created = await api.createStep({
         tutorial_id: tutorial.id,
         look_role_id: parseOptionalNumber(stepForm.look_role_id),
-        step_number: tutorial.steps.length + 1,
+        step_number: parseOptionalNumber(stepForm.step_number) ?? tutorial.steps.length + 1,
         title: stepForm.title,
         instruction: stepForm.instruction,
         technique_tip: emptyToNull(stepForm.technique_tip),
         common_mistake: emptyToNull(stepForm.common_mistake)
       });
-      setTutorial({ ...tutorial, steps: [...tutorial.steps, created] });
+      setTutorial({ ...tutorial, steps: sortSteps([...tutorial.steps, created]) });
       setStepForm(emptyStep);
+    });
+  };
+
+  const updateStep = async (stepId: number, form: StepForm) => {
+    if (!tutorial) {
+      return;
+    }
+    await runSaving(async () => {
+      const updated = await api.updateStep(stepId, {
+        look_role_id: parseOptionalNumber(form.look_role_id),
+        step_number: parseOptionalNumber(form.step_number) ?? undefined,
+        title: form.title,
+        instruction: form.instruction,
+        technique_tip: emptyToNull(form.technique_tip),
+        common_mistake: emptyToNull(form.common_mistake)
+      });
+      setTutorial({
+        ...tutorial,
+        steps: sortSteps(tutorial.steps.map((step) => (step.id === updated.id ? updated : step)))
+      });
     });
   };
 
   const createStore = async () => {
     await runSaving(async () => {
       const created = await api.createStore({
-        name: storeForm.name,
-        city: storeForm.city,
-        country: storeForm.country,
-        latitude: Number(storeForm.latitude),
-        longitude: Number(storeForm.longitude)
+        ...storePayload(storeForm)
       });
-      setStores((current) => [...current, created]);
+      setStores((current) => sortStores([...current, created]));
       setStoreForm(emptyStore);
+    });
+  };
+
+  const updateStore = async (storeId: number, form: StoreForm) => {
+    await runSaving(async () => {
+      const updated = await api.updateStore(storeId, storePayload(form));
+      setStores((current) => sortStores(current.map((store) => (store.id === updated.id ? updated : store))));
+      setOffers((current) =>
+        current.map((offer) => (offer.store_id === updated.id ? { ...offer, store: updated } : offer))
+      );
+    });
+  };
+
+  const deleteStore = async (storeId: number) => {
+    await runSaving(async () => {
+      await api.deleteStore(storeId);
+      setStores((current) => current.filter((store) => store.id !== storeId));
+      setOffers((current) => current.filter((offer) => offer.store_id !== storeId));
     });
   };
 
   const createOffer = async () => {
     await runSaving(async () => {
-      const created = await api.createOffer({
-        store_id: Number(offerForm.store_id),
-        product_name: offerForm.product_name,
-        brand: offerForm.brand,
-        category: offerForm.category,
-        color_family: emptyToNull(offerForm.color_family),
-        price: Number(offerForm.price),
-        currency: offerForm.currency,
-        availability_status: offerForm.availability_status,
-        source_label: offerForm.source_label
-      });
+      const created = await api.createOffer(offerPayload(offerForm));
       setOffers((current) => [...current, created]);
       setOfferForm(emptyOffer);
+    });
+  };
+
+  const updateOffer = async (offerId: number, form: OfferForm) => {
+    await runSaving(async () => {
+      const updated = await api.updateOffer(offerId, offerPayload(form));
+      setOffers((current) => current.map((offer) => (offer.id === updated.id ? updated : offer)));
     });
   };
 
@@ -387,18 +415,17 @@ export function App() {
             <h2>Роли образа</h2>
             <div className="list">
               {roles.map((role) => (
-                <div className="row" key={role.id}>
-                  <div>
-                    <strong>{role.title}</strong>
-                    <small>{role.role_key} · {role.native_category}</small>
-                  </div>
-                  <button className="ghost" onClick={() => void runSaving(async () => {
+                <RoleEditor
+                  disabled={saving}
+                  key={role.id}
+                  role={role}
+                  vocabulary={vocabulary}
+                  onDelete={() => runSaving(async () => {
                     await api.deleteRole(role.id);
                     setRoles((current) => current.filter((item) => item.id !== role.id));
-                  })} type="button">
-                    Удалить
-                  </button>
-                </div>
+                  })}
+                  onSave={(form) => updateRole(role.id, form)}
+                />
               ))}
             </div>
             <div className="grid two">
@@ -414,6 +441,11 @@ export function App() {
               <Field label="coverage" value={roleForm.accepted_coverage} onChange={(value) => setRoleForm({ ...roleForm, accepted_coverage: value })} />
               <Field label="min intensity" value={roleForm.intensity_min} onChange={(value) => setRoleForm({ ...roleForm, intensity_min: value })} />
               <Field label="max intensity" value={roleForm.intensity_max} onChange={(value) => setRoleForm({ ...roleForm, intensity_max: value })} />
+              <Field label="sort order" value={roleForm.sort_order} onChange={(value) => setRoleForm({ ...roleForm, sort_order: value })} />
+              <label className="check">
+                <input checked={roleForm.required} onChange={(event) => setRoleForm({ ...roleForm, required: event.target.checked })} type="checkbox" />
+                Обязательная роль
+              </label>
             </div>
             <button disabled={saving || !selectedLook} onClick={() => void createRole()} type="button">
               Добавить роль
@@ -435,21 +467,21 @@ export function App() {
               </div>
               <div className="list">
                 {tutorial.steps.map((step) => (
-                  <div className="row" key={step.id}>
-                    <div>
-                      <strong>{step.step_number}. {step.title}</strong>
-                      <small>{step.instruction}</small>
-                    </div>
-                    <button className="ghost" onClick={() => void runSaving(async () => {
+                  <StepEditor
+                    disabled={saving}
+                    key={step.id}
+                    roles={roles}
+                    step={step}
+                    onDelete={() => runSaving(async () => {
                       await api.deleteStep(step.id);
                       setTutorial({ ...tutorial, steps: tutorial.steps.filter((item) => item.id !== step.id) });
-                    })} type="button">
-                      Удалить
-                    </button>
-                  </div>
+                    })}
+                    onSave={(form) => updateStep(step.id, form)}
+                  />
                 ))}
               </div>
               <div className="grid two">
+                <Field label="Номер шага" value={stepForm.step_number} onChange={(value) => setStepForm({ ...stepForm, step_number: value })} />
                 <Field label="Название шага" value={stepForm.title} onChange={(value) => setStepForm({ ...stepForm, title: value })} />
                 <SelectField label="Роль" options={roles.map((role) => String(role.id))} value={stepForm.look_role_id} onChange={(value) => setStepForm({ ...stepForm, look_role_id: value })} />
                 <Textarea label="Инструкция" value={stepForm.instruction} onChange={(value) => setStepForm({ ...stepForm, instruction: value })} />
@@ -484,6 +516,18 @@ export function App() {
               Добавить store
             </button>
 
+            <div className="list">
+              {stores.map((store) => (
+                <StoreEditor
+                  disabled={saving}
+                  key={store.id}
+                  store={store}
+                  onDelete={() => deleteStore(store.id)}
+                  onSave={(form) => updateStore(store.id, form)}
+                />
+              ))}
+            </div>
+
             <div className="grid two">
               <SelectField label="Store" options={stores.map((store) => String(store.id))} value={offerForm.store_id} onChange={(value) => setOfferForm({ ...offerForm, store_id: value })} />
               <Field label="Product" value={offerForm.product_name} onChange={(value) => setOfferForm({ ...offerForm, product_name: value })} />
@@ -493,6 +537,7 @@ export function App() {
               <Field label="Price" value={offerForm.price} onChange={(value) => setOfferForm({ ...offerForm, price: value })} />
               <Field label="Currency" value={offerForm.currency} onChange={(value) => setOfferForm({ ...offerForm, currency: value })} />
               <SelectField label="Status" options={vocabulary?.offer_statuses ?? []} value={offerForm.availability_status} onChange={(value) => setOfferForm({ ...offerForm, availability_status: value })} />
+              <Textarea label="Source label" value={offerForm.source_label} onChange={(value) => setOfferForm({ ...offerForm, source_label: value })} />
             </div>
             <button disabled={saving} onClick={() => void createOffer()} type="button">
               Добавить offer
@@ -500,18 +545,18 @@ export function App() {
 
             <div className="list">
               {offers.map((offer) => (
-                <div className="row" key={offer.id}>
-                  <div>
-                    <strong>{offer.brand} · {offer.product_name}</strong>
-                    <small>{offer.store?.name ?? offer.store_id} · {offer.category} · {offer.price} {offer.currency}</small>
-                  </div>
-                  <button className="ghost" onClick={() => void runSaving(async () => {
+                <OfferEditor
+                  disabled={saving}
+                  key={offer.id}
+                  offer={offer}
+                  stores={stores}
+                  vocabulary={vocabulary}
+                  onDelete={() => runSaving(async () => {
                     await api.deleteOffer(offer.id);
                     setOffers((current) => current.filter((item) => item.id !== offer.id));
-                  })} type="button">
-                    Удалить
-                  </button>
-                </div>
+                  })}
+                  onSave={(form) => updateOffer(offer.id, form)}
+                />
               ))}
             </div>
           </section>
@@ -522,6 +567,215 @@ export function App() {
 }
 
 type LookForm = typeof emptyLook;
+type RoleForm = typeof emptyRole;
+type StepForm = typeof emptyStep;
+type StoreForm = typeof emptyStore;
+type OfferForm = typeof emptyOffer;
+
+function RoleEditor({
+  disabled,
+  role,
+  vocabulary,
+  onDelete,
+  onSave
+}: {
+  disabled: boolean;
+  role: LookRole;
+  vocabulary: Vocabulary | null;
+  onDelete: () => Promise<void>;
+  onSave: (form: RoleForm) => Promise<void>;
+}) {
+  const [form, setForm] = useState<RoleForm>(roleToForm(role));
+
+  useEffect(() => {
+    setForm(roleToForm(role));
+  }, [role]);
+
+  return (
+    <div className="row editableRow">
+      <div className="rowTitle">
+        <strong>{role.sort_order}. {role.title}</strong>
+        <small>{role.role_key} · {role.native_category}</small>
+      </div>
+      <div className="grid two">
+        <Field label="role_key" value={form.role_key} onChange={(value) => setForm({ ...form, role_key: value })} />
+        <Field label="Название" value={form.title} onChange={(value) => setForm({ ...form, title: value })} />
+        <Textarea label="Описание" value={form.description} onChange={(value) => setForm({ ...form, description: value })} />
+        <SelectField label="Категория" options={vocabulary?.categories ?? []} value={form.native_category} onChange={(value) => setForm({ ...form, native_category: value })} />
+        <Field label="accepted categories" value={form.accepted_categories} onChange={(value) => setForm({ ...form, accepted_categories: value })} />
+        <Field label="color families" value={form.accepted_color_families} onChange={(value) => setForm({ ...form, accepted_color_families: value })} />
+        <Field label="undertones" value={form.accepted_undertones} onChange={(value) => setForm({ ...form, accepted_undertones: value })} />
+        <Field label="finishes" value={form.accepted_finishes} onChange={(value) => setForm({ ...form, accepted_finishes: value })} />
+        <Field label="textures" value={form.accepted_textures} onChange={(value) => setForm({ ...form, accepted_textures: value })} />
+        <Field label="coverage" value={form.accepted_coverage} onChange={(value) => setForm({ ...form, accepted_coverage: value })} />
+        <Field label="min intensity" value={form.intensity_min} onChange={(value) => setForm({ ...form, intensity_min: value })} />
+        <Field label="max intensity" value={form.intensity_max} onChange={(value) => setForm({ ...form, intensity_max: value })} />
+        <Field label="sort order" value={form.sort_order} onChange={(value) => setForm({ ...form, sort_order: value })} />
+        <label className="check">
+          <input checked={form.required} onChange={(event) => setForm({ ...form, required: event.target.checked })} type="checkbox" />
+          Обязательная роль
+        </label>
+      </div>
+      <div className="actions">
+        <button disabled={disabled} onClick={() => void onSave(form)} type="button">
+          Сохранить роль
+        </button>
+        <button className="ghost" disabled={disabled} onClick={() => setForm(roleToForm(role))} type="button">
+          Сбросить
+        </button>
+        <button className="danger" disabled={disabled} onClick={() => void onDelete()} type="button">
+          Удалить
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function StepEditor({
+  disabled,
+  roles,
+  step,
+  onDelete,
+  onSave
+}: {
+  disabled: boolean;
+  roles: LookRole[];
+  step: TutorialStep;
+  onDelete: () => Promise<void>;
+  onSave: (form: StepForm) => Promise<void>;
+}) {
+  const [form, setForm] = useState<StepForm>(stepToForm(step));
+
+  useEffect(() => {
+    setForm(stepToForm(step));
+  }, [step]);
+
+  return (
+    <div className="row editableRow">
+      <div className="rowTitle">
+        <strong>{step.step_number}. {step.title}</strong>
+        <small>{step.instruction}</small>
+      </div>
+      <div className="grid two">
+        <Field label="Номер шага" value={form.step_number} onChange={(value) => setForm({ ...form, step_number: value })} />
+        <Field label="Название шага" value={form.title} onChange={(value) => setForm({ ...form, title: value })} />
+        <SelectField label="Роль" options={roles.map((role) => String(role.id))} value={form.look_role_id} onChange={(value) => setForm({ ...form, look_role_id: value })} />
+        <Textarea label="Инструкция" value={form.instruction} onChange={(value) => setForm({ ...form, instruction: value })} />
+        <Textarea label="Техника" value={form.technique_tip} onChange={(value) => setForm({ ...form, technique_tip: value })} />
+        <Textarea label="Ошибка" value={form.common_mistake} onChange={(value) => setForm({ ...form, common_mistake: value })} />
+      </div>
+      <div className="actions">
+        <button disabled={disabled} onClick={() => void onSave(form)} type="button">
+          Сохранить шаг
+        </button>
+        <button className="ghost" disabled={disabled} onClick={() => setForm(stepToForm(step))} type="button">
+          Сбросить
+        </button>
+        <button className="danger" disabled={disabled} onClick={() => void onDelete()} type="button">
+          Удалить
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function StoreEditor({
+  disabled,
+  store,
+  onDelete,
+  onSave
+}: {
+  disabled: boolean;
+  store: Store;
+  onDelete: () => Promise<void>;
+  onSave: (form: StoreForm) => Promise<void>;
+}) {
+  const [form, setForm] = useState<StoreForm>(storeToForm(store));
+
+  useEffect(() => {
+    setForm(storeToForm(store));
+  }, [store]);
+
+  return (
+    <div className="row editableRow">
+      <div className="rowTitle">
+        <strong>{store.name}</strong>
+        <small>{store.city}, {store.country} · {store.latitude}, {store.longitude}</small>
+      </div>
+      <div className="grid two">
+        <Field label="Store name" value={form.name} onChange={(value) => setForm({ ...form, name: value })} />
+        <Field label="City" value={form.city} onChange={(value) => setForm({ ...form, city: value })} />
+        <Field label="Country" value={form.country} onChange={(value) => setForm({ ...form, country: value })} />
+        <Field label="Latitude" value={form.latitude} onChange={(value) => setForm({ ...form, latitude: value })} />
+        <Field label="Longitude" value={form.longitude} onChange={(value) => setForm({ ...form, longitude: value })} />
+      </div>
+      <div className="actions">
+        <button disabled={disabled} onClick={() => void onSave(form)} type="button">
+          Сохранить store
+        </button>
+        <button className="ghost" disabled={disabled} onClick={() => setForm(storeToForm(store))} type="button">
+          Сбросить
+        </button>
+        <button className="danger" disabled={disabled} onClick={() => void onDelete()} type="button">
+          Удалить
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function OfferEditor({
+  disabled,
+  offer,
+  stores,
+  vocabulary,
+  onDelete,
+  onSave
+}: {
+  disabled: boolean;
+  offer: StoreOffer;
+  stores: Store[];
+  vocabulary: Vocabulary | null;
+  onDelete: () => Promise<void>;
+  onSave: (form: OfferForm) => Promise<void>;
+}) {
+  const [form, setForm] = useState<OfferForm>(offerToForm(offer));
+
+  useEffect(() => {
+    setForm(offerToForm(offer));
+  }, [offer]);
+
+  return (
+    <div className="row editableRow">
+      <div className="rowTitle">
+        <strong>{offer.brand} · {offer.product_name}</strong>
+        <small>{offer.store?.name ?? offer.store_id} · {offer.category} · {offer.price} {offer.currency}</small>
+      </div>
+      <div className="grid two">
+        <SelectField label="Store" options={stores.map((store) => String(store.id))} value={form.store_id} onChange={(value) => setForm({ ...form, store_id: value })} />
+        <Field label="Product" value={form.product_name} onChange={(value) => setForm({ ...form, product_name: value })} />
+        <Field label="Brand" value={form.brand} onChange={(value) => setForm({ ...form, brand: value })} />
+        <SelectField label="Category" options={vocabulary?.categories ?? []} value={form.category} onChange={(value) => setForm({ ...form, category: value })} />
+        <Field label="Color" value={form.color_family} onChange={(value) => setForm({ ...form, color_family: value })} />
+        <Field label="Price" value={form.price} onChange={(value) => setForm({ ...form, price: value })} />
+        <Field label="Currency" value={form.currency} onChange={(value) => setForm({ ...form, currency: value })} />
+        <SelectField label="Status" options={vocabulary?.offer_statuses ?? []} value={form.availability_status} onChange={(value) => setForm({ ...form, availability_status: value })} />
+        <Textarea label="Source label" value={form.source_label} onChange={(value) => setForm({ ...form, source_label: value })} />
+      </div>
+      <div className="actions">
+        <button disabled={disabled} onClick={() => void onSave(form)} type="button">
+          Сохранить offer
+        </button>
+        <button className="ghost" disabled={disabled} onClick={() => setForm(offerToForm(offer))} type="button">
+          Сбросить
+        </button>
+        <button className="danger" disabled={disabled} onClick={() => void onDelete()} type="button">
+          Удалить
+        </button>
+      </div>
+    </div>
+  );
+}
 
 function LookFields({ form, setForm }: { form: LookForm; setForm: (form: LookForm) => void }) {
   return (
@@ -572,6 +826,115 @@ function SelectField({ label, options, value, onChange }: { label: string; optio
   );
 }
 
+function roleToForm(role: LookRole): RoleForm {
+  return {
+    role_key: role.role_key,
+    title: role.title,
+    description: role.description,
+    required: role.required,
+    native_category: role.native_category,
+    accepted_categories: role.accepted_categories.join(", "),
+    accepted_color_families: role.accepted_color_families.join(", "),
+    accepted_undertones: role.accepted_undertones.join(", "),
+    accepted_finishes: role.accepted_finishes.join(", "),
+    accepted_textures: role.accepted_textures.join(", "),
+    accepted_coverage: role.accepted_coverage.join(", "),
+    intensity_min: numberToForm(role.intensity_min),
+    intensity_max: numberToForm(role.intensity_max),
+    sort_order: String(role.sort_order)
+  };
+}
+
+function rolePayload(form: RoleForm, fallbackSortOrder = 0): Partial<LookRole> {
+  return {
+    role_key: form.role_key,
+    title: form.title,
+    description: form.description,
+    required: form.required,
+    native_category: form.native_category,
+    accepted_categories: splitTokens(form.accepted_categories),
+    accepted_color_families: splitTokens(form.accepted_color_families),
+    accepted_undertones: splitTokens(form.accepted_undertones),
+    accepted_finishes: splitTokens(form.accepted_finishes),
+    accepted_textures: splitTokens(form.accepted_textures),
+    accepted_coverage: splitTokens(form.accepted_coverage),
+    intensity_min: parseOptionalNumber(form.intensity_min),
+    intensity_max: parseOptionalNumber(form.intensity_max),
+    sort_order: parseOptionalNumber(form.sort_order) ?? fallbackSortOrder
+  };
+}
+
+function stepToForm(step: TutorialStep): StepForm {
+  return {
+    step_number: String(step.step_number),
+    title: step.title,
+    instruction: step.instruction,
+    technique_tip: step.technique_tip ?? "",
+    common_mistake: step.common_mistake ?? "",
+    look_role_id: numberToForm(step.look_role_id)
+  };
+}
+
+function storeToForm(store: Store): StoreForm {
+  return {
+    name: store.name,
+    city: store.city,
+    country: store.country,
+    latitude: String(store.latitude),
+    longitude: String(store.longitude)
+  };
+}
+
+function storePayload(form: StoreForm): Partial<Store> {
+  return {
+    name: form.name,
+    city: form.city,
+    country: form.country,
+    latitude: Number(form.latitude),
+    longitude: Number(form.longitude)
+  };
+}
+
+function offerToForm(offer: StoreOffer): OfferForm {
+  return {
+    store_id: String(offer.store_id),
+    product_name: offer.product_name,
+    brand: offer.brand,
+    category: offer.category,
+    color_family: offer.color_family ?? "",
+    price: String(offer.price),
+    currency: offer.currency,
+    availability_status: offer.availability_status,
+    source_label: offer.source_label
+  };
+}
+
+function offerPayload(form: OfferForm): Partial<StoreOffer> {
+  return {
+    store_id: Number(form.store_id),
+    product_name: form.product_name,
+    brand: form.brand,
+    category: form.category,
+    color_family: emptyToNull(form.color_family),
+    price: Number(form.price),
+    currency: form.currency,
+    availability_status: form.availability_status,
+    source_label: form.source_label
+  };
+}
+
+function sortRoles(roles: LookRole[]): LookRole[] {
+  return [...roles].sort((left, right) => left.sort_order - right.sort_order || left.id - right.id);
+}
+
+function sortSteps(steps: TutorialStep[]): TutorialStep[] {
+  return [...steps].sort((left, right) => left.step_number - right.step_number || left.id - right.id);
+}
+
+function sortStores(stores: Store[]): Store[] {
+  return [...stores].sort((left, right) => left.name.localeCompare(right.name));
+}
+
 function splitTokens(value: string): string[] {
   return value.split(",").map((token) => token.trim()).filter(Boolean);
 }
@@ -584,4 +947,8 @@ function emptyToNull(value: string): string | null {
 function parseOptionalNumber(value: string): number | null {
   const parsed = Number(value);
   return value.trim() && Number.isFinite(parsed) ? parsed : null;
+}
+
+function numberToForm(value: number | null): string {
+  return value === null ? "" : String(value);
 }

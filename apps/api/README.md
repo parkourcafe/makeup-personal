@@ -1,6 +1,6 @@
 # Makeup Coach API
 
-FastAPI backend for Pass 1 of the Makeup AI Personal Coach MVP.
+FastAPI backend for the Mirari Makeup Personal Coach MVP.
 
 ## Stack
 

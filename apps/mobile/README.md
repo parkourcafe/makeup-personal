@@ -1,6 +1,6 @@
 # Mirari Mobile App
 
-Expo React Native vertical slice for Pass 2.
+Expo React Native app for the Mirari MVP.
 
 Implemented screens:
 
@@ -75,6 +75,8 @@ npm run eas:production
 ```
 
 Production Android builds use an AAB (`android.buildType=app-bundle`). Production iOS builds use store distribution and are ready for TestFlight submission once Apple credentials are configured in EAS.
+
+Current blocker for cloud native builds: Expo CLI must be logged in or `EXPO_TOKEN` must be set. Android prebuild has been validated locally, but EAS cloud preview was not queued without account credentials.
 
 ## Product Notes
 
